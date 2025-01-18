@@ -1,0 +1,94 @@
+"use client"
+
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
+
+import { ShoppingCart, Menu } from 'lucide-react'
+
+import { AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
+
+import { TypeUser } from '@/types/user'
+import useCart from '../zustand/useCart'
+
+
+
+
+const Navbar = () => {
+
+    const { cart } = useCart()
+
+    const router = useRouter()
+
+    const pathname = usePathname()
+
+    const qtyEachProduct = cart.map((product) => product.qty)
+    const totalQtyCart = qtyEachProduct.length ? qtyEachProduct.reduce((a,b) => a + b) : 0
+
+    const [showNavScroll, setShowNavScroll] = useState(false) 
+    const [userProfile, setUserProfile] = useState<TypeUser | null>(null)
+    const [showProfile, setShowProfile] = useState<boolean>(false)
+
+
+    useEffect(() => {
+        setShowProfile(false)
+    },[pathname])
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            const res = await fetch('/api/user')
+            const result = await res.json()
+            setUserProfile(result.currUser)
+            console.log(result)
+         }
+        fetchUser()
+    },[])
+
+    const  handleLogOut = async () => {
+        const response = await fetch('/api/logout', {method: 'POST'} )
+        if(response.ok) router.push('/login')
+    }
+    
+    return (
+    <div className="flex backdrop justify-between sticky top-0 z-[999]  items-center px-5 h-20 lg:px-10 bg-gray-800 border border-r border-gray-700 backdrop-blur-sm">
+        <Link href='/' className='text-white font-bold text-xl lg:text-2xl'>Waroeng</Link>
+       
+        <ul className={`left-0   fixed z-[9] border-b lg:border-none   h-20 bg-gray-700 w-full gap-4 flex flex-col  duration-300 ${showNavScroll ? 'top-0' : '-translate-y-full'} px-10 py-2 gap-2  lg:flex lg:items-center lg:text-lg lg:gap-10 lg:translate-y-1 lg:static lg:flex-row lg:w-max lg:bg-transparent`}>
+            <li><Link className='hover:text-gray-300 hover:border-b border-white  font-bold text-white active:text-gray-400 py-1' href='/about'>About</Link></li>
+            <li><Link className='hover:text-gray-300 hover:border-b border-white  font-bold text-white active:text-gray-400 py-1' href='/products'>Products</Link></li>
+            {  userProfile?.username ? 
+            <>
+                <div onClick={() => setShowProfile(prev => !prev)} className='size-10 cursor-pointer bg-white rounded-full fixed right-20 top-5 lg:static'>
+                </div>
+                <AnimatePresence>
+                    {showProfile && 
+                    <motion.div
+                    initial={{opacity: 0}}
+                    animate={{opacity: 1}}
+                    exit={{opacity: 0}}
+                    transition={{duration: 0.2}}
+                    className='fixed -right-5 top-20 bg-gray-700 border border-gray-600 w-40 z-10  flex flex-col gap-1 rounded overflow-hidden text-sm '>
+                        <Link href={`/profile/${userProfile._id}/account`} className='text-white py-1 font-bold text-center hover:text-gray-300'>{userProfile.username}</Link>
+                        <button className='py-1  bg-gray-500 hover:bg-gray-600 active:bg-gray-800' onClick={handleLogOut}>Log Out</button>
+                    </motion.div>
+                    }
+                </AnimatePresence>
+            </>
+            :  
+            <li><Link className='hover:text-gray-300 hover:border-b border-white  font-bold text-white active:text-gray-400 py-1 absolute right-20 top-5 lg:static' href='/login'>Login</Link></li>}
+        </ul>
+       
+        <div className='absolute  right-20 lg:right-[400px]'>
+            {!!totalQtyCart &&  <span className='absolute bg-green-500 py-[2px] px-2 text-sm -top-4 -right-4 rounded-full'>{totalQtyCart}</span>}
+            <Link href='/cart'><ShoppingCart size={24} className='text-white hover:text-gray-400'/></Link> 
+        </div>
+        <div className='relative z-10 lg:hidden flex items-center justify-center cursor-pointer flex-col size-max gap-1' onClick={() => setShowNavScroll(prev => !prev)}>
+            <Menu size={24} color='white' />
+        </div>
+        
+    </div> 
+  )
+}
+
+export default Navbar

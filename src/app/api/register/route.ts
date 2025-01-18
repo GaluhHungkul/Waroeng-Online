@@ -1,0 +1,20 @@
+import ConnectToDatabase from "@/lib/mongoose";
+import { NextRequest, NextResponse } from "next/server";
+import bcrypt from 'bcrypt'
+import User from "@/models/User";
+
+export async function POST(req:NextRequest) {
+    try {
+        
+        await ConnectToDatabase()
+        const { username, password } = await req.json()
+        const hashedPassword = await bcrypt.hash(password, 10)
+
+        const newUser = new User({username, password : hashedPassword})
+        await newUser.save()
+        return NextResponse.json({ok : true, username, password})
+
+    } catch (error) {
+        console.log('error : ', error)
+    }
+}
