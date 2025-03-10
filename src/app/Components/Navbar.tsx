@@ -2,12 +2,10 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 
 import { ShoppingCart, Menu } from 'lucide-react'
 
-import { AnimatePresence } from 'framer-motion'
-import { motion } from 'framer-motion'
 
 import { TypeUser } from '@/types/user'
 import useCart from '../zustand/useCart'
@@ -19,7 +17,6 @@ const Navbar = () => {
 
     const { cart } = useCart()
 
-    const router = useRouter()
 
     const pathname = usePathname()
 
@@ -28,11 +25,10 @@ const Navbar = () => {
 
     const [showNavScroll, setShowNavScroll] = useState(false) 
     const [userProfile, setUserProfile] = useState<TypeUser | null>(null)
-    const [showProfile, setShowProfile] = useState<boolean>(false)
 
 
     useEffect(() => {
-        setShowProfile(false)
+        setShowNavScroll(false)
     },[pathname])
 
     useEffect(() => {
@@ -45,10 +41,7 @@ const Navbar = () => {
         fetchUser()
     },[])
 
-    const  handleLogOut = async () => {
-        const response = await fetch('/api/logout', {method: 'POST'} )
-        if(response.ok) router.push('/login')
-    }
+   
     
     return (
     <div className="flex backdrop justify-between sticky top-0 z-[999]  items-center px-5 h-20 lg:px-10 bg-gray-800 border border-r border-gray-700 backdrop-blur-sm">
@@ -59,21 +52,9 @@ const Navbar = () => {
             <li><Link className='hover:text-gray-300 hover:border-b border-white  font-bold text-white active:text-gray-400 py-1' href='/products'>Products</Link></li>
             {  userProfile?.username ? 
             <>
-                <div onClick={() => setShowProfile(prev => !prev)} className='size-10 cursor-pointer bg-white rounded-full fixed right-20 top-5 lg:static'>
-                </div>
-                <AnimatePresence>
-                    {showProfile && 
-                    <motion.div
-                    initial={{opacity: 0}}
-                    animate={{opacity: 1}}
-                    exit={{opacity: 0}}
-                    transition={{duration: 0.2}}
-                    className='fixed -right-5 top-20 bg-gray-700 border border-gray-600 w-40 z-10  flex flex-col gap-1 rounded overflow-hidden text-sm '>
-                        <Link href={`/profile/${userProfile._id}/account`} className='text-white py-1 font-bold text-center hover:text-gray-300'>{userProfile.username}</Link>
-                        <button className='py-1  bg-gray-500 hover:bg-gray-600 active:bg-gray-800' onClick={handleLogOut}>Log Out</button>
-                    </motion.div>
-                    }
-                </AnimatePresence>
+                <Link href={`/profile/account`} className='size-10 cursor-pointer bg-white rounded-full fixed right-20 top-5 lg:static'>
+                </Link>
+                
             </>
             :  
             <li><Link className='hover:text-gray-300 hover:border-b border-white  font-bold text-white active:text-gray-400 py-1 absolute right-20 top-5 lg:static' href='/login'>Login</Link></li>}

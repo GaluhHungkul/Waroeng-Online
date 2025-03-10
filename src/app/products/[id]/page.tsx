@@ -31,8 +31,8 @@ const DetailProductPage = () => {
     }, [id])
 
   return (
-    <div className='backdrop-blur-md flex w-3/5 min-h-96 shadow-white/20 shadow-xl bg-gradient-to-br from-gray-800 to-gray-800 via-gray-700 mt-10 content-center mx-auto'>
-        <Image src={product?.img || 'https://placehold.co/200x200.png?text=Default Image'} alt={product?.name || 'DefaultHungkul'} width={900} height={900} className='w-1/2'/>
+    <div className='backdrop-blur-md flex mb-20 w-4/5  min-h-64 shadow-white/20 shadow-md md:flex-row flex-col bg-gradient-to-br from-gray-800 to-gray-800 via-gray-700 mt-10 content-center mx-auto'>
+        <Image src={product?.img || 'https://placehold.co/200x200.png?text=Default Image'} alt={product?.name || 'DefaultHungkul'} width={900} height={900} className='md:w-3/4 lg:w-1/2'/>
         <div className='p-10 flex flex-col gap-3'>
           <p>Nama Product : <span className='text-gray-400'>{product?.name}</span></p>
           <p>Harga : <span className='text-gray-400'><CurrencyFormatter amount={product?.price || 0}/></span></p>

@@ -11,12 +11,13 @@ const RegisterPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [errorMEssage, setErrorMessage] = useState<string>("");
+
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (username.trim() == "" || password.trim() == "") return;
-
+   
     setLoading(true);
 
     try {
@@ -33,6 +34,7 @@ const RegisterPage = () => {
       const response = await result.json();
       setLoading(false);
       if (response.ok) return router.push("/login");
+      setErrorMessage(response.message);
       } catch (error) {
         setLoading(false);
         console.log("error : " + error);
@@ -116,9 +118,10 @@ const RegisterPage = () => {
           </div>
 
           <div>
+            <p className="text-red-500 my-2 text-opacity-80 text-center">{errorMEssage}</p>
             <button
               type="submit"
-              disabled={password !== verifyPassword || loading}
+              disabled={password !== verifyPassword || loading || username.trim() == "" || password.trim() == "" || username.length < 8 || password.length < 8}
               className="flex h-[37px] relative w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:bg-blue-900 "
             >
               

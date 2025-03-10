@@ -10,4 +10,5 @@ export interface Products {
     };
     category : string
     qty : number
+    stock : number
   }

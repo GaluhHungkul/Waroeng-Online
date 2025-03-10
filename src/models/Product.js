@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-
 const ProductSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -21,6 +20,11 @@ const ProductSchema = new mongoose.Schema({
     category: {
         type: String,
         required: true
+    },
+    stock : {
+        type : Number,
+        required : true,
+        min : [0,'Stock tidak boleh negatif']
     },
     rate : {
         value : {

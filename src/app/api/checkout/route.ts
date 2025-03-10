@@ -35,8 +35,6 @@ export async function POST(req: NextRequest) {
         }
 
         const currUser = await User.findById(payload.id);
-       
-
 
         if (!currUser) {
             return NextResponse.json(
@@ -55,9 +53,8 @@ export async function POST(req: NextRequest) {
             );
         }
 
-        if (!Array.isArray(currUser.historyShopping)) {
-            currUser.historyShopping = [];
-        }
+        if (!Array.isArray(currUser.historyShopping))  currUser.historyShopping = [];
+        
 
         const products = cart.map((item) => ({
             productId: item._id,
@@ -67,6 +64,14 @@ export async function POST(req: NextRequest) {
             quantity: item.qty,
         }))
 
+        const bulkOps = cart.map((item) => ({
+            updateOne : {
+                filter : { _id : item._id },
+                update : { $inc : { stock : -item.qty } }
+            }
+        }))
+
+       await Product.bulkWrite(bulkOps)
 
         const newHistory = {
             products,
@@ -74,18 +79,17 @@ export async function POST(req: NextRequest) {
             totalPrice,
         }
         
+       
+
         currUser.historyShopping.push(newHistory);
 
-        console.log('before saving' , currUser.historyShopping)
-        
         await currUser.save();
-        console.log('after saving' , currUser.historyShopping)
-        
        
         return NextResponse.json(
             { message: 'History added successfully', history: currUser.historyShopping },
             { status: 200 }
         );
+
     } catch (error) {
         console.error('Error:', error);
         return NextResponse.json(

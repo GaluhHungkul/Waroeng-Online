@@ -1,6 +1,7 @@
 export interface TypeUser {
     _id : string;
     username : string;
+    password : string;
     historyShopping : [
         {
             products: [

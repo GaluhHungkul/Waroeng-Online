@@ -8,6 +8,11 @@ export async function POST(req:NextRequest) {
         
         await ConnectToDatabase()
         const { username, password } = await req.json()
+
+        const alreadyExistUser = await User.findOne({ username })
+
+        if(alreadyExistUser) return NextResponse.json({message : 'Username already used'} , {status : 400})
+
         const hashedPassword = await bcrypt.hash(password, 10)
 
         const newUser = new User({username, password : hashedPassword})
