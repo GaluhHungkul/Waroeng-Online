@@ -6,19 +6,31 @@ import ConnectToDatabase from "@/lib/mongoose";
 export async function GET(req:NextRequest) {
 
     const { searchParams } = new URL(req.url);
-    const search = searchParams.get('search');
-
-    const page = searchParams.get('page')
-    console.log('yang ini query' , page)
-
+    const searchQuery = searchParams.get('search');
+    const categoriesQuery = searchParams.get('category')?.split(",");
+    
+    
     try {
         await ConnectToDatabase()
-        const products = await Product.find()
-        if(search) {
-            const filteredData = products.filter(el => el.name
-            .toLowerCase().includes(search.toLowerCase()))
-            return NextResponse.json(filteredData)
+
+        const filters = []
+
+        if(searchQuery) {
+            filters.push({
+                $or : [
+                    { name : { $regex : searchQuery, $options : "i" } },
+                    { description : { $regex : searchQuery, $options : "i" } },
+                ]
+            })
         }
+
+        if(categoriesQuery?.length) {
+            filters.push({ category : { $in : categoriesQuery } })
+        }
+
+        const query = filters.length ? { $and : filters } : {}
+        const products = await Product.find(query)
+        console.log({filters, query})
         return NextResponse.json(products)
 
     } catch (error) {

@@ -5,10 +5,7 @@ const SECRET_KEY = new TextEncoder().encode(process.env.JWT_SECRET);
 
 async function verfiyToken(token : string) {
     try {
-        console.log(SECRET_KEY)
-        console.log('verify token dulu')
         if (!SECRET_KEY) throw new Error('JWT_SECRET is not defined in .env file');
-
         const { payload } = await jwtVerify(token, SECRET_KEY)
         return payload
 
@@ -44,5 +41,5 @@ export async function middleware(req:NextRequest) {
 }
 
 export const config = {
-    matcher: ['/', '/products', '/about', '/profile']
+    matcher: ["/" ,'/products', '/about', '/profile/:path*']
 }

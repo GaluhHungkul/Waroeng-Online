@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import useProducts from '@/app/zustand/useProducts';
+import { useState } from "react";
+import useProducts from "@/zustand/useProducts";
 
 interface OptionType {
   value: string;
@@ -9,10 +9,10 @@ interface OptionType {
 }
 
 const options: OptionType[] = [
-  { value: 'hargaTertinggi', label: 'Dari harga tertinggi' },
-  { value: 'hargaTerrendah', label: 'Dari harga terendah' },
-  { value: 'ratingTertinggi', label: 'Dari rating tertinggi' },
-  { value: 'ratingTerrendah', label: 'Dari rating terendah' },
+  { value: "hargaTertinggi", label: "Dari harga tertinggi" },
+  { value: "hargaTerrendah", label: "Dari harga terendah" },
+  { value: "ratingTertinggi", label: "Dari rating tertinggi" },
+  { value: "ratingTerrendah", label: "Dari rating terendah" },
 ];
 
 const Sorting: React.FC = () => {
@@ -21,23 +21,23 @@ const Sorting: React.FC = () => {
 
   const handleSorting = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
-    const selectedOption = options.find(option => option.value === value);
+    const selectedOption = options.find((option) => option.value === value);
 
     if (!selectedOption) return;
 
     const sortedProducts = [...products];
 
     switch (selectedOption.value) {
-      case 'hargaTertinggi':
+      case "hargaTertinggi":
         setProducts(sortedProducts.sort((a, b) => b.price - a.price));
         break;
-      case 'hargaTerrendah':
+      case "hargaTerrendah":
         setProducts(sortedProducts.sort((a, b) => a.price - b.price));
         break;
-      case 'ratingTertinggi':
+      case "ratingTertinggi":
         setProducts(sortedProducts.sort((a, b) => b.rate.value - a.rate.value));
         break;
-      case 'ratingTerrendah':
+      case "ratingTerrendah":
         setProducts(sortedProducts.sort((a, b) => a.rate.value - b.rate.value));
         break;
     }
@@ -48,10 +48,12 @@ const Sorting: React.FC = () => {
   return (
     <select
       onChange={handleSorting}
-      value={userSorting?.value || ''}
+      value={userSorting?.value || ""}
       className="rounded px-1 py-1 text-gray-400 font-semibold text-[12px] lg:text-base"
     >
-      <option value="" disabled>Urutkan</option>
+      <option value="" disabled>
+        Urutkan
+      </option>
       {options.map((item, index) => (
         <option key={index} value={item.value}>
           {item.label}

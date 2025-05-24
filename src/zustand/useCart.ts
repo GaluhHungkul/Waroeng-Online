@@ -8,7 +8,6 @@ interface TypeUseCart {
     cart : ProductInCart[];
     addToCart : (value:Products) => void ;
     deleteFromCart : (value:Products) => void ;
-    deleteAllcart : () => void ;
 }
 
 const useCart = create<TypeUseCart>((set) => ({
@@ -46,8 +45,7 @@ const useCart = create<TypeUseCart>((set) => ({
         const final = state.cart.map((product) => product._id == value._id ? { ...product, qty : product.qty - 1, totalPrice : product.price * ( product.qty - 1 ) } : product)
         localStorage.setItem('cart', JSON.stringify(final) )
         return { cart : final }
-    }),
-    deleteAllcart : () => set(() => ({ cart : [] }))
+    })
 }))
 
 export default useCart

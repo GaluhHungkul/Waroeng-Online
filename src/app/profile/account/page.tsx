@@ -18,7 +18,7 @@ const AccountPage = () => {
 
   const [loading, setLoading] = useState<boolean>(false);
 
-  const { push } = useRouter();
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -46,7 +46,7 @@ const AccountPage = () => {
       });
       const response = await result.json();
       console.log(response);
-      if(result.ok) window.location.reload();   
+      if(result.ok) router.refresh()
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -56,7 +56,7 @@ const AccountPage = () => {
 
   const handleLogOut = async () => {
     const response = await fetch("/api/logout", { method: "POST" });
-    if (response.ok) push("/login");
+    if (response.ok) router.push("/login");
   }
 
   useEffect(() => {

@@ -7,10 +7,4 @@ const store = configureStore({
     }
 })
 
-console.log('INITIAL STORE => ' , store.getState())
-
-store.subscribe(() => {
-    console.log('TERJADI PERUBAHAN PADA STORE => ' , store.getState())
-})
-
 export default store
