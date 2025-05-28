@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { TypeUser } from '@/types/user'
-import CurrencyFormatter from '@/app/Components/CurrencyFormatter'
+import CurrencyFormatter from '@/components/CurrencyFormatter'
 import Link from 'next/link'
 
 const HistoryShoppingPage:React.FC = () => {

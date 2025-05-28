@@ -1,8 +1,11 @@
-export default function Home() {
-    
+import Banner from "@/components/dashboard/Banner";
+
+export default function Home() {    
+
+
  return (
-  <div className="bg-gray-800 min-h-screen h-max  bg-opacity-50 ">
-    Hello Admin
+  <div className="min-h-screen h-max backdrop-blur-md">
+    <Banner />
   </div>
  )
 }

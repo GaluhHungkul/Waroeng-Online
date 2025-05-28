@@ -29,8 +29,8 @@ export async function middleware(req:NextRequest) {
             console.log("Invalid token, redirecting to /login");
             return NextResponse.redirect(new URL('/login', req.url));
           }
-
-        console.log('decoded : ' , decoded)
+        
+        
 
         return NextResponse.next()
 

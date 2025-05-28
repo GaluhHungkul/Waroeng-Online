@@ -6,19 +6,20 @@ import Link from "next/link";
 import CurrencyFormatter from "../CurrencyFormatter";
 
 const ListProducts = (props: { products: Products[] }) => {
+  
   const { addToCart } = useCart();
 
   return (
     <div className="relative z-10 flex-1 overflow-auto">
       <ul className="grid grid-cols-2 gap-5  justify-items-center mx-auto mt-10 w-4/5 lg:grid-cols-4">
-        {props.products.map((product: Products) => (
+        {props?.products?.map((product: Products) => (
           <div
             key={product._id}
             className="my-5 relative lg:w-52 pb-10 lg:pb-10 flex flex-col items-center min-h-96 bg-gray-800"
           >
             <Image
-              src={product.img}
-              alt={product.name}
+              src={product?.img}
+              alt={product?.name}
               className="w-full"
               width={150}
               height={150}
@@ -30,7 +31,7 @@ const ListProducts = (props: { products: Products[] }) => {
               </Link>
               <CurrencyFormatter amount={product.price} />
               <li>
-                {product?.rate.value} ⭐ | {product.rate.count} reviews
+                {product?.rate?.value} ⭐ | {product?.rate?.count} reviews
               </li>
               <li>Stock : {product?.stock}</li>
             </ul>

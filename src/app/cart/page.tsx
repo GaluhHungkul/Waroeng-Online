@@ -3,7 +3,7 @@
 import Image from "next/image";
 import useCart from "../../zustand/useCart";
 import { useEffect, useState } from "react";
-import CurrencyFormatter from "../Components/CurrencyFormatter";
+import CurrencyFormatter from "@/components/CurrencyFormatter";
 import useProducts from "../../zustand/useProducts";
 
 const CartPage = () => {

@@ -2,42 +2,46 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import { ShoppingCart, Menu } from "lucide-react";
 
 import { TypeUser } from "@/types/user";
-import useCart from "../../zustand/useCart";
+import useCart from "@/zustand/useCart";
+import SearchProducts from "./SearchProducts";
 
 const Navbar = () => {
+
   const { cart } = useCart();
 
   const disableNavbar = ["/login","/register"]
-
+  
+  const router = useRouter()
+  
   const pathname = usePathname();
-
-  const qtyEachProduct = cart.map((product) => product.qty);
+  
+  const qtyEachProduct = cart.length ?  cart.map((product) => product.qty) : []
   const totalQtyCart = qtyEachProduct.length
     ? qtyEachProduct.reduce((a, b) => a + b)
     : 0;
 
   const [showNavScroll, setShowNavScroll] = useState(false);
   const [userProfile, setUserProfile] = useState<TypeUser | null>(null);
-
+  
   useEffect(() => {
     setShowNavScroll(false);
   }, [pathname]);
-
+  
   useEffect(() => {
     const fetchUser = async () => {
       const res = await fetch("/api/user");
+      if(res.status == 404) return router.push("/login")
       const result = await res.json();
       setUserProfile(result.currUser);
-      console.log(result);
     };
     fetchUser();
-  }, []);
-
+  }, [router]);
+  
   if(disableNavbar.includes(pathname)) return null
 
   return (
@@ -45,6 +49,8 @@ const Navbar = () => {
       <Link href="/" className="text-white font-bold text-xl lg:text-2xl">
         Waroeng
       </Link>
+
+      <SearchProducts />
 
       <ul
         className={`left-0 fixed z-[9] border-b lg:border-none h-20 bg-gray-700 w-full gap-4 flex flex-col  duration-300 ${

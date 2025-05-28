@@ -30,7 +30,6 @@ export async function GET(req:NextRequest) {
 
         const query = filters.length ? { $and : filters } : {}
         const products = await Product.find(query)
-        console.log({filters, query})
         return NextResponse.json(products)
 
     } catch (error) {

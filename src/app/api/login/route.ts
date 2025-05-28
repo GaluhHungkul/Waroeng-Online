@@ -11,17 +11,17 @@ export async function POST(req:NextRequest) {
 
     
     try {
-        
         await ConnectToDatabase()
+
         const  { username, password } = await req.json()
         
         const user = await User.findOne({ username })
         
-        if(!user) return NextResponse.json({ message : 'There is no account with username  ' + username} , {  status: 404 } ) 
+        if(!user) return NextResponse.json({ message : 'Tidak ada akun dengan username ' + username} , {  status: 404 } ) 
 
         const comparedPassword = await bcrypt.compare(password, user.password)
         
-        if(!comparedPassword) return NextResponse.json({message : 'Wrong password'}, {  status: 401  })
+        if(!comparedPassword) return NextResponse.json({message : 'Password salah'}, {  status: 401  })
         
         const payLoad:MyJwtPayload = {
             id : user._id,
@@ -35,9 +35,9 @@ export async function POST(req:NextRequest) {
         const response = NextResponse.json({ message : 'Login success' }, {  status: 200 } )
         
         response.cookies.set('token', token, {
-            httpOnly: true, // Tidak dapat diakses oleh JavaScript
-            secure: process.env.NODE_ENV === 'production', // Hanya aktif di HTTPS di production
-            maxAge: 60 * 60 * 24, // 1 hari
+            httpOnly: true, 
+            secure: process.env.NODE_ENV === 'production', 
+            maxAge: 60 * 60 * 24, 
             path: '/',
         })
         

@@ -1,27 +1,44 @@
 "use client";
 
+import Input from "@/components/tags/Input";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { z } from "zod";
+
+const registerSchema = z
+  .object({
+  username : z.string().min(8),
+  password : z.string().min(8),
+  confirmPassword : z.string().min(8)
+})
+  .refine((data) => data.password === data.confirmPassword, {
+    message : "Password tidak cocok",
+    path : ["confirmPassword"]
+  })
+
+type RegisterSchema = z.infer<typeof registerSchema>
 
 const RegisterPage = () => {
+
   const router = useRouter();
 
-  const [verifyPassword, setVerifyPassword] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [errorMEssage, setErrorMessage] = useState<string>("");
+  const { register, handleSubmit, formState : { errors }, reset } = useForm({
+    resolver : zodResolver(registerSchema)
+  })
+
+  const [loading, setLoading] = useState<boolean>(false)
 
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-   
+  const myHandleSubmit = async ({username, password}:RegisterSchema) => {   
     setLoading(true);
-
+    const loadingToast = toast.loading("Memproses informasi user...")
     try {
-      const result = await fetch("/api/register", {
+
+      const res = await fetch("/api/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -31,14 +48,20 @@ const RegisterPage = () => {
           password,
         }),
       });
-      const response = await result.json();
-      setLoading(false);
-      if (response.ok) return router.push("/login");
-      setErrorMessage(response.message);
-      } catch (error) {
-        setLoading(false);
-        console.log("error : " + error);
+      if (res.ok) {
+        reset()
+        toast.dismiss(loadingToast)
+        return router.push("/login");
       }
+      const { message } = await res.json();
+      toast.error(message)
+      
+    } catch (error) {
+      toast.error("Terjadi kesalahan")
+      console.log("error : " + error);
+    }
+    setLoading(false);
+    toast.dismiss(loadingToast)
   };
 
   return (
@@ -50,88 +73,25 @@ const RegisterPage = () => {
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full  w-80 mx-auto sm:max-w-sm">
-        <form className="space-y-6" method="POST" onSubmit={handleSubmit}>
-          <div>
-            <label
-              htmlFor="username"
-              className="block text-sm/6 font-medium text-gray-900"
-            >
-              Username address
-            </label>
-            <div className="mt-2">
-              <input
-                type="text"
-                onChange={(e) => setUsername(e.target.value)}
-                name="username"
-                id="username"
-                placeholder="Username"
-                autoComplete="username"
-                required
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-              />
-              {!!username.length &&(username.trim().length < 8) && (
-              <span className="text-red-500 text-sm text-opacity-80">
-                Username must be at least 8 characters
-              </span>
-            )}
-            </div>
+        <form className="space-y-6" method="POST" onSubmit={handleSubmit(myHandleSubmit)}>
+          <div className='lg:pb-2'>
+            <Input {...register("username")} label='Username' type="text" name="username" id="username" required  />
+            <p className='text-red-500 lg:text-sm lg:pt-2 '>{errors.username?.message}</p>
           </div>
-
-          <div>
-            <div className="mt-2">
-              <input
-                type="password"
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
-                name="password"
-                id="password"
-                autoComplete="current-password"
-                required
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-              />
-              {!!password.length &&(password.trim().length < 8) && (
-                <span className="text-red-500 text-sm text-opacity-80">
-                  Password must be at least 8 characters
-                </span>
-              )}
-            </div>
+          <div className='lg:pb-2'>        
+            <Input {...register("password")} label='Password' type="password" name="password" id="password" required  />  
+            <p className='text-red-500 lg:text-sm lg:pt-2 '>{errors.password?.message}</p>   
           </div>
-
-          <div>
-            <div className="mt-2">
-              <input
-                type="password"
-                onChange={(e) => setVerifyPassword(e.target.value)}
-                placeholder="Verify your password"
-                name="vpassword"
-                id="vpassword"
-                autoComplete="current-password"
-                required
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-              />
-              {!!verifyPassword.length && password !== verifyPassword && (
-                <span className="text-red-500 text-sm text-opacity-80">
-                  Password must be the same
-                </span>
-              )}
-            </div>
+          <div className='lg:pb-2'>        
+            <Input {...register("confirmPassword")} label='Confirm Password' type="password" name="confirmPassword" id="confirmPassword" required  />  
+            <p className='text-red-500 lg:text-sm lg:pt-2 '>{errors.confirmPassword?.message}</p>   
           </div>
-
-          <div>
-            <p className="text-red-500 my-2 text-opacity-80 text-center">{errorMEssage}</p>
-            <button
-              type="submit"
-              disabled={password !== verifyPassword || loading || username.trim() == "" || password.trim() == "" || username.length < 8 || password.length < 8}
-              className="flex h-[37px] relative w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:bg-blue-900 "
-            >
-              
-              {loading ? (
-                <div className="size-5   absolute border-4 border-white border-t-transparent rounded-full animate-spin"></div>
-              ) : (
-                "Sign in"
-              )}
-            </button>
-          </div>
+          <button type="submit" disabled={loading} className="flex h-[37px] relative w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:bg-blue-900 ">
+            {loading ? (
+              <div className="size-5   absolute border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+            ) : (
+              "Sign in"
+              )} </button>
         </form>
         <p className="mt-10 text-center text-sm/6 text-gray-500">
             Already have an account?

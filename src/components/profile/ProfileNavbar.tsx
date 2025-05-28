@@ -4,7 +4,7 @@ import Link from "next/link"
 import { User, Menu, ShoppingBag } from "lucide-react"
 import { useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
-import { useParams, usePathname } from "next/navigation"
+import { usePathname } from "next/navigation"
 
 
 

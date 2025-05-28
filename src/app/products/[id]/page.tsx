@@ -4,7 +4,7 @@ import { useParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { Products } from '@/types/products'
 import Image from 'next/image'
-import CurrencyFormatter from '@/app/Components/CurrencyFormatter'
+import CurrencyFormatter from '@/components/CurrencyFormatter'
 
 const DetailProductPage = () => {
 

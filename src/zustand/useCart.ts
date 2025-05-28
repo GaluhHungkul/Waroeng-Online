@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware"
 import { Products } from "@/types/products";
 import { ProductInCart } from "@/types/cart";
 import useProducts from './useProducts'
@@ -10,42 +11,32 @@ interface TypeUseCart {
     deleteFromCart : (value:Products) => void ;
 }
 
-const useCart = create<TypeUseCart>((set) => ({
-    cart: (() => {
-        try {
-          return JSON.parse(localStorage.getItem('cart')!) || [];
-        } catch (error) {
-          console.error("Error parsing cart data:", error);
-          return [];
-        }
-      })(),      
-    addToCart : (value:Products) => set((state) => {
+const useCart = create<TypeUseCart>()(persist((set, get) => ({
+    cart: [],      
+    addToCart : (value) => {
+        const { cart } = get()
         const { minStock } = useProducts.getState()
-        const isExist = state.cart.find((product) => product._id == value._id)
+        const isExist = cart.find((product) => product._id === value._id)
         minStock(value._id)
+        let final:ProductInCart[]
         if(isExist) {
-            const final = state.cart.map((product) => product._id == value._id ? { ...product, qty : product.qty + 1, totalPrice : (product.qty + 1) * product.price } : product)
-            if(!state.cart.length) localStorage.removeItem('cart')
-            else localStorage.setItem('cart', JSON.stringify(final) )
-            return { cart : final }
+            final = cart.map((product) => product._id === value._id ? { ...product, qty : product.qty + 1, totalPrice : (product.qty + 1) * product.price } : product)
         } else {
-            const final = [...state.cart, { ...value, qty : 1, totalPrice : value.price }]
-            if(!state.cart.length) localStorage.removeItem('cart')
-            else localStorage.setItem('cart', JSON.stringify(final) )
-            return { cart : final }
+            final = [...cart, { ...value, qty : 1, totalPrice : value.price }]
         }
-    }),
+        set(() => ({ cart : final }))
+    },
     deleteFromCart : (value) => set((state) => {
-        const productInCart = state.cart.find((el) => el._id == value._id)
-        if(productInCart?.qty == 1) {
+        const productInCart = state.cart.find((el) => el._id === value._id)
+        if(productInCart?.qty === 1) {
             const final = state.cart.filter((product) => product._id !== value._id)
-            localStorage.setItem('cart', JSON.stringify(final) )
             return { cart : final }
         }
-        const final = state.cart.map((product) => product._id == value._id ? { ...product, qty : product.qty - 1, totalPrice : product.price * ( product.qty - 1 ) } : product)
-        localStorage.setItem('cart', JSON.stringify(final) )
+        const final = state.cart.map((product) => product._id === value._id ? { ...product, qty : product.qty - 1, totalPrice : product.price * ( product.qty - 1 ) } : product)
         return { cart : final }
     })
+}), {
+    name : "cart-storage"
 }))
 
 export default useCart

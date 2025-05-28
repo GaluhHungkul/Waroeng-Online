@@ -1,5 +1,5 @@
 import React from 'react'
-import ProfileNavbar from '../Components/profile/ProfileNavbar'
+import ProfileNavbar from '@/components/profile/ProfileNavbar'
 
 const ProfileLlayout = ({ children } : { children : React.ReactNode} ) => {
   return (

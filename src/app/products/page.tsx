@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-import ListProducts from "../Components/products/ListProducts";
-import Navigasi from "../Components/products/Navigasi";
+import ListProducts from "@/components/products/ListProducts";
+import Navigasi from "@/components/products/Navigasi";
 import useCategory from "../../zustand/useCategory";
 import useProducts from "../../zustand/useProducts";
 
@@ -20,11 +20,9 @@ const ProductsPage: React.FC = () => {
         if(userCategory.length) {
           api += `?category=${encodeURIComponent(userCategory.join())}`
         }
-        console.log({api})
         const response = await fetch(api);
         if(!response.ok) throw new Error("Something went wrong!")
         const result = await response.json();
-        console.log({result})
         setProducts(result);
       } catch (error) {
         console.error({error})
