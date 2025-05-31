@@ -3,7 +3,7 @@ import { jwtVerify } from 'jose'
 
 const SECRET_KEY = new TextEncoder().encode(process.env.JWT_SECRET);
 
-async function verfiyToken(token : string) {
+async function verifyToken(token : string) {
     try {
         if (!SECRET_KEY) throw new Error('JWT_SECRET is not defined in .env file');
         const { payload } = await jwtVerify(token, SECRET_KEY)
@@ -11,27 +11,21 @@ async function verfiyToken(token : string) {
 
     } catch (error) {
         console.log(error)
-        return 
+        return null
     }
 }
 
 export async function middleware(req:NextRequest) {
 
     const token = req.cookies.get('token')?.value
-
     if(!token) return NextResponse.redirect(new URL('/login', req.url))
-
+        
     try {
-             
-        const decoded = await verfiyToken(token)
-
+        const decoded = await verifyToken(token)
         if (!decoded) {
             console.log("Invalid token, redirecting to /login");
             return NextResponse.redirect(new URL('/login', req.url));
-          }
-        
-        
-
+        }      
         return NextResponse.next()
 
     } catch (error) {

@@ -51,12 +51,9 @@ const LoginPage = () => {
       toast.error("Terjadi kesalahan ketika mengirim data")
       console.error('Error:', error);
     }
-    toast.dismiss(loadingToast)
-        
+    toast.dismiss(loadingToast)      
 
-  }
-
-   
+  }   
 
   return (
 <div className="flex min-h-full  flex-col justify-center px-6 py-12 lg:px-8 backdrop-blur-sm">

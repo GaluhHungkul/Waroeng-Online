@@ -1,6 +1,11 @@
 import "./globals.css";
 import Navbar from "../components/Navbar";
 import { Toaster } from "react-hot-toast"
+import type { Metadata } from "next"; 
+
+export const metadata : Metadata = {
+  title : "Waroeng Online"
+}
 
 export default function RootLayout({
   children,
@@ -10,14 +15,10 @@ export default function RootLayout({
   
   return (
     <html lang="en">
-      <body className="overflow-x-hidden">
-        <div className="fixed inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-gray-900 via-gray-800 opacity-80" />
-          <div className="absolute inset-0 backdrop-blur-sm z-[-100]"/>
-        </div>
-          <Toaster position="top-right" reverseOrder={false}/>
-          <Navbar />
-          {children}
+      <body className="overflow-x-hidden bg-primary ">
+        <Toaster position="top-right" reverseOrder={false}/>
+        <Navbar />
+        {children}
       </body>
     </html>
   );

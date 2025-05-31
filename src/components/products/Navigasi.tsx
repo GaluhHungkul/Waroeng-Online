@@ -1,65 +1,57 @@
 import useCategory from "@/zustand/useCategory";
-import { FormEvent } from "react";
 import Sorting from "./Sorting";
-import useProducts from "@/zustand/useProducts";
+import { useRouter } from "next/navigation";
+import Input from "../tags/Input";
+import BackgroundAnimation from "../BackgroundAnimation";
 
 interface PropsNavigasi {
   categorys: string[];
+  params : URLSearchParams
 }
 
-const Navigasi = (props: PropsNavigasi) => {
-  const { setProducts } = useProducts();
+const Navigasi = ({categorys, params}: PropsNavigasi) => {
 
-  const { userCategory, setCategory } = useCategory();
+  const { userCategory } = useCategory();
+
+  const router = useRouter()
 
   const handleCategory = (value: string) => {
-    setCategory(value);
+    useCategory.getState().setCategory(value)
+    if(!useCategory.getState().userCategory.length) {
+      params.delete("category")
+      router.replace(`/products?${params.toString()}`)
+    } else {
+      params.set("category", useCategory.getState().userCategory.join())
+      router.replace(`/products?${params.toString()}`)
+    }
   };
 
-  const handleSearch = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); 
+  const handleSearch = async () => {
 
-    const productInput = (e.target as HTMLFormElement).elements.namedItem(
-      "product"
-    ) as HTMLInputElement;
-
-    if (productInput) {
-      const productValue = productInput.value; 
-
-      const res = await fetch(
-        `/api/products?search=${encodeURIComponent(productValue)}`
-      );
-      const data = await res.json();
-      setProducts(data);
-    } 
-  };
+  }
 
   return (
-    <div className="text-white h-28 justify-center flex flex-col gap-2  bg-gray-700  backdrop-blur-sm">
-      <div className="flex justify-between items-center px-2 lg:px-10">
-        <form
-          className=" flex items-center gap-2 text-sm"
-          onSubmit={handleSearch}
-        >
-          <input
-            id="product"
-            type="text"
-            placeholder="Cari Product..."
-            className="px-2 text-black w-40 py-1 rounded"
+    <div className="text-white lg:flex-1  sticky lg:top-28 lg:min-h-40 lg:max-h-[80vh] rounded-xl bg-secondary flex flex-col items-center lg:gap-10 lg:pt-10  ">
+      <BackgroundAnimation />
+      <form className=" flex items-center gap-2 text-sm w-4/5"  onSubmit={handleSearch}>
+        <Input
+          label="Cari Product"
+          id="product"
+          type="text"
           />
-          <button className="bg-gray-800 px-2 py-1 rounded hover:bg-gray-900">
-            Cari!
-          </button>
-        </form>
-        <Sorting />
-      </div>
-      <div className="flex items-center justify-center gap-1 w-full">
-        {props.categorys.map((el, index) => (
+        <button className="bg-primary text-secondary h-full font-bold px-6 py-3 rounded hover:bg-primary/50 active:bg-primary/30">
+          Cari!
+        </button>
+      </form>
+
+      <Sorting />
+      <div className="flex flex-wrap lg:gap-4 w-[83%] mx-auto">
+        {categorys.map((el, index) => (
           <button
             onClick={() => handleCategory(el)}
             className={`${
-              userCategory.includes(el) ? "bg-gray-600" : "bg-gray-800"
-            } text-[7px] px-2 py-3 rounded-full hover:bg-gray-600 active:bg-gray-500 lg:text-[15px] `}
+              userCategory.includes(el) ? "bg-secondary text-primary  border-primary" : "bg-primary text-secondary "
+            } text-[7px] px-2 py-3 rounded-full hover:bg-primary/80 border-2 active:bg-primary/60 lg:text-[15px] `}
             key={index}
           >
             {el}

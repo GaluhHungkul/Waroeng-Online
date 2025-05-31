@@ -1,11 +1,26 @@
 import Banner from "@/components/dashboard/Banner";
+import ListProducts from "@/components/products/ListProducts";
 
-export default function Home() {    
+const getProducts = async () => {
+  try {
+    const res = await fetch(`${process.env.NEXT_BASE_API_URL}/products?random=true`)
+    return await res.json()
+    
+  } catch (error) {
+    console.log("Error : ", error)
+    return []
+  }
+}
 
+export default async function Home() {    
+
+  const { products } = await getProducts()
 
  return (
-  <div className="min-h-screen h-max backdrop-blur-md">
+  <div className="min-h-screen h-max backdrop-blur-md ">
     <Banner />
+    <h1 className="lg:mt-10 lg:mx-14 lg:text-2xl font-bold text-secondary   ">Rekomendasi Product</h1>
+    <ListProducts products={products}/>
   </div>
  )
 }

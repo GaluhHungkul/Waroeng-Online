@@ -24,7 +24,10 @@ const userSchema = new mongoose.Schema({
         type : String,
         required : true
     },
-    historyShopping: { type: [HistorySchema], default: [] },
+    historyShopping: { 
+        type: [HistorySchema], 
+        default: []    
+    },
 })
 
 const User = mongoose.models.User || mongoose.model('User', userSchema)

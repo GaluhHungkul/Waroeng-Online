@@ -15,7 +15,7 @@ const options: OptionType[] = [
   { value: "ratingTerrendah", label: "Dari rating terendah" },
 ];
 
-const Sorting: React.FC = () => {
+const Sorting = () => {
   const { products, setProducts } = useProducts();
   const [userSorting, setUserSorting] = useState<OptionType | null>(null);
 
@@ -49,7 +49,7 @@ const Sorting: React.FC = () => {
     <select
       onChange={handleSorting}
       value={userSorting?.value || ""}
-      className="rounded px-1 py-1 text-gray-400 font-semibold text-[12px] lg:text-base"
+      className="rounded px-1 py-1 text-gray-400 font-semibold text-[12px] lg:text-base w-4/5 "
     >
       <option value="" disabled>
         Urutkan

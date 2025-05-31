@@ -11,6 +11,21 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        primary : "#fff",
+        secondary : "#000"
+      },
+       backgroundSize: {
+        '200': '200% 200%',
+      },
+      keyframes: {
+        'gradient-move': {
+          '0%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+          '100%': { backgroundPosition: '0% 50%' },
+        },
+      },
+      animation: {
+        'gradient-move': 'gradient-move 8s ease infinite',
       },
     },
   },

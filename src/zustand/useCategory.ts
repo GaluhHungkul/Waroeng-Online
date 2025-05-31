@@ -5,16 +5,15 @@ interface CategoryStore {
     setCategory : (value:string) => void
 }
 
-const useCategory = create<CategoryStore>((set) => ({
+const useCategory = create<CategoryStore>()((set, get) => ({
     userCategory : [],
-    setCategory : (value:string) => set((state) => {
-        if(!state.userCategory.includes(value)) {
-            return { userCategory : [...state.userCategory, value] }
-        } else {
-            return { userCategory : state.userCategory.filter(el => el != value) }
-        }
-    })
-}))
+    setCategory : (value:string) => {
+        const { userCategory } = get()
+        if(userCategory.includes(value)) set((state) => ({ userCategory : state.userCategory.filter(item => item !== value) }))
+        else set((state) => ({ userCategory : [...state.userCategory, value] }))
+    }
+}) ) 
+
 
 
 export default useCategory

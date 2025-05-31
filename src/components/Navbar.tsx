@@ -8,7 +8,7 @@ import { ShoppingCart, Menu } from "lucide-react";
 
 import { TypeUser } from "@/types/user";
 import useCart from "@/zustand/useCart";
-import SearchProducts from "./SearchProducts";
+import BackgroundAnimation from "./BackgroundAnimation";
 
 const Navbar = () => {
 
@@ -45,13 +45,12 @@ const Navbar = () => {
   if(disableNavbar.includes(pathname)) return null
 
   return (
-    <div className="flex backdrop justify-between sticky top-0 z-[999]  items-center px-5 h-20 lg:px-10 bg-gray-800 border border-r border-gray-700 backdrop-blur-sm">
+    <div className="flex backdrop justify-between sticky lg:mt-5 top-2 z-[999] bg-secondary items-center px-5 h-20 lg:px-10 backdrop-blur-md rounded-full lg:w-[90vw] mx-auto overflow-hidden">
+      <BackgroundAnimation />
       <Link href="/" className="text-white font-bold text-xl lg:text-2xl">
         Waroeng
       </Link>
-
-      <SearchProducts />
-
+      {/* <SearchProducts /> */}
       <ul
         className={`left-0 fixed z-[9] border-b lg:border-none h-20 bg-gray-700 w-full gap-4 flex flex-col  duration-300 ${
           showNavScroll ? "top-0" : "-translate-y-full"
