@@ -15,7 +15,7 @@ export default function RootLayout({
   
   return (
     <html lang="en">
-      <body className="overflow-x-hidden bg-primary ">
+      <body className="overflow-x-hidden bg-white">
         <Toaster position="top-right" reverseOrder={false}/>
         <Navbar />
         {children}

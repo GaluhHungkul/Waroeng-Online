@@ -1,26 +1,30 @@
 import Banner from "@/components/dashboard/Banner";
-import ListProducts from "@/components/products/ListProducts";
+import ListProducts from "@/components/common/ListProducts";
+import SearchProducts from "@/components/SearchProducts";
 
 const getProducts = async () => {
   try {
-    const res = await fetch(`${process.env.NEXT_BASE_API_URL}/products?random=true`)
-    return await res.json()
-    
+    const res = await fetch(
+      `${process.env.NEXT_BASE_API_URL}/products?random=true`
+    );
+    return await res.json();
   } catch (error) {
-    console.log("Error : ", error)
-    return []
+    console.log("Error : ", error);
+    return [];
   }
-}
+};
 
-export default async function Home() {    
+export default async function Home() {
+  const { products } = await getProducts();
 
-  const { products } = await getProducts()
-
- return (
-  <div className="min-h-screen h-max backdrop-blur-md ">
-    <Banner />
-    <h1 className="lg:mt-10 lg:mx-14 lg:text-2xl font-bold text-secondary   ">Rekomendasi Product</h1>
-    <ListProducts products={products}/>
-  </div>
- )
+  return (
+    <div className="min-h-screen h-max backdrop-blur-md lg:mx-16 ">
+      <SearchProducts />
+      <Banner />
+      <h1 className="lg:mt-10  lg:text-2xl font-bold text-black lg:mb-4">
+        Rekomendasi Product
+      </h1>
+      <ListProducts products={products} />
+    </div>
+  );
 }

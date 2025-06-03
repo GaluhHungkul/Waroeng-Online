@@ -1,14 +1,10 @@
 export default function BackgroundAnimation() {
   return (
-    <div className="absolute w-full h-full  flex items-center justify-center bg-black z-[-1]">
-      {/* Background gradient animasi */}
-      <div
-  className="absolute inset-0 animate-gradient-move bg-[length:200%_200%] blur-[60px] opacity-30 z-0"
-  style={{
-    backgroundImage: 'linear-gradient(45deg, #12d, #fff08f, #4f0000)',
-    backgroundPosition: '0% 50%',
-  }}
-></div>
+    <div className="absolute inset-0 bg-black z-[-1] bg-opacity-90">
+      <div className="absolute inset-0 animate-gradient-move bg-[length:100%_100%] blur-[60px] opacity-30 z-0"
+        style={{
+        backgroundImage: 'linear-gradient(210deg,#000000, #fff, #000)',
+        backgroundPosition: '0% 50%'}}></div>
     </div>
   );
 }

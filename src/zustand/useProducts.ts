@@ -11,9 +11,11 @@ interface IuseProducts {
 const useProducts = create<IuseProducts>((set) => ({
     products : [],
     setProducts : (value) => set({ products : value }),
-    minStock : (value) => set((state) => ({ products : state.products.map(a => (
-        a._id == value ? { ...a, stock : a.stock - 1 } : a
+    minStock : (value) => {
+        set((state) => ({ products : state.products.map(a => (
+        a._id === value ? { ...a, stock : a.stock - 1 } : a
     )) }))
+    }
 }))
 
 export default useProducts

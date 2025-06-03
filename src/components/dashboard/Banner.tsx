@@ -12,8 +12,8 @@ const bannerImg:string[] = ["/assets/img/banner1.jpg","/assets/img/banner2.jpg",
 const Banner = () => {   
 
   return (
-    <div className="lg:w-[90vw] lg:mt-10 mx-auto  rounded relative">
-      <button id="prev" className="absolute lg:-left-10 z-[1000] bg-white  top-1/2 -translate-y-1/2 lg:p-1 rounded-full hover:bg-gray-200 active:bg-gray-400"><ArrowLeft color="black" /></button>
+    <div className="lg:w-[90vw] lg:mt-10 mx-auto  rounded relative border-4 border-black">
+      <button id="prev" className="absolute lg:-left-10 z-[1000] bg-black text-white  top-1/2 -translate-y-1/2 lg:p-1 rounded-full hover:bg-black/70 active:bg-black/50"><ArrowLeft  /></button>
       <Swiper
       modules={[Navigation, Autoplay, Pagination]}
       spaceBetween={100}
@@ -34,7 +34,7 @@ const Banner = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-        <button id="next" className="absolute lg:-right-10 z-10 bg-white  top-1/2 -translate-y-1/2 lg:p-1 rounded-full hover:bg-gray-200 active:bg-gray-400"><ArrowRight color="black" /></button>
+        <button id="next" className="absolute lg:-right-10 z-10 bg-black text-white  top-1/2 -translate-y-1/2 lg:p-1 rounded-full hover:bg-black/70 active:bg-black/50"><ArrowRight  /></button>
     </div>
   )
 }

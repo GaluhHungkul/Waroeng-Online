@@ -35,7 +35,7 @@ const RegisterPage = () => {
 
   const myHandleSubmit = async ({username, password}:RegisterSchema) => {   
     setLoading(true);
-    const loadingToast = toast.loading("Memproses informasi user...")
+    const loadingToast = toast.loading("Memproses informasi login...")
     try {
 
       const res = await fetch("/api/register", {
@@ -51,10 +51,13 @@ const RegisterPage = () => {
       if (res.ok) {
         reset()
         toast.dismiss(loadingToast)
-        return router.push("/login");
+        toast.success("Berhasil login")
+        toast.loading("Redirecting...")
+        router.push("/login");
+      } else {
+        const { message } = await res.json();
+        toast.error(message)
       }
-      const { message } = await res.json();
-      toast.error(message)
       
     } catch (error) {
       toast.error("Terjadi kesalahan")
@@ -65,13 +68,12 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 backdrop-blur-sm">
-      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-white">
-          Create your account
-        </h2>
-      </div>
-
+    <div style={{ backgroundImage : "url(/assets/img/bg.jpg)" }} className="lg:pt-10 min-h-screen bg-cover bg-center relative">
+      <div className="absolute inset-0 backdrop-blur-md"/>
+      <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 backdrop-blur-sm lg:w-1/3 mx-auto bg-gray-200/70 rounded-xl">
+      <h2 className="mt-10 text-center text-2xl/9 font-bold  text-black">
+        Create your account
+      </h2>
       <div className="mt-10 sm:mx-auto sm:w-full  w-80 mx-auto sm:max-w-sm">
         <form className="space-y-6" method="POST" onSubmit={handleSubmit(myHandleSubmit)}>
           <div className='lg:pb-2'>
@@ -98,6 +100,8 @@ const RegisterPage = () => {
           <Link href='/login' className="font-semibold text-indigo-600 hover:text-indigo-500"> Click here!</Link>      
         </p>
       </div>
+      </div>
+      {/* <BackgroundAnimation /> */}
     </div>
   );
 };

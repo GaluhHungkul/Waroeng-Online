@@ -31,10 +31,11 @@ const Pagination : FC<Props> = ({ page, setPage, maxPage, params }) => {
     }
     
   return (
-    <div className="lg:w-max h-10 lg:mt-20 mx-auto flex items-center justify-center lg:gap-4">
-        <button onClick={() => handlePagination("prev")} className="border rounded-full bg-secondary hover:bg-secondary/70 active:bg-secondary/50  "><ChevronLeft /></button>
-        <span className="lg:text-xl text-secondary">{page}</span>
-        <button onClick={() => handlePagination("next")} className="border rounded-full bg-secondary hover:bg-secondary/70 active:bg-secondary/50  "><ChevronRight /></button>
+    <div className="lg:w-max h-10 absolute bottom-20 lg:right-96  lg:mt-20 mx-auto flex items-center justify-center lg:gap-4 lg:text-3xl">
+        <button disabled={page === 1} onClick={() => handlePagination("prev")} className="border rounded-full bg-black text-white hover:bg-black/70 active:bg-black/50 disabled:bg-black/50"><ChevronLeft size={30} /></button>
+        <span className="text-black font-bold">{page}</span>
+        <button disabled={page === maxPage} onClick={() => handlePagination("next")} className="border rounded-full bg-black text-white hover:bg-black/70 active:bg-black/50 disabled:bg-black/50"><ChevronRight size={30} /></button>
+        <p className="absolute lg:-bottom-10 w-max lg:text-lg">{page !== maxPage && `${page}...`}{maxPage}</p>
     </div>
   )
 }
