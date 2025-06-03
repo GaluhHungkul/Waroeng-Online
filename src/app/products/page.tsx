@@ -40,7 +40,6 @@ const ProductsPage = () => {
         setLoadingFetchData(true)
         if (currentCategory) {
           params.set("category", currentCategory);
-          console.log(currentCategory.split(","))
           setCategory(currentCategory.split(","))
         }
         if (pageQuery) params.set("page", page + "");

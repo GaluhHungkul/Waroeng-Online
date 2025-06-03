@@ -26,7 +26,7 @@ const Navbar = () => {
     ? qtyEachProduct.reduce((a, b) => a + b)
     : 0;
 
-  const [showNavScroll, setShowNavScroll] = useState(false);
+  const [showNavScroll, setShowNavScroll] = useState(true);
   const [loadingGetUser, setLoadingGetUser] = useState<boolean>(true)
   
   useEffect(() => {
@@ -48,29 +48,12 @@ const Navbar = () => {
   if(disableNavbar.includes(pathname)) return null
 
   return (
-    <nav 
-    className="flex justify-between bg-black/80 sticky top-2 z-[999] lg:w-[90vw] items-center px-5 h-20 lg:px-10 backdrop-blur-md rounded-full mx-auto overflow-hidden ">
-      <Link href="/" className="text-white font-bold text-xl lg:text-2xl">
+    <nav className="flex py-2  justify-between bg-black/80 sticky top-2 z-[999] lg:w-[90vw] items-center px-5 lg:h-20 lg:px-10 backdrop-blur-md rounded-full mx-auto ">
+      <Link href="/" className="text-white font-bold lg:text-2xl">
         Waroeng
       </Link>
       <SearchProducts />
-      <ul className={`left-0 fixed z-[9] border-b lg:border-none h-20 bg-gray-700 w-full gap-4 flex flex-col  duration-300 ${showNavScroll ? "top-0" : "-translate-y-full" } px-10 py-2 gap-2  lg:flex lg:items-center lg:text-lg lg:gap-10 lg:translate-y-1 lg:static lg:flex-row lg:w-max lg:bg-transparent`}>
-        <li>
-          <Link className="hover:text-gray-300 hover:border-b border-white  font-bold text-white active:text-gray-400 py-1" href="/products" >
-            Products
-          </Link>
-        </li>
-        {loadingGetUser ? <div className="size-10 border-r-2 border-l-2 animate-spin rounded-full"></div> :
-        <> {user?.username? <Link href={`/profile/account`}  className="size-10 cursor-pointer bg-white rounded-full fixed right-20 top-5 lg:static" ></Link> : (
-          <li>
-            <Link className="hover:text-gray-300 hover:border-b border-white  font-bold text-white active:text-gray-400 py-1 absolute right-20 top-5 lg:static" href="/login" >
-              Login
-            </Link>
-          </li>
-        )}
-        </>}
-      </ul>
-      <div className="absolute  right-20 lg:right-[400px]">
+      <div className="relative">
         {!!totalQtyCart && (
           <span className="absolute bg-green-500 py-[2px] px-2 text-sm -top-4 -right-4 rounded-full">
             {totalQtyCart}
@@ -80,6 +63,24 @@ const Navbar = () => {
           <ShoppingCart size={24} className="text-white hover:text-gray-400" />
         </Link>
       </div>
+      <ul className={`right-0 h-screen fixed z-[9] top-0  bg-black w-1/2 gap-4 flex flex-col  duration-300 ${showNavScroll ? "translate-x-0" : "translate-x-full" } px-10 py-2 gap-2  lg:flex lg:items-center lg:text-lg lg:gap-10 lg:translate-y-1 lg:static lg:flex-row lg:w-max lg:bg-transparent`}>
+        {loadingGetUser 
+        ? <div className="size-10 border-r-2 border-l-2 animate-spin rounded-full"></div> 
+        :
+        <> {user?.username? <Link href={`/profile/account`}  className="size-10 cursor-pointer bg-white rounded-full lg:static" ></Link> : (
+          <li>
+            <Link className="hover:text-gray-300 hover:border-b border-white  font-bold text-white active:text-gray-400 py-1 absolute right-20 top-5 lg:static" href="/login" >
+              Login
+            </Link>
+          </li>
+        )}
+        </>}
+        <li>
+          <Link className="hover:text-gray-300 hover:border-b border-white  font-bold text-white active:text-gray-400 py-1" href="/products" >
+            Products
+          </Link>
+        </li>
+      </ul>      
       <div className="relative z-10 lg:hidden flex items-center justify-center cursor-pointer flex-col size-max gap-1" onClick={() => setShowNavScroll((prev) => !prev)} >
         <Menu size={24} color="white" />
       </div>

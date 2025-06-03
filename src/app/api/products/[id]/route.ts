@@ -2,14 +2,10 @@ import ConnectToDatabase from "@/lib/ConnectToDatabase";
 import Product from "@/models/Product";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(req: NextRequest,{ params }: { params: { id: string } }) {
+  
   const { id } = params;
-
-  if (!id)
-    return NextResponse.json({ message: "Id not found" }, { status: 404 });
+  if (!id) return NextResponse.json({ message: "Id not found", id }, { status: 404 });
 
   try {
     await ConnectToDatabase();
