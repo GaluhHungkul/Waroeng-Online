@@ -1,6 +1,5 @@
 import Banner from "@/components/dashboard/Banner";
 import ListProducts from "@/components/common/ListProducts";
-import SearchProducts from "@/components/SearchProducts";
 
 const getProducts = async () => {
   try {
@@ -19,7 +18,6 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen h-max backdrop-blur-md lg:mx-16 ">
-      <SearchProducts />
       <Banner />
       <h1 className="lg:mt-10  lg:text-2xl font-bold text-black lg:mb-4">
         Rekomendasi Product
