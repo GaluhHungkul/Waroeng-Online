@@ -32,7 +32,7 @@ const DetailProductPage = () => {
     }, [id])
 
   return (
-    <div className='backdrop-blur-md flex mb-20 w-4/5  min-h-96 shadow-white/20 shadow-md md:flex-row flex-col mt-10 content-center mx-auto border-2 border-gray-400'>
+    <div className='backdrop-blur-md flex mb-20 w-4/5 rounded  min-h-96 shadow-white/20 shadow-md md:flex-row flex-col mt-10 content-center mx-auto border-2 border-gray-400 lg:w-3/4'>
         {loadingFetchData 
         ?
         <>
@@ -45,13 +45,13 @@ const DetailProductPage = () => {
         </>
         :
         <>
-        <Image src={product?.img || 'https://placehold.co/200x200.png?'} alt={product?.name || 'DefaultHungkul'} width={900} height={900} className='md:w-3/4 lg:w-1/2'/>
-        <div className='p-10 flex flex-col gap-3 bg-'>
-          <p>Nama Product : <span className='text-gray-400'>{product?.name}</span></p>
-          <p>Harga : <span className='text-gray-400'><CurrencyFormatter amount={product?.price || 0}/></span></p>
-          <p>Deskripsi Product : <br /><span className='text-gray-400'>{product?.description}</span></p>
-          <p>Category : <span className='text-gray-400'>{product?.category}</span></p>
-          <p>Rate : <span className='text-gray-400'>{product?.rate.value}</span> ⭐ | <span className='text-gray-400'>{product?.rate.count} reviews</span>  </p>
+        <Image src={product?.img || 'https://placehold.co/200x200.png'} alt={product?.name || 'DefaultHungkul'} width={900} height={900} className='md:w-3/4 lg:w-1/2'/>
+        <div className='p-4 flex flex-col gap-3 font-bold lg:text-xl'>
+          <p>Nama Product : <span className='font-normal text-gray-500'>{product?.name}</span></p>
+          <p>Harga : <span className='font-normal text-gray-500'><CurrencyFormatter amount={product?.price || 0}/></span></p>
+          <p>Deskripsi Product : <br /><span className='font-normal text-gray-500'>{product?.description}</span></p>
+          <p>Category : <span className='font-normal text-gray-500'>{product?.category}</span></p>
+          <p>Rate : <span className='font-normal text-gray-500'>{product?.rate.value}</span> ⭐ | <span className='font-normal text-gray-500'>{product?.rate.count} reviews</span>  </p>
         </div>
         </>
         }
