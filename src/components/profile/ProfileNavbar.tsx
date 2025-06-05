@@ -24,12 +24,12 @@ const ProfileNavbar = () => {
   return (
     <motion.nav
     animate={{ width: showSideBar ? 256 : 80 }}
-    className={`relative z-10 border-r duration-75 overflow-hidden  transition-all ease-linear border-gray-400 backdrop-blur-sm inset-y-0  py-5 flex flex-col min-h-screen flex-shrink-0 `}>
+    className={`relative z-10 border-r duration-75 overflow-hidden  transition-all ease-linear border-gray-400 backdrop-blur-sm  py-5 flex flex-col min-h-screen flex-shrink-0 `}>
         <button onClick={() => setShowSideBar(!showSideBar)} className="hidden lg:block size-max bg-black lg:p-2 hover:bg-black/75 active:bg-black/55 rounded-full p-1 hover:scale-125 ml-5  duration-300">
           <Menu size={24} color="#ffffff"/>
         </button>
         <AnimatePresence>
-          <div className="my-5 flex flex-col">
+          <div className="my-5 items-center flex flex-col">
             {sideBarNavigation.map((item) => (
               <div key={item.name} className={` hover:scale-110 duration-300 relative ${pathname == item.href ? "bg-black/70 text-white " : "bg-white  text-gray-500 hover:bg-black/30 hover:text-white"}`}>
                 <Link href={item.href} className={`my-2 flex items-center`}>

@@ -58,9 +58,8 @@ const ProductsPage = () => {
   }, [setProducts,  currentCategory, pageQuery, page, searchQuery]);
 
   return (
-    <div className="flex lg:w-[90vw] mx-auto lg:pb-32 lg:mt-5 relative lg:min-h-[80vh] ">
-      <Navigasi categorys={categoryList} params={params} loadingFetchData={loadingFetchData}/>
-      <div className="lg:ml-14 lg:mr-2 w-3/4">
+    <div className="flex flex-col lg:w-[90vw] mx-auto lg:pb-32 lg:mt-5 relative lg:min-h-[80vh] lg:flex-row">
+      <div className="lg:mr-12 w-[95%] mx-auto lg:w-3/4 relative order-2">
         {loadingFetchData ?  <SkeletonListProducts /> 
         :
         <>
@@ -72,8 +71,9 @@ const ProductsPage = () => {
         }
         </>
         }
-        <Pagination page={page} setPage={setPage} maxPage={maxPage} params={params} />
+        <Pagination page={page} loadingFetchData={loadingFetchData} setPage={setPage} maxPage={maxPage} params={params} />
       </div>
+      <Navigasi categorys={categoryList} params={params} loadingFetchData={loadingFetchData}/>
     </div>
   );
 };

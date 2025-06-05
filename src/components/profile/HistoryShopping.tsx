@@ -6,10 +6,10 @@ const HistoryShopping = ({ user } : { user : TypeUser }) => {
 
 
   return (
-    <div className=' w-full'>
+    <div className='w-full'>
         {user?.historyShopping.map((data, index) => (
         <div key={index} className='relative pb-10 mb-10 border-b border-black'>
-            <h1 className='text-gray-800'>Transaksi pada {new Date(data.purchasedAt).toLocaleString("id-ID", {
+            <h1 className='text-gray-800 text-sm lg:text-base'>Transaksi pada {new Date(data.purchasedAt).toLocaleString("id-ID", {
                 timeZone: "Asia/Jakarta",
                 year: "numeric",
                 month: "long",

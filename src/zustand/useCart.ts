@@ -8,6 +8,7 @@ interface TypeUseCart {
     cart : ProductInCart[];
     addToCart : (value:Products) => void ;
     deleteFromCart : (value:Products) => void ;
+    clearCart : () => void;
 }
 
 const useCart = create<TypeUseCart>()(persist((set, get) => ({
@@ -31,7 +32,8 @@ const useCart = create<TypeUseCart>()(persist((set, get) => ({
         if(productInCart?.qty === 1) final = cart.filter((product) => product._id !== value._id) 
         else final = cart.map((product) => product._id === value._id ? { ...product, qty : product.qty - 1, totalPrice : product.price * ( product.qty - 1 ) } : product)
         set(() => ({ cart : final }))
-    }
+    },
+    clearCart : () => set(() => ({ cart : [] }))
 }), {
     name : "cart-storage"
 }))

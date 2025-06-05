@@ -7,9 +7,10 @@ type Props = {
     page : number;
     maxPage : number;
     params : URLSearchParams
+    loadingFetchData : boolean;
 }
 
-const Pagination : FC<Props> = ({ page, setPage, maxPage, params }) => {
+const Pagination : FC<Props> = ({ page, setPage, maxPage, params, loadingFetchData }) => {
 
     const router = useRouter()
 
@@ -31,10 +32,10 @@ const Pagination : FC<Props> = ({ page, setPage, maxPage, params }) => {
     }
     
   return (
-    <div className="lg:w-max h-10 absolute bottom-20 lg:right-96  lg:mt-20 mx-auto flex items-center justify-center lg:gap-4 lg:text-3xl">
-        <button disabled={page === 1} onClick={() => handlePagination("prev")} className="border rounded-full bg-black text-white hover:bg-black/70 active:bg-black/50 disabled:bg-black/50"><ChevronLeft size={30} /></button>
+    <div className="lg:w-max h-10 absolute -bottom-10 right-1/2 translate-x-1/2  lg:mt-20 mx-auto flex items-center justify-center lg:gap-4 lg:text-3xl">
+        <button disabled={page === 1 || loadingFetchData} onClick={() => handlePagination("prev")} className="border rounded-full bg-black text-white hover:bg-black/70 active:bg-black/50 disabled:bg-black/50"><ChevronLeft size={30} /></button>
         <span className="text-black font-bold">{page}</span>
-        <button disabled={page === maxPage} onClick={() => handlePagination("next")} className="border rounded-full bg-black text-white hover:bg-black/70 active:bg-black/50 disabled:bg-black/50"><ChevronRight size={30} /></button>
+        <button disabled={page === maxPage || loadingFetchData} onClick={() => handlePagination("next")} className="border rounded-full bg-black text-white hover:bg-black/70 active:bg-black/50 disabled:bg-black/50"><ChevronRight size={30} /></button>
         <p className="absolute lg:-bottom-10 w-max lg:text-lg">{page !== maxPage && `${page}...`}{maxPage}</p>
     </div>
   )

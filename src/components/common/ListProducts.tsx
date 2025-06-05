@@ -29,7 +29,7 @@ const ListProducts = ({ products } :{ products: Products[] }) => {
     variants={parentVariants} 
     initial="hidden"
     animate="show"
-    className={`grid grid-cols-2 mb-10 lg:grid-cols-4 lg:gap-5 lg:mt-4`}>
+    className={`grid grid-cols-2 mt-2 mb-10 gap-3 lg:grid-cols-4 lg:gap-5 lg:mt-4`}>
       {products?.map((product: Products) => (
         <motion.div
         variants={childVariants}

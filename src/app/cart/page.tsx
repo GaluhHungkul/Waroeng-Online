@@ -5,15 +5,12 @@ import useCart from "../../zustand/useCart";
 import CurrencyFormatter from "@/components/CurrencyFormatter";
 import toast from "react-hot-toast";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 
 const CartPage = () => {
 
-  const { cart, deleteFromCart, addToCart } = useCart();
+  const { cart, deleteFromCart, addToCart, clearCart } = useCart();
 
   const [loadingCheckout, setLoadingCheckout] = useState<boolean>(false);
-
-  const router = useRouter()
 
   const totalPrice: number = cart.reduce((a, b) => a + b.totalPrice, 0);
 
@@ -31,7 +28,7 @@ const CartPage = () => {
       if (!response.ok) throw new Error("Terjadi kesalahan ketika checkout");
       localStorage.removeItem("cart-storage");
       toast.success("Transaksi berhasil")
-      router.refresh()
+      clearCart()
       setLoadingCheckout(false);
     } catch (error) {
       setLoadingCheckout(false);
@@ -72,7 +69,7 @@ const CartPage = () => {
           ))}
           <div className="w-full  p-2 text-sm  border-t border-black lg:absolute lg:bottom-0 lg:text-xl">
             <h1 className="font-semibold">Total Price : <CurrencyFormatter amount={totalPrice} /></h1>
-            <button disabled={loadingCheckout} onClick={handleCheckout} className="bg-black text-white mt-2  w-full font-bold rounded  hover:bg-black/70 active:bg-black/50  disabled:bg-black/50 lg:py-2" >
+            <button disabled={loadingCheckout} onClick={handleCheckout} className="bg-black text-white mt-2 py-1  w-full font-bold rounded  hover:bg-black/70 active:bg-black/50  disabled:bg-black/50 lg:py-2" >
               Checkout
             </button>
           </div>
