@@ -35,7 +35,7 @@ const RegisterPage = () => {
 
   const myHandleSubmit = async ({username, password}:RegisterSchema) => {   
     setLoading(true);
-    const loadingToast = toast.loading("Memproses informasi login...")
+    const loadingToast = toast.loading("Memproses data...")
     try {
 
       const res = await fetch("/api/register", {
@@ -51,8 +51,7 @@ const RegisterPage = () => {
       if (res.ok) {
         reset()
         toast.dismiss(loadingToast)
-        toast.success("Berhasil login")
-        toast.loading("Redirecting...")
+        toast.success("Pendaftaran berhasil")
         router.push("/login");
       } else {
         const { message } = await res.json();

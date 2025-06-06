@@ -5,6 +5,7 @@ import { Products } from "@/types/products";
 import Link from "next/link";
 import CurrencyFormatter from "../CurrencyFormatter";
 import { motion } from "framer-motion";
+import { useMemo } from "react";
 
 
 const ListProducts = ({ products } :{ products: Products[] }) => {
@@ -24,7 +25,8 @@ const ListProducts = ({ products } :{ products: Products[] }) => {
     show : { opacity : 1, y : 0 }
   }
 
-  return (  
+  const productsMapping = useMemo(() => {
+    return (  
     <motion.div 
     variants={parentVariants} 
     initial="hidden"
@@ -67,6 +69,9 @@ const ListProducts = ({ products } :{ products: Products[] }) => {
       ))}
     </motion.div>
   );
+  },[products, addToCart])
+
+  return productsMapping
 };
 
 export default ListProducts;

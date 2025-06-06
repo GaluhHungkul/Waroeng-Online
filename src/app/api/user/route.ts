@@ -7,13 +7,13 @@ import User from "@/models/User";
 
 const SECRET_KEY = new TextEncoder().encode(process.env.JWT_SECRET);
 
-export async function GET(req: NextRequest) {
+export async function GET(req:NextRequest) {
   try {
     await ConnectToDatabase();
-    const token = req.cookies.get("token")?.value;
 
-    if (!token)
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    const token = req.cookies.get("token")?.value
+
+    if(!token) return NextResponse.json({ message: "Unauthorized" }, { status: 401 });    
 
     if (!process.env.JWT_SECRET)
       throw new Error("JWT_SECRET is not defined in .env file");
@@ -29,12 +29,7 @@ export async function GET(req: NextRequest) {
     if (!currUser)
       return NextResponse.json({ message: "User not found" }, { status: 404 });
 
-    return NextResponse.json(
-      {
-        currUser,
-      },
-      { status: 200 }
-    );
+      return NextResponse.json({currUser},{ status: 200 });
   } catch (err) {
     const error = err as TypeError;
     console.log("Error : ", error);

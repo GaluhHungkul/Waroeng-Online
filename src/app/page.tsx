@@ -1,5 +1,6 @@
 import Banner from "@/components/dashboard/Banner";
 import ListProducts from "@/components/common/ListProducts";
+import { Metadata } from "next";
 
 const getProducts = async () => {
   try {
@@ -13,8 +14,14 @@ const getProducts = async () => {
   }
 };
 
+export const metadata : Metadata = {
+  title : "Waroeng Online"
+}
+
 export default async function Home() {
-  const { products } = await getProducts();
+
+  
+  const { products=[] } = await getProducts();
 
   return (
     <div className="min-h-screen h-max mx-4 lg:mx-16 ">

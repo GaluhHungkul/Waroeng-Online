@@ -1,11 +1,22 @@
 "use client"
 
 import HistoryShopping from '@/components/profile/HistoryShopping'
+import { getUser } from '@/lib/getUser'
 import useUser from '@/zustand/useUser'
+import { useEffect } from 'react'
 
 const HistoryShoppingPage:React.FC = () => {
 
-  const { user } = useUser()
+  const { user, setUser } = useUser()
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const data = await getUser()
+      setUser(data)
+    }
+    fetchUser()
+  },[setUser])
+
 
   return (
     <div className='backdrop-blur-md px-3 py-5 lg:p-10  w-full'>

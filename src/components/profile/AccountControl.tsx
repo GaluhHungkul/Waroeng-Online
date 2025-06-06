@@ -14,7 +14,7 @@ const schemaChangeUser = z.object({
 type SchemaNewUser = z.infer<typeof schemaChangeUser>
 
 
-const AccountSetting = () => {   
+const AccountControl = () => {   
 
   const { register, handleSubmit, formState : { errors }, reset } = useForm({
     resolver : zodResolver(schemaChangeUser)
@@ -47,7 +47,7 @@ const AccountSetting = () => {
     <div className="my-10 min-h-80 border mx-5 transition-all duration-300 rounded-xl border-gray-700 hover:shadow-md px-4 hover:shadow-gray-700 ">
         <h1 className="font-bold text-center mt-4  text-xl text-black lg:text-3xl lg:mt-8 lg:ml-20">Account Control</h1>          
         <form onSubmit={handleSubmit(myHandleSubmit)} className="flex flex-col min-h-64 my-10 relative lg:px-20">
-          <div className="flex flex-col lg:justify-between lg:items-center mx-2  mt-5 lg:mx-0">
+          <div className="flex flex-col lg:justify-between lg:flex-row lg:items-center mx-2  mt-5 lg:mx-0">
             <p className="text-sm text-gray-700 font-semibold lg:text-xl">
               Username Baru
             </p>
@@ -56,7 +56,7 @@ const AccountSetting = () => {
             <span className="text-red-700 absolute">{errors.newUsername?.message}</span>
             </div>
           </div>
-          <div className="flex flex-col lg:justify-between lg:items-center mx-2  mt-5 lg:mx-0">
+          <div className="flex flex-col lg:justify-between lg:flex-row lg:items-center mx-2  mt-5 lg:mx-0">
             <p className="text-sm text-gray-700 font-semibold lg:text-xl">
                Password Baru
             </p>
@@ -65,7 +65,7 @@ const AccountSetting = () => {
             <span className="text-red-700 absolute">{errors.newPassword?.message}</span>
             </div>
           </div>
-          <div className="flex flex-col lg:justify-between lg:items-center mx-2  mt-5 lg:mx-0">
+          <div className="flex flex-col lg:justify-between lg:flex-row lg:items-center mx-2  mt-5 lg:mx-0">
             <p className="text-sm text-gray-700 font-semibold lg:text-xl">
                 Verifikasi password sebelumnya
             </p>
@@ -82,4 +82,4 @@ const AccountSetting = () => {
   )
 }
 
-export default AccountSetting 
+export default AccountControl 

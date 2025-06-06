@@ -28,7 +28,7 @@ const LoginPage = () => {
   const [loadingSubmitLogin, setLoadingSubmitLogin] = useState<boolean>(false)
 
   const myHandleSubmit = async ({username, password}:LoginSchema) => {             
-    const loadingToast = toast.loading("Memproses informasi login...")
+    const loadingToast = toast.loading("Memproses data...")
     try {
       setLoadingSubmitLogin(true);    
       const res = await fetch('/api/login', {
@@ -41,6 +41,7 @@ const LoginPage = () => {
       
       if (res.ok) {        
         reset()
+        toast.success("Berhasil login")
         const redirectingLoadingToast = toast.loading("Redirecting...")
         router.push('/');
         toast.dismiss(redirectingLoadingToast)
@@ -62,7 +63,7 @@ const LoginPage = () => {
     <div style={{ backgroundImage : "url(/assets/img/bg.jpg)" }} className='lg:pt-10 bg-cover bg-center min-h-screen relative'>
       <div className='absolute inset-0 backdrop-blur-md'/>
       <div className="flex min-h-[85vh] bg-gray-200/70 justify-center flex-col  px-6 py-12 lg:px-8 backdrop-blur-sm border border-gray-300 lg:w-1/3  shadow-xl mx-auto  rounded-xl">
-        <h2 className="text-center text-2xl font-bold text-black lg:mt-5">Sign in to your account</h2>             
+        <h2 className="text-center text-2xl font-bold text-black lg:mt-5">Log in to your account</h2>             
         <div className="mt-10 w-80 mx-auto sm:mx-auto sm:w-full sm:max-w-sm ">
           <form className="space-y-6"  method="POST" onSubmit={handleSubmit(myHandleSubmit)}> 
             <div className='lg:pb-2'>

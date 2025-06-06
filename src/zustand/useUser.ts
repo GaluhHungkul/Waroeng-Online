@@ -3,7 +3,7 @@ import { create } from "zustand";
 
 type useUser = {
     user : TypeUser | null
-    setUser : (value:TypeUser) => void
+    setUser : (value:TypeUser | null) => void
 }
 
 const useUser = create<useUser>()((set) => ({
