@@ -40,6 +40,7 @@ const Navbar = () => {
       const res = await fetch("/api/user");
       if(res.status == 404) return router.push("/login")
       const { currUser } = await res.json();
+      console.log(currUser)
       setUser(currUser)
       setLoadingGetUser(false)
     };

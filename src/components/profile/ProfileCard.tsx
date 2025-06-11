@@ -29,9 +29,10 @@ const ProfileCard = ({user} : { user : TypeUser | null }) => {
         <div className="flex mb-5 mt-2 items-start justify-between  lg:px-6 lg:text-xl lg:mb-8 lg:mt-8 lg:w-full">
           <section className='flex flex-col mb-6 text-center lg:text-start items-center lg:gap-10 lg:flex-row'>
             <div className="size-14 rounded-full bg-black lg:ml-4"></div>
-            <div className=" h-20 p-2 pt-3  w-max text-gray-800">
+            <div className=" h-20 p-2 pt-3 text-[12px] lg:text-base w-max text-gray-800">
               <h1 className='font-bold'>Username : {user?.username}</h1>
-              <h2 className='font-semibold'>Id : {user?._id}</h2>
+              <h1 className='font-bold'>Role : {user?.role}</h1>
+              <h2 className='font-semibold'>User id : {user?._id}</h2>
             </div>
           </section>
           <button onClick={handleLogOut} className="right-10 absolute bottom-4 bg-black text-white lg:static hover:bg-black/70 active:bg-black/50  px-4 py-1 rounded font-bold ">

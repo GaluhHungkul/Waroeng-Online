@@ -2,6 +2,8 @@ export interface TypeUser {
     _id : string;
     username : string;
     password : string;
+    role : string;
+    isMember : boolean;
     historyShopping : [
         {
             products: [

@@ -28,6 +28,16 @@ const userSchema = new mongoose.Schema({
         type: [HistorySchema], 
         default: []    
     },
+    role : {
+        type : String,
+        required : true, 
+        default : "Customer"
+    },
+    isMember : {
+        type : Boolean, 
+        required : true, 
+        default : false
+    },
 })
 
 const User = mongoose.models.User || mongoose.model('User', userSchema)
