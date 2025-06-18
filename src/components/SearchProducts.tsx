@@ -10,8 +10,8 @@ const SearchProducts = () => {
 
   const handleSearch = (e: FormEvent) => {
     e.preventDefault();
-    if (!searchQuery.trim().length) return;
-    router.push(`/products?search=${searchQuery}`);
+    if (!searchQuery.trim().length) router.replace("/products");
+    router.replace(`/products?search=${searchQuery}`);
   };
 
   return (
@@ -19,7 +19,6 @@ const SearchProducts = () => {
       <input
         type="text"
         placeholder="Cari Product"
-        required
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
         className="rounded px-2 lg:px-4 duration-300 lg:w-2/3 lg:py-1 focus:outline-none lg:text-lg"

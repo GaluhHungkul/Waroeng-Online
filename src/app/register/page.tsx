@@ -1,5 +1,7 @@
 "use client";
 
+import AuthInputForm from "@/components/tags/AuthInputForm";
+import ButtonAuthSubmit from "@/components/tags/ButtonAuthSubmit";
 import Input from "@/components/tags/Input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
@@ -9,16 +11,16 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { z } from "zod";
 
-const registerSchema = z
-  .object({
+const registerSchema = z.object({
   username : z.string().min(8),
   password : z.string().min(8),
-  confirmPassword : z.string().min(8)
+  email : z.string().email("Email tidak valid"),
+  confirmPassword : z.string().min(8),
 })
-  .refine((data) => data.password === data.confirmPassword, {
-    message : "Password tidak cocok",
-    path : ["confirmPassword"]
-  })
+.refine((data) => data.password === data.confirmPassword, {
+  message : "Password tidak cocok",
+  path : ["confirmPassword"]
+})
 
 type RegisterSchema = z.infer<typeof registerSchema>
 
@@ -30,29 +32,26 @@ const RegisterPage = () => {
     resolver : zodResolver(registerSchema)
   })
 
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loadingSubmitRegister, setLoadingSubmitRegister] = useState<boolean>(false)
 
 
-  const myHandleSubmit = async ({username, password}:RegisterSchema) => {   
-    setLoading(true);
+  const myHandleSubmit = async ({username, password, email}:RegisterSchema) => {   
+    setLoadingSubmitRegister(true);
     const loadingToast = toast.loading("Memproses data...")
     try {
-
       const res = await fetch("/api/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          username,
-          password,
-        }),
+        body: JSON.stringify({ username, password, email }),
       });
       if (res.ok) {
         reset()
-        toast.dismiss(loadingToast)
         toast.success("Pendaftaran berhasil")
-        router.push("/login");
+        const loadingToast = toast.loading("Redirecting")
+        router.push("/login")
+        toast.dismiss(loadingToast)
       } else {
         const { message } = await res.json();
         toast.error(message)
@@ -62,45 +61,31 @@ const RegisterPage = () => {
       toast.error("Terjadi kesalahan")
       console.log("error : " + error);
     }
-    setLoading(false);
+    setLoadingSubmitRegister(false);
     toast.dismiss(loadingToast)
   };
 
   return (
-    <div style={{ backgroundImage : "url(/assets/img/bg.jpg)" }} className="lg:pt-10 min-h-screen bg-cover bg-center relative">
+    <div style={{ backgroundImage : "url(/assets/img/bg.jpg)" }} className="pt-5 min-h-screen bg-cover bg-center relative">
       <div className="absolute inset-0 backdrop-blur-md"/>
-      <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 backdrop-blur-sm lg:w-1/3 mx-auto bg-gray-200/70 rounded-xl">
-      <h2 className="mt-10 text-center text-2xl/9 font-bold  text-black">
+      <div className="flex w-4/5  min-h-full flex-col items-center p-6 lg:px-8 backdrop-blur-sm lg:w-1/3 mx-auto bg-gray-200/70 rounded-xl">
+      <h2 className="mt-10 text-center text-xl lg:text-2xl font-bold  text-black">
         Create your account
       </h2>
-      <div className="mt-10 sm:mx-auto sm:w-full  w-80 mx-auto sm:max-w-sm">
-        <form className="space-y-6" method="POST" onSubmit={handleSubmit(myHandleSubmit)}>
-          <div className='lg:pb-2'>
-            <Input {...register("username")} label='Username' type="text" name="username" id="username" required  />
-            <p className='text-red-500 lg:text-sm lg:pt-2 '>{errors.username?.message}</p>
-          </div>
-          <div className='lg:pb-2'>        
-            <Input {...register("password")} label='Password' type="password" name="password" id="password" required  />  
-            <p className='text-red-500 lg:text-sm lg:pt-2 '>{errors.password?.message}</p>   
-          </div>
-          <div className='lg:pb-2'>        
-            <Input {...register("confirmPassword")} label='Confirm Password' type="password" name="confirmPassword" id="confirmPassword" required  />  
-            <p className='text-red-500 lg:text-sm lg:pt-2 '>{errors.confirmPassword?.message}</p>   
-          </div>
-          <button type="submit" disabled={loading} className="flex h-[37px] relative w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:bg-blue-900 ">
-            {loading ? (
-              <div className="size-5   absolute border-4 border-white border-t-transparent rounded-full animate-spin"></div>
-            ) : (
-              "Sign in"
-              )} </button>
+      <div className="mt-10 w-80 lg:w-full relative left-8 lg:left-12">
+        <form className="space-y-6 " method="POST" onSubmit={handleSubmit(myHandleSubmit)}>
+          <AuthInputForm errorMessage={errors.username?.message} inputForm={<Input {...register("username")} label='Username' type="text" name="username" id="username" required  />}/>
+          <AuthInputForm errorMessage={errors.email?.message} inputForm={<Input {...register("email")} label='Email' type="email" name="email" id="email" required  />}/>
+          <AuthInputForm errorMessage={errors.password?.message} inputForm={<Input {...register("password")} label='Password' type="password" name="password" id="password" required  />}/>   
+          <AuthInputForm errorMessage={errors.confirmPassword?.message} inputForm={<Input {...register("confirmPassword")} label='Confirm Password' type="password" name="confirmPassword" id="confirmPassword" required  />}/>   
+          <ButtonAuthSubmit loadingSubmit={loadingSubmitRegister} submitText="Sign Up"/>
         </form>
-        <p className="mt-10 text-center text-sm/6 text-gray-500">
-            Already have an account?
+        <p className="mt-10 relative right-8 text-center text-sm/6 text-gray-500">
+          Already have an account?
           <Link href='/login' className="font-semibold text-indigo-600 hover:text-indigo-500"> Click here!</Link>      
         </p>
       </div>
       </div>
-      {/* <BackgroundAnimation /> */}
     </div>
   );
 };

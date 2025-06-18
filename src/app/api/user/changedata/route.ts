@@ -10,7 +10,6 @@ export async function PUT(req: NextRequest) {
   try {
 
     await ConnectToDatabase();
-
     
     const token = req.cookies.get("token")?.value;
     if (!token) return NextResponse.json({ message: "Unauthorized" }, { status: 401 });

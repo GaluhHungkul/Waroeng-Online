@@ -4,6 +4,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Input from "@/components/tags/Input";
 import toast from "react-hot-toast";
+import Title from "../common/Title";
 
 const schemaChangeUser = z.object({
   oldPassword : z.string().min(8),
@@ -44,15 +45,15 @@ const AccountControl = () => {
     reset()
   };
   return (
-    <div className="my-10 min-h-80 border mx-5 transition-all duration-300 rounded-xl border-gray-700 hover:shadow-md px-4 hover:shadow-gray-700 ">
-        <h1 className="font-bold text-center mt-4  text-xl text-black lg:text-3xl lg:mt-8 lg:ml-20">Account Control</h1>          
-        <form onSubmit={handleSubmit(myHandleSubmit)} className="flex flex-col min-h-64 my-10 relative lg:px-20">
+    <div className="my-20 min-h-80 border mx-5 transition-all duration-300 rounded-xl border-gray-700 hover:shadow-md px-4 relative hover:shadow-gray-700 ">
+        <Title className='!absolute -top-16 left-4'>Account Control</Title>
+        <form onSubmit={handleSubmit(myHandleSubmit)} className="flex  flex-col min-h-64 my-10 relative lg:px-10">
           <div className="flex flex-col lg:justify-between lg:flex-row lg:items-center mx-2  mt-5 lg:mx-0">
             <p className="text-sm text-gray-700 font-semibold lg:text-xl">
               Username Baru
             </p>
-            <div className="lg:w-1/3 relative lg:mb-4">
-            <Input required type="text" id="newUsername" label="Username baru" {...register("newUsername")} />
+            <div className="lg:w-2/5 relative lg:mb-4">
+            <Input className="w-full" required type="text" id="newUsername" label="Username baru" {...register("newUsername")} />
             <span className="text-red-700 absolute">{errors.newUsername?.message}</span>
             </div>
           </div>
@@ -60,8 +61,8 @@ const AccountControl = () => {
             <p className="text-sm text-gray-700 font-semibold lg:text-xl">
                Password Baru
             </p>
-            <div className="lg:w-1/3 relative lg:mb-4">
-            <Input required type="password" id="newPassword" label="Password baru" {...register("newPassword")} />
+            <div className="lg:w-2/5 relative lg:mb-4">
+            <Input className="w-full" required type="password" id="newPassword" label="Password baru" {...register("newPassword")} />
             <span className="text-red-700 absolute">{errors.newPassword?.message}</span>
             </div>
           </div>
@@ -69,8 +70,8 @@ const AccountControl = () => {
             <p className="text-sm text-gray-700 font-semibold lg:text-xl">
                 Verifikasi password sebelumnya
             </p>
-            <div className="lg:w-1/3 relative lg:mb-4">
-            <Input required type="password" id="oldPassword" label="Password lama" {...register("oldPassword")} />   
+            <div className="lg:w-2/5 relative lg:mb-4">
+            <Input className="w-full" required type="password" id="oldPassword" label="Password lama" {...register("oldPassword")} />   
             <span className="text-red-700 absolute">{errors.oldPassword?.message}</span>
             </div>
           </div>

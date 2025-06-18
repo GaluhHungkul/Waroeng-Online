@@ -1,17 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
-import { jwtVerify } from "jose";
 
 import User from "@/models/User";
 import ConnectToDatabase from "@/lib/ConnectToDatabase";
 import Product from "@/models/Product";
+import { getToken } from "next-auth/jwt";
 
-const SECRET_KEY = new TextEncoder().encode(process.env.JWT_SECRET);
+const secret = process.env.NEXTAUTH_SECRET
 
 export async function POST(req: NextRequest) {
-  const token = req.cookies.get("token")?.value;
 
-  if (!token)
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  const token = await getToken({req, secret})
+  
+  if (!token) return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
 
   try {
     await ConnectToDatabase();
@@ -32,20 +32,11 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const { payload } = await jwtVerify(token, SECRET_KEY);
-
-    if (!payload || !payload.id) {
-      return NextResponse.json(
-        { message: "Invalid token payload" },
-        { status: 401 }
-      );
-    }
-
-    const currUser = await User.findById(payload.id);
+    const currUser = await User.findById(token.id);
 
     if (!currUser) {
       return NextResponse.json(
-        { message: `There is no account with username ${payload.username}` },
+        { message: `There is no account with username ${token.username}` },
         { status: 404 }
       );
     }

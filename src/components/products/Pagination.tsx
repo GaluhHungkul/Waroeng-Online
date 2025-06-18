@@ -32,11 +32,11 @@ const Pagination : FC<Props> = ({ page, setPage, maxPage, params, loadingFetchDa
     }
     
   return (
-    <div className="lg:w-max h-10 absolute -bottom-10 right-1/2 translate-x-1/2  lg:mt-20 mx-auto flex items-center justify-center lg:gap-4 lg:text-3xl">
+    <div className="lg:w-max h-10 absolute -bottom-4 lg:-bottom-10 right-1/2  translate-x-1/2  lg:mt-20 mx-auto flex items-center justify-center gap-2 lg:gap-4 text-2xl lg:text-3xl">
         <button disabled={page === 1 || loadingFetchData} onClick={() => handlePagination("prev")} className="border rounded-full bg-black text-white hover:bg-black/70 active:bg-black/50 disabled:bg-black/50"><ChevronLeft size={30} /></button>
         <span className="text-black font-bold">{page}</span>
         <button disabled={page === maxPage || loadingFetchData} onClick={() => handlePagination("next")} className="border rounded-full bg-black text-white hover:bg-black/70 active:bg-black/50 disabled:bg-black/50"><ChevronRight size={30} /></button>
-        <p className="absolute lg:-bottom-10 w-max lg:text-lg">{page !== maxPage && `${page}...`}{maxPage}</p>
+        <p className="absolute -bottom-6 lg:-bottom-10 w-max text-lg">{page !== maxPage && `${page}...`}{maxPage}</p>
     </div>
   )
 }

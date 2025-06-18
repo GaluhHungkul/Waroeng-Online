@@ -18,7 +18,7 @@ const CartPage = () => {
     const loadingToast = toast.loading("Checkout..")
     try {
       setLoadingCheckout(true);
-      const response = await fetch("/api/checkout", {
+      const response = await fetch("/api/products/checkout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -34,8 +34,9 @@ const CartPage = () => {
       setLoadingCheckout(false);
       toast.error("Terjadi kesalahan ketika melakukan checkout")
       console.log(error);
+    } finally {
+      toast.dismiss(loadingToast)
     }
-    toast.dismiss(loadingToast)
   };
 
   return (

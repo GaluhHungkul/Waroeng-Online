@@ -1,32 +1,58 @@
 "use client"
 
 import HistoryShopping from '@/components/profile/HistoryShopping'
-import { getUser } from '@/lib/getUser'
-import useUser from '@/zustand/useUser'
-import { useEffect } from 'react'
+import { Skeleton } from '@/components/ui/skeleton'
+import { TypeHistoryShopping } from '@/types/history_shopping'
+import { useEffect, useState } from 'react'
 
 const HistoryShoppingPage:React.FC = () => {
 
-  const { user, setUser } = useUser()
+
+  const [historyShopping, setHistoryShopping] = useState<TypeHistoryShopping>([])
+  const [loadingGetHistoryShopping, setLoadingGetHistoryShopping] = useState<boolean>(true)
 
   useEffect(() => {
     const fetchUser = async () => {
-      const data = await getUser()
-      setUser(data)
+      try {
+        setLoadingGetHistoryShopping(true)
+        const res = await fetch("/api/user/historyShopping")
+        if(!res.ok) throw new Error("Failed to fetch data")
+        const { historyShopping } = await res.json()
+        setHistoryShopping(historyShopping)
+
+      } catch (error) {
+        console.log("Error : " , error)
+      } finally {
+        setLoadingGetHistoryShopping(false)
+      }
     }
     fetchUser()
-  },[setUser])
+  },[])
 
 
   return (
     <div className='backdrop-blur-md px-3 py-5 lg:p-10  w-full'>
-        <h1 className='text-black lg:text-3xl font-bold mb-10'>History Shopping</h1>
-        {user?.historyShopping.length 
-        ? 
-          <HistoryShopping user={user}/>
-        :
-        <h1>Tidak ada transaksi</h1>
-        }
+      <h1 className='text-black lg:text-3xl font-bold mb-10'>History Shopping</h1>
+      {loadingGetHistoryShopping ?
+        <div className='space-y-20'>
+          {Array.from({ length : 3 }).map((_,i) => (
+            <div key={i}>
+              <Skeleton className='w-2/5 mr-auto bg-black/30 h-4 mb-6'/>
+              <Skeleton className='bg-black/30 h-4'/>
+              <Skeleton className='bg-black/30 h-4 mt-2'/>
+              <Skeleton className='bg-black/30 h-4 mt-2'/>
+              <Skeleton className='bg-black/30 h-4 mt-8'/>
+              <Skeleton className='w-2/5 ml-auto bg-black/30 h-4 mt-2'/>
+            </div>
+          ))}
+        </div> : 
+        <>
+        {historyShopping?.length 
+          ? <HistoryShopping historyShopping={historyShopping}/>
+          : <h1 className='font-bold lg:text-2xl text-center lg:mt-32'>Anda tidak pernah melakukan transaksi</h1>
+          }
+        </>  
+      }
     </div>
   )
 }

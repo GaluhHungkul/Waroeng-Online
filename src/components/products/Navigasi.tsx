@@ -28,9 +28,9 @@ const Navigasi = ({categorys, params, loadingFetchData}: PropsNavigasi) => {
   };
 
   return (
-    <div className="text-white py-4 order-1 lg:order-3 lg:w-1/3 lg:sticky lg:top-28 lg:min-h-40 bg-black/70 lg:max-h-[80vh] rounded overflow-hidden gap-5 flex flex-col items-center lg:gap-10 lg:pt-10">
+    <div className="text-white py-4 order-1 lg:order-3 lg:w-1/3 lg:sticky lg:top-28 lg:min-h-40 bg-black/70 lg:max-h-[80vh] lg:rounded  gap-5 flex flex-col items-center lg:gap-10 lg:pt-10">
       <Sorting />
-      <div className="flex flex-wrap gap-2 lg:gap-4 w-[83%] mx-auto">
+      <div className="flex flex-wrap gap-2 lg:gap-4 w-4/5 mx-auto">
         {categorys.map((el, index) => (
           <button
             key={index}

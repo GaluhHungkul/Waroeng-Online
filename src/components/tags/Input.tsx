@@ -25,7 +25,7 @@ const Input: React.FC<InputProps> = ({
   };
 
   return (
-    <div className={`relative w-full text-white ${className} `} id={id}>       
+    <div className={`relative w-4/5   text-white ${className} `} id={id}>       
         {isPassword && (
         <>
         {showPassword
