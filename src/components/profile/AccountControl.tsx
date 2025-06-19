@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Input from "@/components/tags/Input";
 import toast from "react-hot-toast";
 import Title from "../common/Title";
+import { useSession } from "next-auth/react";
 
 const schemaChangeUser = z.object({
   oldPassword : z.string().min(8),
@@ -21,12 +22,14 @@ const AccountControl = () => {
     resolver : zodResolver(schemaChangeUser)
   })
 
+  const { update } = useSession()
+
   const [loadingSubmitNewData, setLoadingSubmitNewData] = useState<boolean>(false);
 
   const myHandleSubmit = async (values:SchemaNewUser) => { 
 
     setLoadingSubmitNewData(true);
-
+    const loadingToast = toast.loading("Mengupdate data...")
     try {
       const res = await fetch("/api/user/changedata", {
         method: "PUT",
@@ -35,14 +38,21 @@ const AccountControl = () => {
         },
         body: JSON.stringify(values),
       });
-      const result = await res.json()
-      if(!result.ok) toast.error(result.message)
-      else toast.success("Data anda berhasil diupdatre")
+      if(!res.ok) {
+        const { message } = await res.json()
+        throw new Error(message)      
+      } else toast.success("Data berhasil diupdate")
+      await update()
     } catch (error) {
-        console.log("error : " + error);
+        let msg
+        if (error instanceof Error) msg = error?.message;
+        else msg = "Gagal mengupdate data";
+        toast.error(msg)
+    } finally {
+      toast.dismiss(loadingToast)
+      reset()
+      setLoadingSubmitNewData(false);
     }
-    setLoadingSubmitNewData(false);
-    reset()
   };
   return (
     <div className="my-20 min-h-80 border mx-5 transition-all duration-300 rounded-xl border-gray-700 hover:shadow-md px-4 relative hover:shadow-gray-700 ">
@@ -54,7 +64,7 @@ const AccountControl = () => {
             </p>
             <div className="lg:w-2/5 relative lg:mb-4">
             <Input className="w-full" required type="text" id="newUsername" label="Username baru" {...register("newUsername")} />
-            <span className="text-red-700 absolute">{errors.newUsername?.message}</span>
+            <span className="text-red-700 absolute text-[12px]">{errors.newUsername?.message}</span>
             </div>
           </div>
           <div className="flex flex-col lg:justify-between lg:flex-row lg:items-center mx-2  mt-5 lg:mx-0">
@@ -63,7 +73,7 @@ const AccountControl = () => {
             </p>
             <div className="lg:w-2/5 relative lg:mb-4">
             <Input className="w-full" required type="password" id="newPassword" label="Password baru" {...register("newPassword")} />
-            <span className="text-red-700 absolute">{errors.newPassword?.message}</span>
+            <span className="text-red-700 absolute text-[12px]">{errors.newPassword?.message}</span>
             </div>
           </div>
           <div className="flex flex-col lg:justify-between lg:flex-row lg:items-center mx-2  mt-5 lg:mx-0">
@@ -72,7 +82,7 @@ const AccountControl = () => {
             </p>
             <div className="lg:w-2/5 relative lg:mb-4">
             <Input className="w-full" required type="password" id="oldPassword" label="Password lama" {...register("oldPassword")} />   
-            <span className="text-red-700 absolute">{errors.oldPassword?.message}</span>
+            <span className="text-red-700 absolute text-[12px]">{errors.oldPassword?.message}</span>
             </div>
           </div>
           <button disabled={loadingSubmitNewData} type="submit" className="mt-5 lg:min-w-28  bg-black text-white hover:bg-black/70 active:bg-black/50 disabled:bg-black/50  px-4 py-1 rounded font-bold ml-auto lg:px-8 lg:py-2 lg:mt-10" >

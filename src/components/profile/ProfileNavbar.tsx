@@ -40,7 +40,7 @@ const ProfileNavbar = () => {
       </button>
       <div className="lg:my-5 items-center flex-row-reverse justify-end flex lg:flex-col w-full">
         {sideBarNavigation.map((item) => (
-          <Link href={item.href} key={item.name} className={`flex-1 lg:hover:scale-110 duration-300 border-t border-gray-300 relative ${pathname == item.href ? "bg-black/70 text-white " : "bg-gray-200  text-gray-500 hover:bg-white/20 hover:text-white"} w-full `}>
+          <Link href={item.href} key={item.name} className={`flex-1 lg:hover:scale-110 duration-300 relative ${pathname == item.href ? "bg-black/70 text-white " : "bg-gray-200  text-gray-500 hover:bg-white/20 hover:text-white"} w-full `}>
             <div className={`my-2 flex items-center justify-center lg:justify-start`}>
             <item.icon size={24} className="ml-7 w-max mr-5" style={{ color : item.color }} /> 
             {showSideBar && 

@@ -4,6 +4,7 @@ import User from "@/models/User";
 import ConnectToDatabase from "@/lib/ConnectToDatabase";
 import Product from "@/models/Product";
 import { getToken } from "next-auth/jwt";
+import Order from "@/models/Order";
 
 const secret = process.env.NEXTAUTH_SECRET
 
@@ -34,12 +35,8 @@ export async function POST(req: NextRequest) {
 
     const currUser = await User.findById(token.id);
 
-    if (!currUser) {
-      return NextResponse.json(
-        { message: `There is no account with username ${token.username}` },
-        { status: 404 }
-      );
-    }
+    if (!currUser) return NextResponse.json({ message: `There is no account with username ${token.username}` },{ status: 404 });
+    
 
     const productIds = cart.map((item) => item._id);
     const productses = await Product.find({ _id: { $in: productIds } });
@@ -85,6 +82,19 @@ export async function POST(req: NextRequest) {
     currUser.historyShopping.push(newHistory);
 
     await currUser.save();
+
+    //? New Order handler
+
+    const items = cart.map((item) => ({ product : item._id, quantity : item.qty, price : item.price }))
+
+    const newOrder = new Order({
+      user : currUser._id,
+      items, 
+      paymentMethod : "Transfer",
+      totalPrice
+    })
+
+    await newOrder.save()
 
     return NextResponse.json(
       {

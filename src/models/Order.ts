@@ -25,19 +25,11 @@ const orderSchema = new mongoose.Schema(
         },
       },
     ],
-    shippingAddress: {
-      fullName: { type: String, required: true },
-      phone: { type: String },
-      address: { type: String, required: true },
-      city: { type: String, required: true },
-      postalCode: { type: String, required: true },
-      country: { type: String, required: true },
-    },
     paymentMethod: {
       type: String,
       required: true,
       enum: ["COD", "Transfer", "Credit Card", "PayPal"],
-      default: "COD",
+      default: "Transfer",
     },
     paymentStatus: {
       type: String,

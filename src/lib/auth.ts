@@ -69,20 +69,31 @@ export const authOptions : NextAuthOptions = {
             return true
             
         },
-        async jwt({ token, user }) {
+        async jwt({ token, user, trigger }) {
+            
+            
+            if(trigger === "update" && token?.id) {
+                await ConnectToDatabase()
+                const currUser = await User.findById(token.id)
+                if(currUser) {
+                    token.username = currUser.username
+                    token.role = currUser.role
+                    token.isMember = currUser.isMember
+                }
+            }
+            
             if(!user?.email) return token
+            
             await ConnectToDatabase()
             const currUser = await User.findOne({ email : user.email })
-            
             if(!currUser) return token
-            
+
             const { _id, email, username, role, isMember } = currUser
             token.id = _id.toString()
             token.email = email
             token.username = username
             token.role = role
-            token.isMember = isMember
-           
+            token.isMember = isMember          
 
             return token
         },
