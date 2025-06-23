@@ -1,5 +1,3 @@
-import { TypeHistoryShopping } from "./history_shopping"
-
 export interface TypeUser {
     id? : string | null
     username? : string | null
@@ -7,5 +5,4 @@ export interface TypeUser {
     role? : string | null
     isMember? : boolean | null
     email? : string | null
-    historyShopping? : TypeHistoryShopping
 }
