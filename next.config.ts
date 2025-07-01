@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   images: {
     domains: ['placehold.co', 'via.placeholder.com'],
   },
+  experimental : {
+    viewTransition : true
+  }
 };
 
 export default nextConfig;
