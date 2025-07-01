@@ -44,7 +44,7 @@ export async function GET(req: NextRequest) {
     const categories = await Product.distinct("category");
     const totalProducts = await Product.countDocuments(query)
 
-    return NextResponse.json({ products, categories, maxPage : Math.ceil(totalProducts / limit) });
+    return NextResponse.json({ products, categories, maxPageFromServer : Math.ceil(totalProducts / limit) });
   } catch (error) {
     console.log(error);
     return NextResponse.json({

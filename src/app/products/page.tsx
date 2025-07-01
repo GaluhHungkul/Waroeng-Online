@@ -45,10 +45,10 @@ const ProductsPage = () => {
         if (pageQuery) params.set("page", page + "");
         const response = await fetch(`/api/products?${params.toString()}`);
         if (!response.ok) throw new Error("Something went wrong!");
-        const { products, categories, maxPage } = await response.json();
+        const { products, categories, maxPageFromServer } = await response.json();
         setCategoryList(categories);
         setProducts(products);
-        setMaxPage(maxPage)
+        setMaxPage(maxPageFromServer)
       } catch (error) {
         console.error({ error });
       } finally {
