@@ -6,7 +6,7 @@ import Navigasi from "@/components/products/Navigasi";
 import useCategory from "../../zustand/useCategory";
 import useProducts from "../../zustand/useProducts";
 import { useSearchParams } from "next/navigation";
-import Pagination from "@/components/products/Pagination";
+import InfiniteScroll from "@/components/products/InfiniteScroll";
 import SkeletonListProducts from "@/components/common/SkeletonListProducts";
 
 
@@ -14,25 +14,18 @@ const ProductsPage = () => {
 
   const searchParams = useSearchParams();
   const currentCategory = searchParams.get("category");
-  const pageQuery = Number(searchParams.get("page"));
   const searchQuery = searchParams.get("search")
 
   const { products, setProducts } = useProducts();
 
-  const [page, setPage] = useState<number>(1);
-  const [loadingFetchData, setLoadingFetchData] = useState<boolean>(false)
-  const [maxPage, setMaxPage] = useState<number>(1)
+  const [loadingFetchData, setLoadingFetchData] = useState<boolean>(true)
+  const [isNextPage, setIsNextPage] = useState<boolean>(false)
 
   const { setCategory } = useCategory();
 
   const [categoryList, setCategoryList] = useState<string[]>([]);
 
   const params = new URLSearchParams(searchParams.toString());
-
-  useEffect(() => {
-    if(pageQuery && !isNaN(pageQuery))  setPage(pageQuery)
-    else setPage(1)
-  },[pageQuery])
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -42,13 +35,12 @@ const ProductsPage = () => {
           params.set("category", currentCategory);
           setCategory(currentCategory.split(","))
         }
-        if (pageQuery) params.set("page", page + "");
         const response = await fetch(`/api/products?${params.toString()}`);
         if (!response.ok) throw new Error("Something went wrong!");
-        const { products, categories, maxPageFromServer } = await response.json();
+        const { products, categories, isNextPage:nextPage } = await response.json();
         setCategoryList(categories);
         setProducts(products);
-        setMaxPage(maxPageFromServer)
+        setIsNextPage(nextPage)
       } catch (error) {
         console.error({ error });
       } finally {
@@ -57,7 +49,7 @@ const ProductsPage = () => {
       
     };
     fetchProducts();
-  }, [setProducts,  currentCategory, pageQuery, page, searchQuery]);
+  }, [setProducts,  currentCategory, searchQuery]);
 
   return (
     <div className="flex flex-col lg:w-[90vw] mx-auto pb-14 lg:pb-32 lg:mt-5 relative lg:min-h-[80vh] lg:flex-row">
@@ -74,7 +66,7 @@ const ProductsPage = () => {
         }
         </>
         }
-        {!loadingFetchData && <Pagination page={page} loadingFetchData={loadingFetchData} setPage={setPage} maxPage={maxPage} params={params} />}
+        {!loadingFetchData && <InfiniteScroll params={params} isNextPage={isNextPage} setIsNextPage={setIsNextPage} />}
       </div>
     </div>
   );
