@@ -66,25 +66,25 @@ const RegisterPage = () => {
   };
 
   return (
-    <div style={{ backgroundImage : "url(/assets/img/bg.jpg)" }} className="pt-5 min-h-screen bg-cover bg-center relative">
+    <div style={{ backgroundImage : "url(/assets/img/bg.jpg)" }} className="pt-5 min-h-screen bg-cover bg-center relative content-center ">
       <div className="absolute inset-0 backdrop-blur-md"/>
-      <div className="flex w-4/5  min-h-full flex-col items-center p-6 lg:px-8 backdrop-blur-sm lg:w-1/3 mx-auto bg-gray-200/70 rounded-xl">
-      <h2 className="mt-10 text-center text-xl lg:text-2xl font-bold  text-black">
-        Create your account
-      </h2>
-      <div className="mt-10 w-80 lg:w-full relative left-8 lg:left-12">
-        <form className="space-y-6 " method="POST" onSubmit={handleSubmit(myHandleSubmit)}>
-          <AuthInputForm errorMessage={errors.username?.message} inputForm={<Input {...register("username")} label='Username' type="text" name="username" id="username" required  />}/>
-          <AuthInputForm errorMessage={errors.email?.message} inputForm={<Input {...register("email")} label='Email' type="email" name="email" id="email" required  />}/>
-          <AuthInputForm errorMessage={errors.password?.message} inputForm={<Input {...register("password")} label='Password' type="password" name="password" id="password" required  />}/>   
-          <AuthInputForm errorMessage={errors.confirmPassword?.message} inputForm={<Input {...register("confirmPassword")} label='Confirm Password' type="password" name="confirmPassword" id="confirmPassword" required  />}/>   
-          <ButtonAuthSubmit loadingSubmit={loadingSubmitRegister} submitText="Sign Up"/>
-        </form>
-        <p className="mt-10 relative right-8 text-center text-sm/6 text-gray-500">
-          Already have an account?
-          <Link href='/login' className="font-semibold text-indigo-600 hover:text-indigo-500"> Click here!</Link>      
-        </p>
-      </div>
+      <div className="flex w-4/5  flex-col items-center pb-8 lg:px-8 backdrop-blur-sm md:w-2/5 md:scale-150 md: lg:w-1/3 mx-auto bg-gray-200/70 rounded-xl lg:scale-100">
+        <h2 className="mt-10 text-center text-xl md:text-2xl font-bold  text-black">
+          Create your account
+        </h2>
+        <div className="mt-10 w-80 lg:w-full relative left-8 lg:left-12">
+          <form className="space-y-6 " method="POST" onSubmit={handleSubmit(myHandleSubmit)}>
+            <AuthInputForm errorMessage={errors.username?.message} inputForm={<Input {...register("username")} label='Username' type="text" name="username" id="username" required  />}/>
+            <AuthInputForm errorMessage={errors.email?.message} inputForm={<Input {...register("email")} label='Email' type="email" name="email" id="email" required  />}/>
+            <AuthInputForm errorMessage={errors.password?.message} inputForm={<Input {...register("password")} label='Password' type="password" name="password" id="password" required  />}/>   
+            <AuthInputForm errorMessage={errors.confirmPassword?.message} inputForm={<Input {...register("confirmPassword")} label='Confirm Password' type="password" name="confirmPassword" id="confirmPassword" required  />}/>   
+            <ButtonAuthSubmit loadingSubmit={loadingSubmitRegister} submitText="Sign Up"/>
+          </form>
+          <p className="mt-10 relative right-8 text-center text-sm/6 text-gray-500">
+            Already have an account?
+            <Link href='/login' className="font-semibold text-indigo-600 hover:text-indigo-500"> Click here!</Link>      
+          </p>
+        </div>
       </div>
     </div>
   );
