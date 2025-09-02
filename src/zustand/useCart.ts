@@ -1,13 +1,13 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware"
-import { Products } from "@/types/products";
+import { Product } from "@/types/product";
 import { ProductInCart } from "@/types/cart";
 
 
 interface TypeUseCart {
     cart : ProductInCart[];
-    addToCart : (value:Products) => void ;
-    deleteFromCart : (value:Products) => void ;
+    addToCart : (value:Product) => void ;
+    deleteFromCart : (value:Product) => void ;
     clearCart : () => void;
 }
 

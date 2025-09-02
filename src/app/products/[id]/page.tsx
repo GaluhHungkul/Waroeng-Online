@@ -1,19 +1,23 @@
 "use client"
 
 import { useParams } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
-import { Products } from '@/types/products'
-import Image from 'next/image'
-import CurrencyFormatter from '@/components/CurrencyFormatter'
-import { Skeleton } from '@/components/ui/skeleton'
+import { useEffect, useState } from 'react'
+import { Product } from '@/types/product'
+import SkeletonDetailProduct from '@/components/skeleton/SkeletonDetailProduct'
+import DetailProduct from '@/components/detailProductPage/DetailProduct'
+import SimilarProducts from '@/components/detailProductPage/SimilarProducts'
+
+type Data = {
+  product : Product;
+  similarProducts : Product[]
+}
 
 const DetailProductPage = () => {
 
     const { id } = useParams()
 
-
     const [loadingFetchData, setLoadingFetchData] = useState<boolean>(false)
-    const [product, setProduct] = useState<Products | null>(null)    
+    const [data, setData] = useState<Data | null>(null)    
 
     useEffect(() => {
       const fetchingData = async () => {
@@ -21,8 +25,9 @@ const DetailProductPage = () => {
         try {
           const response = await fetch(`/api/products/${id}`)        
           if(!response.ok) throw new Error("Failed to fetch data")
-          const result = await response.json()
-          setProduct(result.product)
+          const results = await response.json()
+          console.log(results)
+          setData(results)
         } catch (error) {
           console.log("Error : " , error)
         }
@@ -32,29 +37,13 @@ const DetailProductPage = () => {
     }, [id])
 
   return (
-    <div className='backdrop-blur-md flex mb-20 w-4/5 rounded  min-h-96 shadow-white/20 shadow-md md:flex-row flex-col mt-10 content-center mx-auto border-2 border-gray-400 lg:w-3/4'>
-        {loadingFetchData 
-        ?
-        <>
-          <Skeleton className='flex-1 bg-gray-200'/>
-          <div className='flex-1 lg:pt-10 lg:px-4 lg:space-y-4'>
-            {Array.from({length : 10}).map((_, index) => (
-              <Skeleton key={index} className='lg:h-4'/>
-            ))}
-          </div>
-        </>
-        :
-        <>
-        <Image src={product?.img || 'https://placehold.co/200x200.png'} alt={product?.name || 'DefaultHungkul'} width={900} height={900} className='md:w-3/4 lg:w-1/2'/>
-        <div className='p-4 flex flex-col gap-3 font-bold lg:text-xl'>
-          <p>Nama Product : <span className='font-normal text-gray-500'>{product?.name}</span></p>
-          <p>Harga : <span className='font-normal text-gray-500'><CurrencyFormatter amount={product?.price || 0}/></span></p>
-          <p>Deskripsi Product : <br /><span className='font-normal text-gray-500'>{product?.description}</span></p>
-          <p>Category : <span className='font-normal text-gray-500'>{product?.category}</span></p>
-          <p>Rate : <span className='font-normal text-gray-500'>{product?.rate.value}</span> ⭐ | <span className='font-normal text-gray-500'>{product?.rate.count} reviews</span>  </p>
-        </div>
-        </>
-        }
+    <div className='backdrop-blur-md flex mb-20 w-4/5 rounded  min-h-96 shadow-white/20 shadow-md md:flex-row flex-col mt-10 content-center mx-auto lg:gap-20'>
+      {loadingFetchData ? <SkeletonDetailProduct /> : 
+      <div className='flex flex-col bg-'>
+        <DetailProduct product={data?.product}/>
+        <SimilarProducts products={data?.similarProducts}/>
+      </div>
+      }
     </div>
   )
 }

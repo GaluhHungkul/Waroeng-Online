@@ -17,8 +17,9 @@ export async function GET(req: NextRequest,{ params }: { params: { id: string } 
         { message: "Product not found" },
         { status: 404 }
       );
-
-    return NextResponse.json({ product }, { status: 200 });
+    
+    const similarProducts = await Product.find({ category : product.category }).limit(10)
+    return NextResponse.json({ product, similarProducts }, { status: 200 });
   } catch (error) {
     console.log("error : ", error);
     return NextResponse.json({ message : "Internal server error" }, { status : 500 })

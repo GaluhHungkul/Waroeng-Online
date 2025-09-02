@@ -1,10 +1,10 @@
 import { create } from "zustand";
-import { Products } from "@/types/products";
+import { Product } from "@/types/product";
 
 
 interface IuseProducts {
-    products : Products[];
-    setProducts : (value:Products[]) => void;
+    products : Product[];
+    setProducts : (value:Product[]) => void;
     minStock : (value : number) => void
 }
 
