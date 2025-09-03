@@ -9,7 +9,6 @@ import { Menu } from "lucide-react";
 import useUser from "@/zustand/useUser";
 import SearchProducts from "../SearchProducts";
 import { useSession } from "next-auth/react";
-import Cart from "./Cart";
 import Navigation from "./Navigation";
 
 const Navbar = () => {
@@ -45,7 +44,6 @@ const Navbar = () => {
         Waroeng
       </Link>
       <SearchProducts />
-      <Cart />
       <Navigation
         showNavScroll={showNavScroll}
         loadingGetUser={loadingGetUser}
