@@ -1,6 +1,5 @@
 import Banner from "@/components/dashboard/Banner";
 import ListProducts from "@/components/common/ListProducts";
-import { Metadata } from "next";
 
 const getProducts = async () => {
   try {
@@ -14,9 +13,6 @@ const getProducts = async () => {
   }
 };
 
-export const metadata : Metadata = {
-  title : "Waroeng Online"
-}
 
 export default async function Home() {
 

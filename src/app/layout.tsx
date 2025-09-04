@@ -4,12 +4,19 @@ import { Toaster } from "react-hot-toast";
 import SessionProviderWrapper from "@/components/SessionProviderWrapper";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { Metadata } from "next";
+
+
+export const metadata : Metadata = {
+  title : "Waroeng Online"
+}
 
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   const session = await getServerSession(authOptions);
 
   return (
