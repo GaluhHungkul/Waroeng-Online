@@ -3,14 +3,14 @@ import Product from "@/models/Product";
 import { NextRequest, NextResponse } from "next/server";
 
 type RouteContext = {
-  params : {
+  params : Promise<{
     id : string
-  }
+  }>
 }
 
 export async function GET(req: NextRequest, context: RouteContext ) {
   
-  const { id } = context.params;
+  const { id } = await context.params
   if (!id) return NextResponse.json({ message: "Id not found", id }, { status: 404 });
 
   try {
