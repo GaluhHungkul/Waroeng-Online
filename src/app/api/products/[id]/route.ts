@@ -2,7 +2,13 @@ import ConnectToDatabase from "@/lib/ConnectToDatabase";
 import Product from "@/models/Product";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest, context : { params : { id : string } } ) {
+type RouteContext = {
+  params : {
+    id : string
+  }
+}
+
+export async function GET(req: NextRequest, context: RouteContext ) {
   
   const { id } = context.params;
   if (!id) return NextResponse.json({ message: "Id not found", id }, { status: 404 });
