@@ -1,27 +1,49 @@
-import useCart from '@/zustand/useCart';
-import { ShoppingCart } from 'lucide-react'
-import Link from 'next/link'
-import React from 'react'
+"use client"
 
-const Cart = () => {
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
+import { Menu } from "lucide-react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { useEffect, useState } from "react"
+// import Navigation from "./Navigation"
+// import ListFilterMoviesBy from "./ListFilterMoviesBy"
 
-    const { cart } = useCart();
-    const qtyEachProduct = cart.length ?  cart.map((product) => product.qty) : []
-    const totalQtyCart = qtyEachProduct.length ? qtyEachProduct.reduce((a, b) => a + b) : 0;
+const   MobileSheet = () => {
+
+  const pathname = usePathname()
+
+  const [open, setOpen] = useState(false)
+
+  useEffect(() => {
+    setOpen(false)
+  },[pathname])
 
   return (
-    <div className="relative">
-        {!!totalQtyCart && 
-        <>
-        <span className="absolute bg-green-500 py-[2px] px-2 text-sm -top-4 -right-4 text-white rounded-full">
-          {totalQtyCart}
-        </span>
-        <Link href="/cart">
-          <ShoppingCart size={24} className="text-white hover:text-gray-400" />
-        </Link>
-        </>}
-    </div>
+    <Sheet open={open}  onOpenChange={setOpen}>
+      <SheetTrigger asChild className="cursor-pointer lg:hidden">
+        <Menu size={32} color="white"/>
+      </SheetTrigger>
+      <SheetContent  className="z-[999] flex flex-col items-end" >
+        <SheetClose/>
+        <SheetHeader>
+          <SheetTitle>
+            <Link href={"/"} className="font-bold text-2xl text-primary">Waroeng Online</Link>
+          </SheetTitle>
+        </SheetHeader>
+        <div className="text-white space-y-2 text-primary flex flex-col items-end">
+          <Link className="hover:underline font-medium text-xl" href={"/profile/account"}>My Profile</Link>
+          <Link className="hover:underline font-medium text-xl" href={"/products"}>Products</Link>
+        </div>
+      </SheetContent>
+    </Sheet>
   )
 }
 
-export default Cart
+export default MobileSheet
