@@ -15,7 +15,7 @@ import { useEffect, useState } from "react"
 // import Navigation from "./Navigation"
 // import ListFilterMoviesBy from "./ListFilterMoviesBy"
 
-const   MobileSheet = () => {
+const MobileSheet = () => {
 
   const pathname = usePathname()
 
@@ -37,9 +37,9 @@ const   MobileSheet = () => {
             <Link href={"/"} className="font-bold text-2xl text-primary">Waroeng Online</Link>
           </SheetTitle>
         </SheetHeader>
-        <div className="text-white space-y-2 text-primary flex flex-col items-end">
+        <div className=" space-y-2 text-primary flex flex-col items-end">
           <Link className="hover:underline font-medium text-xl" href={"/profile/account"}>My Profile</Link>
-          <Link className="hover:underline font-medium text-xl" href={"/products"}>Products</Link>
+          <Link className="hover:underline font-medium text-xl" href={"/products"}>See All Products</Link>
         </div>
       </SheetContent>
     </Sheet>

@@ -8,9 +8,7 @@ import Title from "../common/Title";
 import { useSession } from "next-auth/react";
 
 const schemaChangeUser = z.object({
-  oldPassword : z.string().min(8),
   newUsername : z.string().min(8),
-  newPassword : z.string().min(8)
 })
 
 type SchemaNewUser = z.infer<typeof schemaChangeUser>
@@ -65,24 +63,6 @@ const AccountControl = () => {
             <div className="lg:w-2/5 relative lg:mb-4">
             <Input className="w-full" required type="text" id="newUsername" label="Username baru" {...register("newUsername")} />
             <span className="text-red-700 absolute text-[12px]">{errors.newUsername?.message}</span>
-            </div>
-          </div>
-          <div className="flex flex-col lg:justify-between lg:flex-row lg:items-center mx-2  mt-5 lg:mx-0">
-            <p className="text-sm text-gray-700 font-semibold lg:text-xl">
-               Password Baru
-            </p>
-            <div className="lg:w-2/5 relative lg:mb-4">
-            <Input className="w-full" required type="password" id="newPassword" label="Password baru" {...register("newPassword")} />
-            <span className="text-red-700 absolute text-[12px]">{errors.newPassword?.message}</span>
-            </div>
-          </div>
-          <div className="flex flex-col lg:justify-between lg:flex-row lg:items-center mx-2  mt-5 lg:mx-0">
-            <p className="text-sm text-gray-700 font-semibold lg:text-xl">
-                Verifikasi password sebelumnya
-            </p>
-            <div className="lg:w-2/5 relative lg:mb-4">
-            <Input className="w-full" required type="password" id="oldPassword" label="Password lama" {...register("oldPassword")} />   
-            <span className="text-red-700 absolute text-[12px]">{errors.oldPassword?.message}</span>
             </div>
           </div>
           <button disabled={loadingSubmitNewData} type="submit" className="mt-5 lg:min-w-28  bg-black text-white hover:bg-black/70 active:bg-black/50 disabled:bg-black/50  px-4 py-1 rounded font-bold ml-auto lg:px-8 lg:py-2 lg:mt-10" >
