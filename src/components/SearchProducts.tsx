@@ -15,13 +15,13 @@ const SearchProducts = () => {
   };
 
   return (
-    <form onSubmit={handleSearch} className="flex gap-2 text-[12px] w-max items-stretch lg:w-full justify-center h-2/3 ">
+    <form onSubmit={handleSearch} className="flex gap-2 text-[12px]">
       <input
         type="text"
         placeholder="Search Products"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
-        className="rounded px-2 w-2/3 lg:px-4  lg:py-1 focus:outline-none lg:text-lg"
+        className="rounded py-1 px-2  lg:px-4  lg:py-1 focus:outline-none lg:text-lg md:w-52 lg:w-96"
       />
       <button className="bg-white font-bold px-2 lg:px-4 lg:py-1 rounded lg:text-lg hover:bg-white/70 active:bg-white/50 ">
         Search
