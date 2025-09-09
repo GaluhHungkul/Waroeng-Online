@@ -16,15 +16,28 @@ const DialogChangeUsername = () => {
 
     const [open, setOpen] = useState(false)
     const [newUsername, setNewUsername] = useState("")
+    const [loadingChangeUsername, setLoadingChangeUsername] = useState(false)
 
   const handleChangeUsername = async (e:FormEvent) => {
     try {
         e.preventDefault()
-        if(newUsername.trim() === "") return
+        if(newUsername.trim() === "" || newUsername.trim().length < 8) return
+        setLoadingChangeUsername(true)
+        const res = await fetch("/api/user/changeusername", {
+            method : "PUT",
+            headers : {
+                "Content-Type" : "application/json"
+            },
+            body : JSON.stringify(newUsername)
+        })
+        if(!res.ok) throw new Error("Failed to change username")
+        console.log(await res.json())
     } catch (error) {
         console.log("Error : " , error)
+    } finally {
+        setLoadingChangeUsername(false)
+        setOpen(false)
     }
-    setOpen(false)
   }
 
   return (
@@ -44,9 +57,9 @@ const DialogChangeUsername = () => {
                 <Label htmlFor="link" className="sr-only">
                 Link
                 </Label>
-                <Input onChange={(e) => setNewUsername(e.target.value)} />
+                <Input required onChange={(e) => setNewUsername(e.target.value)} />
             </div>
-            <Button className="w-full">Change</Button>
+            <Button disabled={loadingChangeUsername} className="w-full">{loadingChangeUsername ? "Submitting..." : "Change"}</Button>
         </form>
       </DialogContent>
     </Dialog>
