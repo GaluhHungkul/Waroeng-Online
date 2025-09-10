@@ -15,11 +15,11 @@ import DialogTotalPrice from "./DialogTotalPrice"
 const DialogBuyProduct = ({ product } : { product : Product | null | undefined}) => {
 
   const [open, setOpen] = useState(false)
-  const [qty, setQty] = useState(0)
+  const [quantity, setQuantity] = useState(0)
   const [loadingCheckout, setLoadingCheckout] = useState(false)
 
   const handleCheckout = async () => {
-    if(!qty) return
+    if(!quantity) return
     try {
       setLoadingCheckout(true)
       const res = await fetch("/api/products/checkout", {
@@ -27,7 +27,7 @@ const DialogBuyProduct = ({ product } : { product : Product | null | undefined})
         headers : {
           "Content-Type" : "application/json"
         },
-        body : JSON.stringify({ product, qty })
+        body : JSON.stringify({ product, quantity })
       })
       if(!res.ok) throw new Error("Failed to checkout")
       console.log(await res.json())
@@ -47,10 +47,10 @@ const DialogBuyProduct = ({ product } : { product : Product | null | undefined})
         </DialogHeader>
           <div>
             <DialogDetailProduct product={product}/>
-            <DialogControlQty qty={qty} setQty={setQty}/>
-            <DialogTotalPrice qty={qty} product={product}/>            
+            <DialogControlQty quantity={quantity} setQuantity={setQuantity}/>
+            <DialogTotalPrice quantity={quantity} product={product}/>            
           </div>
-          <Button  onClick={handleCheckout} disabled={qty < 1 || loadingCheckout} className="md:text-lg">Checkout</Button>
+          <Button  onClick={handleCheckout} disabled={quantity < 1 || loadingCheckout} className="md:text-lg">Checkout</Button>
       </DialogContent>
     </Dialog>
   )

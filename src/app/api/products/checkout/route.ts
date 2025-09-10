@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import User from "@/models/User";
 import ConnectToDatabase from "@/lib/ConnectToDatabase";
 import { getToken } from "next-auth/jwt";
+import Order from "@/models/Order";
 
 const secret = process.env.NEXTAUTH_SECRET
 
@@ -15,11 +16,11 @@ export async function POST(req: NextRequest) {
   try {
     await ConnectToDatabase();
 
-    const { product, qty } = await req.json();
+    const { product, quantity } = await req.json();
 
-    if (!product || !qty) return NextResponse.json(
-        { message: "Invalid cart data" },
-        { status: 400 }
+    if (!product || quantity < 1 || isNaN(quantity)) return NextResponse.json(
+      { message: "Invalid cart data" },
+      { status: 400 }
     );
     
 
@@ -27,68 +28,34 @@ export async function POST(req: NextRequest) {
 
     if (!currUser) return NextResponse.json({ message: `There is no account with username ${token.username}` },{ status: 404 });
     
+    currUser.historyShopping.push({
+      product : {
+        productId : product._id,
+        productName : product.name,
+        productPrice : product.price,
+        productCategory : product.category,
+        quantity : quantity
+      },
+      purchasedAt : new Date(),
+      totalPrice : product.price * quantity
+    })
 
-    // const productIds = cart.map((item) => item._id);
-    // const productses = await Product.find({ _id: { $in: productIds } });
+    await currUser.save()
 
-    // if (productses.length !== productIds.length) {
-    //   return NextResponse.json(
-    //     { message: "Some products in the cart were not found" },
-    //     { status: 404 }
-    //   );
-    // }
+    //? New Order handle
 
-    // if (!Array.isArray(currUser.historyShopping)) currUser.historyShopping = [];
+    const newOrder = new Order({
+      user : currUser._id,
+      product : product._id, 
+      totalPrice : product.price * quantity,
+      quantity
+    })
 
-    // const products = cart.map((item) => ({
-    //   productId: item._id,
-    //   productName: productses.find(
-    //     (product) => product._id.toString() === item._id.toString()
-    //   )?.name,
-    //   productPrice: productses.find(
-    //     (product) => product._id.toString() === item._id.toString()
-    //   )?.price,
-    //   productCategory: productses.find(
-    //     (product) => product._id.toString() === item._id.toString()
-    //   )?.category,
-    //   quantity: item.qty,
-    // }));
-
-    // const bulkOps = cart.map((item) => ({
-    //   updateOne: {
-    //     filter: { _id: item._id },
-    //     update: { $inc: { stock: -item.qty } },
-    //   },
-    // }));
-
-    // await Product.bulkWrite(bulkOps);
-
-    // const newHistory = {
-    //   products,
-    //   purchasedAt: new Date(),
-    //   totalPrice,
-    // };
-
-    // currUser.historyShopping.push(newHistory);
-
-    // await currUser.save();
-
-    // //? New Order handler
-
-    // const items = cart.map((item) => ({ product : item._id, quantity : item.qty, price : item.price }))
-
-    // const newOrder = new Order({
-    //   user : currUser._id,
-    //   items, 
-    //   paymentMethod : "Transfer",
-    //   totalPrice
-    // })
-
-    // await newOrder.save()
+    await newOrder.save()
 
     return NextResponse.json(
       {
-        product, qty, currUser
+        product, currUser, newOrder
       },
       { status: 200 }
     );

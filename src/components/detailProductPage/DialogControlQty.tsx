@@ -3,16 +3,16 @@ import { Button } from '../ui/button'
 import { Minus, Plus } from 'lucide-react'
 
 type Props = {
-    qty : number;
-    setQty : (val:number) => void
+    quantity : number;
+    setQuantity : (val:number) => void
 }
 
-const DialogControlQty : FC<Props> = ({ qty, setQty }) => {
+const DialogControlQty : FC<Props> = ({ quantity, setQuantity }) => {
   return (
     <section className="py-4 text-xl flex justify-center gap-4 items-center md:py-10 md:text-3xl">
-        <Button onClick={() => setQty(qty - 1)} disabled={qty < 1}><Minus /></Button>
-        <span>{qty}</span>
-        <Button onClick={() => setQty(qty + 1)}><Plus /></Button>
+        <Button onClick={() => setQuantity(quantity - 1)} disabled={quantity < 1}><Minus /></Button>
+        <span>{quantity}</span>
+        <Button onClick={() => setQuantity(quantity + 1)}><Plus /></Button>
     </section>
   )
 }
