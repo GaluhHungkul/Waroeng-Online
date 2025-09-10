@@ -13,7 +13,7 @@ const DetailProduct = ({ product } : { product : Product | null | undefined }) =
         <p className='font-semibold text-gray-500'>{product?.category}</p>
         <p>Nama Product : <span className='font-normal text-gray-500'>{product?.name}</span></p>
         <p>Harga : <span className='font-normal text-gray-500'><CurrencyFormatter amount={product?.price || 0}/></span></p>
-        <p>Deskripsi : <br /><span className='font-normal text-gray-500'>{product?.description}</span></p>
+        <p>Deskripsi : <span className='font-normal text-gray-500'>{product?.description}</span></p>
         <p>Rate : <span className='font-normal text-gray-500'>{product?.rate.value}</span> ⭐ | <span className='font-normal text-gray-500'>{product?.rate.count} reviews</span>  </p>
       </section>
     </div>

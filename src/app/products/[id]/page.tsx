@@ -37,9 +37,9 @@ const DetailProductPage = () => {
     }, [id])
 
   return (
-    <div className='backdrop-blur-md flex mb-20 w-4/5 rounded  min-h-96 shadow-white/20 shadow-md md:flex-row flex-col mt-10 content-center mx-auto lg:gap-20'>
+    <div className='backdrop-blur-md flex mb-20  rounded  min-h-96 shadow-white/20 shadow-md md:flex-row flex-col mt-10 content-center mx-auto lg:gap-20'>
       {loadingFetchData ? <SkeletonDetailProduct /> : 
-      <div className='flex flex-col bg-'>
+      <div className='flex flex-col items-center'>
         <DetailProduct product={data?.product}/>
         <SimilarProducts products={data?.similarProducts}/>
       </div>

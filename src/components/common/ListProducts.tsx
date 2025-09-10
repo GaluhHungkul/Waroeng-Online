@@ -1,5 +1,4 @@
 "use client";
-import useCart from "@/zustand/useCart";
 import Image from "next/image";
 import { Product } from "@/types/product";
 import Link from "next/link";
@@ -10,7 +9,6 @@ import { useMemo } from "react";
 
 const ListProducts = ({ products, similar=false } :{ products: Product[] | undefined, similar? : boolean }) => {
   
-  const { addToCart } = useCart();
 
   const parentVariants = {
     hidden : { opacity : 0 },
@@ -31,12 +29,12 @@ const ListProducts = ({ products, similar=false } :{ products: Product[] | undef
     variants={parentVariants} 
     initial="hidden"
     animate="show"
-    className={`grid grid-cols-2 mt-2 mb-10 gap-3 lg:grid-cols-4 lg:gap-5 lg:mt-4`}>
-      {products?.map((product: Product) => (
+    className={`grid grid-cols-2 mt-2 mb-10 gap-3 md:grid-cols-3 lg:grid-cols-4 lg:gap-5 lg:mt-4`}>
+      {products?.map((product) => (
         <motion.div
         variants={childVariants}
         key={product._id}
-        className=" relative lg:w-full pb-10 lg:pb-10 flex flex-col items-center min-h-80 bg-white border border-gray-300 rounded overflow-hidden  shadow"
+        className="relative lg:w-full flex flex-col items-center min-h-80 bg-white border border-gray-300 rounded overflow-hidden  shadow"
         >
           <section className="relative aspect-[1/1] w-full">
             <Image
@@ -60,18 +58,11 @@ const ListProducts = ({ products, similar=false } :{ products: Product[] | undef
             </li>
             <li className="text-gray-800">Stock : {product?.stock}</li>
           </ul>
-          {!similar && <button
-            disabled={!product?.stock}
-            onClick={() => addToCart(product)}
-            className="absolute bottom-2 bg-black lg:py-1 text-white disabled:bg-black/50 hover:bg-black/70 active:bg-black/50 w-4/5 rounded font-bold "
-          >
-            {product?.stock ? "BUY" : "SOLD OUT"}
-          </button>}
         </motion.div>
       ))}
     </motion.div>
   );
-  },[products, addToCart])
+  },[products])
 
   return productsMapping
 };
