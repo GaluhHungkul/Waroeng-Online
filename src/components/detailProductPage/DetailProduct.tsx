@@ -2,6 +2,7 @@ import { Product } from '@/types/product'
 import Image from 'next/image'
 import React from 'react'
 import CurrencyFormatter from '../CurrencyFormatter'
+import DialogBuyProduct from './DialogBuyProduct'
 
 const DetailProduct = ({ product } : { product : Product | null | undefined }) => {
   return (
@@ -15,6 +16,7 @@ const DetailProduct = ({ product } : { product : Product | null | undefined }) =
         <p>Harga : <span className='font-normal text-gray-500'><CurrencyFormatter amount={product?.price || 0}/></span></p>
         <p>Deskripsi : <span className='font-normal text-gray-500'>{product?.description}</span></p>
         <p>Rate : <span className='font-normal text-gray-500'>{product?.rate.value}</span> ⭐ | <span className='font-normal text-gray-500'>{product?.rate.count} reviews</span>  </p>
+        <DialogBuyProduct product={product}/>
       </section>
     </div>
   )
