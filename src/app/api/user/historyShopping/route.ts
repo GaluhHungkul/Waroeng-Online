@@ -14,7 +14,7 @@ export async function GET(req:NextRequest) {
         const user = await User.findById(token.id)
         if(!user) return NextResponse.json({message : "User not found"}, {status : 404})
             
-        return NextResponse.json(user)
+        return NextResponse.json(user.historyShopping)
 
     } catch (error) {
         console.log("Error : " , error)

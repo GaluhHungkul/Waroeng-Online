@@ -21,7 +21,7 @@ const Navbar = () => {
 
 
   useEffect(() => {
-    if (status !== "loading") if (session?.user) setUser(session.user)
+    if (status !== "loading") if (session?.user) setUser(session.user);
   }, [status, session, setUser, pathname]);
 
 

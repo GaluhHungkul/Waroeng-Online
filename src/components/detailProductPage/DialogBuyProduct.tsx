@@ -11,12 +11,14 @@ import { Product } from "@/types/product"
 import DialogDetailProduct from "./DialogDetailProduct"
 import DialogControlQty from "./DialogControlQty"
 import DialogTotalPrice from "./DialogTotalPrice"
+import { useSession } from "next-auth/react"
 
 const DialogBuyProduct = ({ product } : { product : Product | null | undefined}) => {
 
   const [open, setOpen] = useState(false)
   const [quantity, setQuantity] = useState(0)
   const [loadingCheckout, setLoadingCheckout] = useState(false)
+  const session = useSession()
 
   const handleCheckout = async () => {
     if(!quantity) return
@@ -30,6 +32,7 @@ const DialogBuyProduct = ({ product } : { product : Product | null | undefined})
         body : JSON.stringify({ product, quantity })
       })
       if(!res.ok) throw new Error("Failed to checkout")
+      await session.update()
       console.log(await res.json())
     } catch (error) {
       console.log("Error : " , error)
