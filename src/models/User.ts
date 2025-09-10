@@ -30,8 +30,8 @@ const userSchema = new mongoose.Schema({
     default: null,
   },
   historyShopping: {
-    type: HistorySchema,
-    default: null,
+    type: [HistorySchema],
+    default: [],
   },
   role: {
     type: String,

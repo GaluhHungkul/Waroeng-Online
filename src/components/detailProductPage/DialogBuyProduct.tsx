@@ -16,9 +16,26 @@ const DialogBuyProduct = ({ product } : { product : Product | null | undefined})
 
   const [open, setOpen] = useState(false)
   const [qty, setQty] = useState(0)
+  const [loadingCheckout, setLoadingCheckout] = useState(false)
 
   const handleCheckout = async () => {
     if(!qty) return
+    try {
+      setLoadingCheckout(true)
+      const res = await fetch("/api/products/checkout", {
+        method : "POST",
+        headers : {
+          "Content-Type" : "application/json"
+        },
+        body : JSON.stringify({ product, qty })
+      })
+      if(!res.ok) throw new Error("Failed to checkout")
+      console.log(await res.json())
+    } catch (error) {
+      console.log("Error : " , error)
+    } finally {
+      setLoadingCheckout(false)
+    }
   }
 
   return (
@@ -33,7 +50,7 @@ const DialogBuyProduct = ({ product } : { product : Product | null | undefined})
             <DialogControlQty qty={qty} setQty={setQty}/>
             <DialogTotalPrice qty={qty} product={product}/>            
           </div>
-          <Button onClick={handleCheckout} disabled={qty < 1} className="md:text-lg">Checkout</Button>
+          <Button  onClick={handleCheckout} disabled={qty < 1 || loadingCheckout} className="md:text-lg">Checkout</Button>
       </DialogContent>
     </Dialog>
   )
