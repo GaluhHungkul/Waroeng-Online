@@ -1,15 +1,13 @@
 import mongoose from "mongoose";
 
 const HistorySchema = new mongoose.Schema({
-    products: [
-        {
-          productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
-          productName: { type: String, required: true },
-          productPrice: { type: Number, required: true },
-          productCategory: { type: String, required: true },
-          quantity: { type: Number, required: true },
-        },
-    ],
+    product: {
+      productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
+      productName: { type: String, required: true },
+      productPrice: { type: Number, required: true },
+      productCategory: { type: String, required: true },
+      quantity: { type: Number, required: true },
+    },
     purchasedAt: { type: Date, required: true },
     totalPrice: { type: Number, required: true },
 });
@@ -32,8 +30,8 @@ const userSchema = new mongoose.Schema({
     default: null,
   },
   historyShopping: {
-    type: [HistorySchema],
-    default: [],
+    type: HistorySchema,
+    default: null,
   },
   role: {
     type: String,
