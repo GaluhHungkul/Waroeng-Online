@@ -10,13 +10,16 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Pen } from "lucide-react"
+import { useSession } from "next-auth/react"
 import { FormEvent, useState } from "react"
 
 const DialogChangeUsername = () => {
 
-    const [open, setOpen] = useState(false)
-    const [newUsername, setNewUsername] = useState("")
-    const [loadingChangeUsername, setLoadingChangeUsername] = useState(false)
+  const session = useSession()  
+
+  const [open, setOpen] = useState(false)
+  const [newUsername, setNewUsername] = useState("")
+  const [loadingChangeUsername, setLoadingChangeUsername] = useState(false)
 
   const handleChangeUsername = async (e:FormEvent) => {
     try {
@@ -31,7 +34,7 @@ const DialogChangeUsername = () => {
             body : JSON.stringify(newUsername)
         })
         if(!res.ok) throw new Error("Failed to change username")
-        console.log(await res.json())
+        await session.update()
     } catch (error) {
         console.log("Error : " , error)
     } finally {
