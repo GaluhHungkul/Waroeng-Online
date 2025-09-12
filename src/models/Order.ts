@@ -7,16 +7,18 @@ const orderSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    product: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
-      required: true,
-    },
-    quantity: {
-      type: Number,
-      required: true,
-      min: 1,
-    },
+    products: [
+      {
+        product : {
+          type : mongoose.Schema.Types.ObjectId,
+          ref : "Product",
+          required : true
+        },
+        price : { type : Number, required : true },
+        name : { type : String, required : true },
+        quantity : { type : Number, required : true, min : 1 }
+      }
+    ],
     totalPrice: {
       type: Number,
       required: true,
@@ -38,9 +40,7 @@ const orderSchema = new mongoose.Schema(
       default: "pending",
     },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
 export default mongoose.models.Order || mongoose.model("Order", orderSchema);

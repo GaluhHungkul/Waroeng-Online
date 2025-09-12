@@ -1,17 +1,5 @@
 import mongoose from "mongoose";
 
-const HistorySchema = new mongoose.Schema({
-    product: {
-      productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
-      productName: { type: String, required: true },
-      productPrice: { type: Number, required: true },
-      productCategory: { type: String, required: true },
-      quantity: { type: Number, required: true },
-    },
-    purchasedAt: { type: Date, required: true },
-    totalPrice: { type: Number, required: true },
-});
-
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
@@ -28,10 +16,6 @@ const userSchema = new mongoose.Schema({
   oauthProvider: {
     type: String, 
     default: null,
-  },
-  historyShopping: {
-    type: [HistorySchema],
-    default: [],
   },
   role: {
     type: String,
