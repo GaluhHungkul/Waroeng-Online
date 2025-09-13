@@ -5,7 +5,8 @@ import SessionProviderWrapper from "@/components/SessionProviderWrapper";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { Metadata } from "next";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const metadata : Metadata = {
   title : "Waroeng Online"
@@ -26,6 +27,16 @@ export default async function RootLayout({
         <SessionProviderWrapper session={session}>
           <Navbar />
           {children}
+          <ToastContainer            
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            draggable
+            pauseOnHover
+            theme="light"
+          />
         </SessionProviderWrapper>
       </body>
     </html>

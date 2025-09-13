@@ -11,17 +11,18 @@ import { Product } from "@/types/product"
 import DialogDetailProduct from "./DialogDetailProduct"
 import DialogControlQty from "./DialogControlQty"
 import DialogTotalPrice from "./DialogTotalPrice"
-import { useSession } from "next-auth/react"
+import { toast } from "react-toastify"
 
 const DialogBuyProduct = ({ product } : { product : Product | null | undefined}) => {
+
 
   const [open, setOpen] = useState(false)
   const [quantity, setQuantity] = useState(0)
   const [loadingCheckout, setLoadingCheckout] = useState(false)
-  const session = useSession()
 
   const handleCheckout = async () => {
     if(!quantity) return
+    const loadingToast = toast("Checkout...")
     try {
       setLoadingCheckout(true)
       const res = await fetch("/api/products/checkout", {
@@ -29,13 +30,26 @@ const DialogBuyProduct = ({ product } : { product : Product | null | undefined})
         headers : {
           "Content-Type" : "application/json"
         },
-        body : JSON.stringify({ product, quantity })
+        body : JSON.stringify({ 
+          cart : [{ product, quantity }]
+        })
       })
       if(!res.ok) throw new Error("Failed to checkout")
-      await session.update()
-      console.log(await res.json())
+      setQuantity(0)
+      toast.update(loadingToast, {
+        render : "Checkout berhasil",
+        type : "success",
+        isLoading : false,
+        autoClose : 3000
+      })
     } catch (error) {
       console.log("Error : " , error)
+      toast.update(loadingToast, {
+        render : "Checkout gagal",
+        type : "error",
+        isLoading : false,
+        autoClose : 3000
+      })
     } finally {
       setLoadingCheckout(false)
     }
@@ -50,7 +64,7 @@ const DialogBuyProduct = ({ product } : { product : Product | null | undefined})
         </DialogHeader>
           <div>
             <DialogDetailProduct product={product}/>
-            <DialogControlQty quantity={quantity} setQuantity={setQuantity}/>
+            <DialogControlQty quantity={quantity} setQuantity={setQuantity} />
             <DialogTotalPrice quantity={quantity} product={product}/>            
           </div>
           <Button  onClick={handleCheckout} disabled={quantity < 1 || loadingCheckout} className="md:text-lg">Checkout</Button>

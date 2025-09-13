@@ -16,9 +16,9 @@ export async function POST(req: NextRequest) {
   try {
     await ConnectToDatabase();
 
-    const { product, quantity } = await req.json();
+    const { cart } = await req.json();
 
-    if (!product || quantity < 1 || isNaN(quantity)) return NextResponse.json(
+    if (!cart || !cart.length || !Array.isArray(cart)) return NextResponse.json(
       { message: "Invalid cart data" },
       { status: 400 }
     );
@@ -27,36 +27,27 @@ export async function POST(req: NextRequest) {
     const currUser = await User.findById(token.id);
 
     if (!currUser) return NextResponse.json({ message: `There is no account with username ${token.username}` },{ status: 404 });
-    
-    currUser.historyShopping.push({
-      product : {
-        productId : product._id,
-        productName : product.name,
-        productPrice : product.price,
-        productCategory : product.category,
-        quantity : quantity
-      },
-      purchasedAt : new Date(),
-      totalPrice : product.price * quantity
-    })
-
-    await currUser.save()
 
     //? New Order handle
 
+    const products = cart.map(({ product :item, quantity }) => ({
+      product : item._id,
+      price : item.price,
+      name : item.name, 
+      quantity
+    }))
+
+    const totalPrice = cart.reduce((a,{ product, quantity }) => a + (product.price * quantity),0)
+
     const newOrder = new Order({
       user : currUser._id,
-      product : product._id, 
-      totalPrice : product.price * quantity,
-      quantity
+      products, totalPrice, 
     })
 
     await newOrder.save()
 
     return NextResponse.json(
-      {
-        product, currUser, newOrder
-      },
+      { products, newOrder },
       { status: 200 }
     );
   } catch (error) {
