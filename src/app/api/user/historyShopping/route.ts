@@ -1,5 +1,5 @@
 import ConnectToDatabase from "@/lib/ConnectToDatabase";
-import User from "@/models/User";
+import Order from "@/models/Order";
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -11,10 +11,10 @@ export async function GET(req:NextRequest) {
         const token = await getToken({ req })
         if(!token) return NextResponse.json({ message : "Unauthorized" }, { status : 401 })
         console.log({token})
-        const user = await User.findById(token.id)
-        if(!user) return NextResponse.json({message : "User not found"}, {status : 404})
+        const order = await Order.find({ user : token.id })
+        if(!order.length) return NextResponse.json({message : "No Orders found"}, {status : 404})
             
-        return NextResponse.json(user.historyShopping)
+        return NextResponse.json(order)
 
     } catch (error) {
         console.log("Error : " , error)

@@ -1,14 +1,14 @@
-import { Product } from "./product";
 import { TypeUser } from "./user";
 
 export type Order = {
   _id : string
-  user: TypeUser,
-  products: {
-    product : Product
+  user : TypeUser
+  products : {
+    product : string
     price : number
     name : string
     quantity : number
+    _id : string
   }[]
   totalPrice: number
   paymentMethod: "COD" | "Transfer" | "Credit Card" | "PayPal"

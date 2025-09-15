@@ -2,13 +2,13 @@
 
 import HistoryShopping from '@/components/profile/HistoryShopping'
 import { Skeleton } from '@/components/ui/skeleton'
-import { TypeHistoryShopping } from '@/types/history_shopping'
+import { Order } from '@/types/order'
 import { useEffect, useState } from 'react'
 
-const HistoryShoppingPage:React.FC = () => {
+const HistoryShoppingPage = () => {
 
 
-  const [historyShopping, setHistoryShopping] = useState<TypeHistoryShopping>([])
+  const [historyShopping, setHistoryShopping] = useState<Order[]>([])
   const [loadingGetHistoryShopping, setLoadingGetHistoryShopping] = useState<boolean>(true)
 
   useEffect(() => {
@@ -17,9 +17,9 @@ const HistoryShoppingPage:React.FC = () => {
         setLoadingGetHistoryShopping(true)
         const res = await fetch("/api/user/historyShopping")
         if(!res.ok) throw new Error("Failed to fetch data")
-        const { historyShopping } = await res.json()
-        setHistoryShopping(historyShopping)
-
+        const results = await res.json()
+        console.log(results)
+        setHistoryShopping(results)
       } catch (error) {
         console.log("Error : " , error)
       } finally {
@@ -28,7 +28,6 @@ const HistoryShoppingPage:React.FC = () => {
     }
     fetchUser()
   },[])
-
 
   return (
     <div className='backdrop-blur-md px-3 py-5 lg:p-10  w-full'>
