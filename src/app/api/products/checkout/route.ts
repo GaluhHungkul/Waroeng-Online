@@ -16,10 +16,10 @@ export async function POST(req: NextRequest) {
   try {
     await ConnectToDatabase();
 
-    const { cart } = await req.json();
+    const { detailProduct, paymentMethod, paymentStatus, orderStatus } = await req.json();
 
-    if (!cart || !cart.length || !Array.isArray(cart)) return NextResponse.json(
-      { message: "Invalid cart data" },
+    if (!(detailProduct && paymentMethod && paymentStatus && orderStatus)) return NextResponse.json(
+      { message: "Invalid checkout data" },
       { status: 400 }
     );
     
@@ -30,24 +30,25 @@ export async function POST(req: NextRequest) {
 
     //? New Order handle
 
-    const products = cart.map(({ product :item, quantity }) => ({
-      product : item._id,
-      price : item.price,
-      name : item.name, 
-      quantity
-    }))
+    const orderedProduct = {
+      product : detailProduct.product,
+      price : detailProduct.product.price,
+      name : detailProduct.product.name, 
+      quantity : detailProduct.quantity
+    }
 
-    const totalPrice = cart.reduce((a,{ product, quantity }) => a + (product.price * quantity),0)
+    const totalPrice = detailProduct.product.price * detailProduct.quantity
 
     const newOrder = new Order({
       user : currUser._id,
-      products, totalPrice, 
+      orderedProduct, totalPrice, 
+      paymentStatus, paymentMethod, orderStatus
     })
 
     await newOrder.save()
 
     return NextResponse.json(
-      { products, newOrder },
+      { orderedProduct, totalPrice },
       { status: 200 }
     );
   } catch (error) {

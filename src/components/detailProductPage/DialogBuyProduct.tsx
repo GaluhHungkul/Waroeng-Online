@@ -31,16 +31,19 @@ const DialogBuyProduct = ({ product } : { product : Product | null | undefined})
           "Content-Type" : "application/json"
         },
         body : JSON.stringify({ 
-          cart : [{ product, quantity }]
+          detailProduct : {
+            product, quantity
+          }
         })
       })
       if(!res.ok) throw new Error("Failed to checkout")
+      console.log(await res.json())
       setQuantity(0)
       toast.update(loadingToast, {
         render : "Checkout berhasil",
         type : "success",
         isLoading : false,
-        autoClose : 3000
+        autoClose : 2000
       })
     } catch (error) {
       console.log("Error : " , error)
@@ -48,7 +51,7 @@ const DialogBuyProduct = ({ product } : { product : Product | null | undefined})
         render : "Checkout gagal",
         type : "error",
         isLoading : false,
-        autoClose : 3000
+        autoClose : 2000
       })
     } finally {
       setLoadingCheckout(false)
