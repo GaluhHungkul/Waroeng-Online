@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
 
     const { product, quantity } = await req.json();
 
-    if (!(product && quantity) || isNaN(quantity) || quantity < 1) return NextResponse.json(
+    if (!(product)) return NextResponse.json(
       { message: "Invalid checkout data" },
       { status: 400 }
     );
@@ -31,16 +31,17 @@ export async function POST(req: NextRequest) {
     //? New Order handle
 
     const orderedProduct = {
-      product,
+      productId : product._id,
       price :product.price,
       name : product.name, 
+      img : product.img,
       quantity
     }
 
     const totalPrice = product.price * quantity
 
     const newOrder = new Order({
-      user : currUser._id,
+      userId : currUser._id,
       orderedProduct, totalPrice, 
     })
 

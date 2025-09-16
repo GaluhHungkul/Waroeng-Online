@@ -1,12 +1,12 @@
 import { TypeUser } from "./user";
 
 export type Order = {
-  _id : string
-  user : TypeUser
+  userId : TypeUser
   orderedProduct : {
-    product : string
+    productId : string
     price : number
     name : string
+    img : string;
     quantity : number
     _id : string
   }

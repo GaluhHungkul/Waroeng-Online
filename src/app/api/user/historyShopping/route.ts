@@ -11,7 +11,7 @@ export async function GET(req:NextRequest) {
         const token = await getToken({ req })
         if(!token) return NextResponse.json({ message : "Unauthorized" }, { status : 401 })
         console.log({token})
-        const order = await Order.find({ user : token.id })
+        const order = await Order.find({ userId : token.id })
         if(!order.length) return NextResponse.json({message : "No Orders found"}, {status : 404})
             
         return NextResponse.json(order)
