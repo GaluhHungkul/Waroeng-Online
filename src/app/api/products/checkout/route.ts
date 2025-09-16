@@ -16,9 +16,9 @@ export async function POST(req: NextRequest) {
   try {
     await ConnectToDatabase();
 
-    const { detailProduct, paymentMethod, paymentStatus, orderStatus } = await req.json();
+    const { product, quantity } = await req.json();
 
-    if (!(detailProduct && paymentMethod && paymentStatus && orderStatus)) return NextResponse.json(
+    if (!(product && quantity) || isNaN(quantity) || quantity < 1) return NextResponse.json(
       { message: "Invalid checkout data" },
       { status: 400 }
     );
@@ -31,18 +31,17 @@ export async function POST(req: NextRequest) {
     //? New Order handle
 
     const orderedProduct = {
-      product : detailProduct.product,
-      price : detailProduct.product.price,
-      name : detailProduct.product.name, 
-      quantity : detailProduct.quantity
+      product,
+      price :product.price,
+      name : product.name, 
+      quantity
     }
 
-    const totalPrice = detailProduct.product.price * detailProduct.quantity
+    const totalPrice = product.price * quantity
 
     const newOrder = new Order({
       user : currUser._id,
       orderedProduct, totalPrice, 
-      paymentStatus, paymentMethod, orderStatus
     })
 
     await newOrder.save()

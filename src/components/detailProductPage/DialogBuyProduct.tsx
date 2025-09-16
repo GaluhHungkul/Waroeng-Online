@@ -31,9 +31,7 @@ const DialogBuyProduct = ({ product } : { product : Product | null | undefined})
           "Content-Type" : "application/json"
         },
         body : JSON.stringify({ 
-          detailProduct : {
-            product, quantity
-          }
+          product, quantity
         })
       })
       if(!res.ok) throw new Error("Failed to checkout")
