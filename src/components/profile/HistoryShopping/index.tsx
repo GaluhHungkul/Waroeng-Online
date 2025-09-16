@@ -10,21 +10,21 @@ const HistoryShopping = ({ historyShopping } : { historyShopping : Order[] }) =>
 
 
   return (
-    <div className='w-full'>
+    <div className='w-full md:w-[90%] md:mx-auto'>
         {historyShopping?.map(({ orderedProduct : { name, img, price, quantity, productId }, createdAt, totalPrice, paymentMethod, paymentStatus,orderStatus }, index) => (
-        <div key={index} className='relative pb-16 mb-10 border-b border-black'>
-            <div className="flex justify-between items-center mb-4">
-                <h1 className='text-gray-800 text-sm lg:text-base'><FormatedDate date={createdAt}/></h1>
-                <Link href={`/products/${productId}`} className="bg-blue-400 text-white px-4 py-1 rounded font-semibold text-sm hover:bg-blue-500">Beli lagi</Link>
+        <div key={index} className='relative pb-16 mb-10 border-b border-black md:border-b-4 md:pb-20'>
+            <div className="flex justify-between items-center mb-4 text-sm md:text-base md:mb-6">
+                <h1 className='text-gray-800'><FormatedDate date={createdAt}/></h1>
+                <Link href={`/products/${productId}`} className="bg-blue-400 text-white px-4 py-1 rounded font-semibold hover:bg-blue-500 md:px-8 md:py-1.5">Beli lagi</Link>
             </div>
-            <div className="flex justify-between mt-2">
-                <section className="relative aspect-[1/1] w-40">
+            <div className="flex justify-between">
+                <section className="relative aspect-[1/1] w-40 md:w-72">
                     <Image src={img} fill alt={name}/>
                 </section>
                 <DeskripsiProduct name={name} quantity={quantity} price={price}/>
             </div>
             <StatusPembelian paymentMethod={paymentMethod} paymentStatus={paymentStatus} orderStatus={orderStatus}/>
-            <p className='capitalize absolute right-0 text-sm lg:text-lg font-semibold bottom-4'>Total harga : <CurrencyFormatter amount={totalPrice} /></p>
+            <p className='capitalize absolute right-0 text-sm md:text-lg font-semibold bottom-4'>Total harga : <CurrencyFormatter amount={totalPrice} /></p>
         </div>
         ))}
     </div>

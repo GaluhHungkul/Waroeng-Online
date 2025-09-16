@@ -9,7 +9,7 @@ type Props = {
 
 const DeskripsiProduct : FC<Props> = ({ name, price, quantity }) => {
   return (
-    <section className="text-end text-sm space-y-2">
+    <section className="text-end text-sm space-y-2 md:text-xl md:mr-8 md:mt-8">
         <p>{name}</p>
         <p>Harga satuan : <CurrencyFormatter amount={price}/></p>
         <p>Jumlah pembelian : {quantity}</p>
