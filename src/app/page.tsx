@@ -1,5 +1,6 @@
 import Banner from "@/components/dashboard/Banner";
-import ListProducts from "@/components/common/ListProducts";
+import dynamic from "next/dynamic";
+const ListProducts = dynamic(() => import("@/components/common/ListProducts")) ;
 
 const getProducts = async () => {
   try {

@@ -5,13 +5,15 @@ import SkeletonListProducts from "../common/SkeletonListProducts"
 import Navigasi from "./Navigasi"
 import { useEffect, useState } from "react";
 import useCategory from "@/zustand/useCategory";
-import ListProducts from "../common/ListProducts";
 import InfiniteScroll from "./InfiniteScroll";
 import { useSearchParams } from "next/navigation";
+import dynamic from "next/dynamic";
+
+const ListProducts = dynamic(() => import("../common/ListProducts"))
 
 const ClientProductsPage = () => {
 
-    const searchParams = useSearchParams();
+  const searchParams = useSearchParams();
   const currentCategory = searchParams.get("category");
   const searchQuery = searchParams.get("search")
 
