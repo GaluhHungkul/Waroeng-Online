@@ -6,7 +6,7 @@ import DialogBuyProduct from './DialogBuyProduct'
 
 const DetailProduct = ({ product } : { product : Product | null | undefined }) => {
   return (
-    <div className='mb-20 md:flex lg:mb-40 w-[80vw] '>
+    <div className='mb-20 relative md:flex lg:mb-40 w-[80vw] '>
       <section className='relative aspect-[1/1] w-full lg:flex-1'>
         <Image src={product?.img || 'https://placehold.co/200x200.png'} alt={product?.name ?? ""} fill sizes='90vw' className='object-center object-cover rounded'/>
       </section>
@@ -16,8 +16,8 @@ const DetailProduct = ({ product } : { product : Product | null | undefined }) =
         <p>Harga : <span className='font-normal text-gray-500'><CurrencyFormatter amount={product?.price || 0}/></span></p>
         <p>Deskripsi : <span className='font-normal text-gray-500'>{product?.description}</span></p>
         <p>Rate : <span className='font-normal text-gray-500'>{product?.rate.value}</span> ⭐ | <span className='font-normal text-gray-500'>{product?.rate.count} reviews</span>  </p>
-        <DialogBuyProduct product={product}/>
       </section>
+      <DialogBuyProduct product={product}/>
     </div>
   )
 }

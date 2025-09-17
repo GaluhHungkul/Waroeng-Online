@@ -1,3 +1,5 @@
+"use client"
+
 import {
   Dialog,
   DialogContent,
@@ -58,7 +60,7 @@ const DialogBuyProduct = ({ product } : { product : Product | null | undefined})
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild className="mt-4 md:absolute md:bottom-0 md:w-full md:text-lg lg:text-xl lg:py-5"><Button>Buy</Button></DialogTrigger>
+      <DialogTrigger asChild className="mt-4 md:absolute md:-bottom-12 md:text-lg lg:text-xl lg:py-5 w-full lg:-bottom-16"><Button>Buy</Button></DialogTrigger>
       <DialogContent className="w-4/5 rounded">
         <DialogHeader>
           <DialogTitle className="text-center">Buy Product</DialogTitle>

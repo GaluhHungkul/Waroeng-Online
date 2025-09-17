@@ -7,7 +7,7 @@ type Props = {
     setIsNextPage : (value:boolean) => void
 }
 
-const Pagination : FC<Props> = ({ params, isNextPage, setIsNextPage  }) => {
+const InfiniteScroll : FC<Props> = ({ params, isNextPage, setIsNextPage  }) => {
 
   const [page, setPage] = useState<number>(1)
   const { products, setProducts } = useProducts()  
@@ -35,4 +35,4 @@ const Pagination : FC<Props> = ({ params, isNextPage, setIsNextPage  }) => {
   return <button onClick={handleShowMoreProducts} disabled={loadingGetShowMore}  className="absolute right-1/2 translate-x-1/2 border-2 border-black w-1/2 font-semibold text-xl py-1 rounded hover:bg-black hover:text-white active:bg-black/80 duration-100 disabled:bg-black/70 disabled:border-none disabled:text-white">{loadingGetShowMore ? "Loading..." : "Show more"}</button>
 }
 
-export default Pagination
+export default InfiniteScroll
