@@ -22,7 +22,7 @@ const ProfileCard = () => {
             <h1>Role : {user?.role}</h1>            
           </div>
         </section>
-        <button onClick={() => signOut()} className="right-10 absolute bottom-4 bg-black text-white hover:bg-black/70 active:bg-black/50  px-4 py-1 rounded font-bold ">LOG OUT</button>
+        <button onClick={() => signOut()} className="right-10 absolute bottom-4 h-10 bg-black text-white hover:bg-black/70 active:bg-black/50  px-4 py-1 rounded font-bold ">SIGN OUT</button>
     </div>
   )
 }

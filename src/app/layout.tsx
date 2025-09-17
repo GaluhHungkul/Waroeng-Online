@@ -7,7 +7,7 @@ import { authOptions } from "@/lib/auth";
 import { Metadata } from "next";
 // import { ToastContainer } from "react-toastify";/
 // import "react-toastify/dist/ReactToastify.css";
-import { Toaster } from "sonner"
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata : Metadata = {
   title : "Waroeng Online"
