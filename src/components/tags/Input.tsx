@@ -14,7 +14,6 @@ const Input: React.FC<InputProps> = ({
   label,
   type = 'text',
   className = '',
-  showIcon = false,
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -25,7 +24,7 @@ const Input: React.FC<InputProps> = ({
   };
 
   return (
-    <div className={`relative w-4/5   text-white ${className} `} id={id}>       
+    <div className={`relative w-4/5 mx-auto  text-white ${className} `} id={id}>       
         {isPassword && (
         <>
         {showPassword
@@ -39,9 +38,7 @@ const Input: React.FC<InputProps> = ({
       <input
         id={id}
         type={isPassword ? (showPassword ? 'text' : 'password') : type}
-        className={`peer w-full border border-gray-300  rounded-md px-3 pt-6  pb-2 text-gray-500 text-sm focus:outline-none focus:border-blue-500 lg:text-base ${
-          (showIcon || isPassword) ? 'pr-10' : ''
-        }`}
+        className={`peer w-full border border-gray-300  rounded-md px-3 pt-6  pb-2 text-gray-500 text-sm focus:outline-none focus:border-blue-500 lg:text-base pr-10`}
         placeholder=''
         {...props}
       />
