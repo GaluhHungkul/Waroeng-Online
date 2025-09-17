@@ -1,5 +1,5 @@
 import { TypeUser } from "@/types/user"
-import toast from "react-hot-toast"
+import { toast } from "sonner"
 
 export const getUser = async ()  : Promise<TypeUser | null>  =>  {
     try {

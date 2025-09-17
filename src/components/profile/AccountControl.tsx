@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Input from "@/components/tags/Input";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import Title from "../common/Title";
 import { useSession } from "next-auth/react";
 

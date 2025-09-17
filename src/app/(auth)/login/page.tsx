@@ -31,7 +31,7 @@ const LoginPage = () => {
   const [loadingSubmitLogin, setLoadingSubmitLogin] = useState<boolean>(false)
 
   const myHandleSubmit = async ({password, email}:LoginSchema) => {             
-    const loadingToast = toast.loading("Memproses data...")
+    const loadingToast = toast.loading("Memproses data login...")
     try {
       setLoadingSubmitLogin(true);    
       const res = await signIn("credentials", {
@@ -50,16 +50,18 @@ const LoginPage = () => {
       reset()
       toast.success("Login berhasil")
       const redirectingLoadingToast = toast.loading("Redirecting...")
-      toast.dismiss(redirectingLoadingToast)
-      router.push('/');
+      setTimeout(() => {
+        toast.dismiss(redirectingLoadingToast)
+        router.push('/');
+      }, 500);
 
     } catch (error) {
       toast.error("Terjadi kesalahan ketika mengirim data")
       console.error('Error:', error);
+    } finally {
+      toast.dismiss(loadingToast)       
+      setLoadingSubmitLogin(false);
     }
-    setLoadingSubmitLogin(false);
-    toast.dismiss(loadingToast)      
-
   }   
 
   return (

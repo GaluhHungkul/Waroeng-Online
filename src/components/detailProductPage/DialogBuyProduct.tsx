@@ -13,7 +13,7 @@ import { Product } from "@/types/product"
 import DialogDetailProduct from "./DialogDetailProduct"
 import DialogControlQty from "./DialogControlQty"
 import DialogTotalPrice from "./DialogTotalPrice"
-import { toast } from "react-toastify"
+import { toast } from "sonner"
 
 const DialogBuyProduct = ({ product } : { product : Product | null | undefined}) => {
 
@@ -24,7 +24,7 @@ const DialogBuyProduct = ({ product } : { product : Product | null | undefined})
 
   const handleCheckout = async () => {
     if(!quantity) return
-    const loadingToast = toast("Checkout...")
+    const loadingToast = toast.loading("Checkout...")
     try {
       setLoadingCheckout(true)
       const res = await fetch("/api/products/checkout", {
@@ -39,22 +39,13 @@ const DialogBuyProduct = ({ product } : { product : Product | null | undefined})
       if(!res.ok) throw new Error("Failed to checkout")
       console.log(await res.json())
       setQuantity(0)
-      toast.update(loadingToast, {
-        render : "Checkout berhasil",
-        type : "success",
-        isLoading : false,
-        autoClose : 2000
-      })
+      toast.success("Checkout berhasil")
     } catch (error) {
       console.log("Error : " , error)
-      toast.update(loadingToast, {
-        render : "Checkout gagal",
-        type : "error",
-        isLoading : false,
-        autoClose : 2000
-      })
+      toast.error("Checkout gagal")
     } finally {
       setLoadingCheckout(false)
+      toast.dismiss(loadingToast)
     }
   }
 

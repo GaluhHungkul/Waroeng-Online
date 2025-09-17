@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const registerSchema = z.object({
@@ -60,9 +60,10 @@ const RegisterPage = () => {
     } catch (error) {
       toast.error("Terjadi kesalahan")
       console.log("error : " + error);
+    } finally {
+      setLoadingSubmitRegister(false);
+      toast.dismiss(loadingToast)
     }
-    setLoadingSubmitRegister(false);
-    toast.dismiss(loadingToast)
   };
 
   return (
