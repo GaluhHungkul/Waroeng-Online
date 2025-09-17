@@ -73,7 +73,7 @@ const RegisterPage = () => {
         <h2 className="mt-10 text-center text-xl md:text-2xl font-bold  text-black">
           Create your account
         </h2>
-        <div className="mt-10 w-80 lg:w-full relative left-8 lg:left-12">
+        <div className="mt-10 w-80 lg:w-full relative ">
           <form className="space-y-6 " method="POST" onSubmit={handleSubmit(myHandleSubmit)}>
             <AuthInputForm errorMessage={errors.username?.message} inputForm={<Input {...register("username")} label='Username' type="text" name="username" id="username" required  />}/>
             <AuthInputForm errorMessage={errors.email?.message} inputForm={<Input {...register("email")} label='Email' type="email" name="email" id="email" required  />}/>
@@ -81,7 +81,7 @@ const RegisterPage = () => {
             <AuthInputForm errorMessage={errors.confirmPassword?.message} inputForm={<Input {...register("confirmPassword")} label='Confirm Password' type="password" name="confirmPassword" id="confirmPassword" required  />}/>   
             <ButtonAuthSubmit loadingSubmit={loadingSubmitRegister} submitText="Sign Up"/>
           </form>
-          <p className="mt-10 relative right-8 text-center text-sm/6 text-gray-500">
+          <p className="mt-10  text-center text-sm/6 text-gray-500 ">
             Already have an account?
             <Link href='/login' className="font-semibold text-indigo-600 hover:text-indigo-500"> Click here!</Link>      
           </p>
