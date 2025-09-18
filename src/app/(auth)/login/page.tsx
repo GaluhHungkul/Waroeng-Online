@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form'
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import Input from '@/components/tags/Input'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
 import GoogleLoginButton from '@/components/tags/GoogleLoginButton'
 import AuthInputForm from '@/components/tags/AuthInputForm'
 import ButtonAuthSubmit from '@/components/tags/ButtonAuthSubmit'
@@ -39,25 +39,21 @@ const LoginPage = () => {
         email, password
       })      
       
-      if(!res?.ok) {
-        console.log("Error : " , res?.error)
-        setLoadingSubmitLogin(false)
-        toast.dismiss(loadingToast)      
-        toast.error("Login gagal")
-        return
-      } 
+      if(!res?.ok) throw new Error(`${res?.error}`)
+      
 
       reset()
       toast.success("Login berhasil")
-      const redirectingLoadingToast = toast.loading("Redirecting...")
-      setTimeout(() => {
-        toast.dismiss(redirectingLoadingToast)
-        router.push('/');
-      }, 500);
+      router.push('/');
 
     } catch (error) {
-      toast.error("Terjadi kesalahan ketika mengirim data")
-      console.error('Error:', error);
+      let errorMessage = "Login gagal"
+        if (error instanceof Error) {
+          errorMessage = error.message;
+        } else if (typeof error === "string") {
+          errorMessage = error;
+        }
+      toast.error(`Login gagal : ${errorMessage}`)
     } finally {
       toast.dismiss(loadingToast)       
       setLoadingSubmitLogin(false);
