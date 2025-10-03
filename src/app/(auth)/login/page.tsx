@@ -30,7 +30,7 @@ const LoginPage = () => {
 
   const [loadingSubmitLogin, setLoadingSubmitLogin] = useState<boolean>(false)
 
-  const myHandleSubmit = async ({password, email}:LoginSchema) => {             
+  const myHandleSubmit = async ({password, email}:LoginSchema) => {
     const loadingToast = toast.loading("Memproses data login...")
     try {
       setLoadingSubmitLogin(true);    
@@ -39,11 +39,13 @@ const LoginPage = () => {
         email, password
       })      
       
-      if(!res?.ok) throw new Error(`${res?.error}`)
-      
+      if(!res?.ok) throw new Error(`${res?.error}`)      
 
       reset()
       toast.success("Login berhasil")
+      toast.loading("Redirecting...", {
+        duration : 1
+      })
       router.push('/');
 
     } catch (error) {

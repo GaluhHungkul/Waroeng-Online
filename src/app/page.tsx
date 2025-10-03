@@ -1,4 +1,3 @@
-import Banner from "@/components/dashboard/Banner";
 import dynamic from "next/dynamic";
 const ListProducts = dynamic(() => import("@/components/common/ListProducts")) ;
 
@@ -15,14 +14,14 @@ const getProducts = async () => {
 };
 
 
-export default async function Home() {
+export default async function Home() {  
 
   
   const { products=[] } = await getProducts();
 
   return (
     <div className="min-h-screen h-max mx-4 lg:mx-16 ">
-      <Banner />
+      {/* <Banner /> */}
       <h1 className="mt-5 lg:mt-10 text-xl  lg:text-2xl font-bold text-black lg:mb-4">
         Rekomendasi Product
       </h1>
