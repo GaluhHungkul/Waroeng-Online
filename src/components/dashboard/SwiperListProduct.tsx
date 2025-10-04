@@ -7,15 +7,16 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import { Autoplay, Pagination } from "swiper/modules";
 import ProductCard from "../common/ProductCard";
+import SkeletonSwiperListProduct from "../skeleton/SkeletonSwiperListProduct";
 
-const SwiperListProduct = ({ title } : { title : string }) => {
+const SwiperListProduct = ({ title, endpoint, queries } : { title : string, endpoint? : string, queries? : string }) => {
 
     const { data, isPending } = useProductsQuery({
-        key : "rekomendasi-product"
+        queryKey : title,
+        endpoint, queries
     })    
 
-    if(isPending) return <p>Loading...</p>
-    console.log(data)
+    if(isPending) return <SkeletonSwiperListProduct />
 
   return (
     <div className="pt-5">
@@ -30,14 +31,14 @@ const SwiperListProduct = ({ title } : { title : string }) => {
                 slidesPerView : 3 
             },
             1024: {
-                slidesPerView : 4
+                slidesPerView : 5
             }
         }}
         autoplay={{ delay : 1000, disableOnInteraction : false }}
         speed={800}
         >
             {data?.products.map((product) => (
-            <SwiperSlide key={product._id} className="mb-10">
+            <SwiperSlide key={product._id} className="mb-10 lg:mb-14">
                 <ProductCard product={product}/>
             </SwiperSlide>
             ))}

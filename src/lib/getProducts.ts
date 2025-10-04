@@ -8,13 +8,13 @@ type useProdctsQueryReturn  = {
 }
 
 export const useProductsQuery = ({
-    key, route = "", queries = ""
-} : { key : string; route? : string, queries? : string  }) => {
+    queryKey, endpoint = "", queries = ""
+} : { queryKey : string; endpoint? : string, queries? : string  }) => {
     return useQuery({
-        queryKey : ["products", key],
+        queryKey : ["products", queryKey],
         queryFn : async () : Promise<useProdctsQueryReturn | null>=>   {
             try {
-                const res = await fetch(`/api/products/${route}${queries}`)
+                const res = await fetch(`/api/products/${endpoint}${queries}`)
                 if(!res.ok) throw new Error("Failed to get products")
                 return res.json()
             } catch (error) {
