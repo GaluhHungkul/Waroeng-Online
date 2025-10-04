@@ -1,10 +1,8 @@
 "use client";
-import Image from "next/image";
 import { Product } from "@/types/product";
-import Link from "next/link";
-import CurrencyFormatter from "../CurrencyFormatter";
 import { motion } from "framer-motion";
 import { useMemo } from "react";
+import ProductCard from "./ProductCard";
 
 
 const ListProducts = ({ products, similar=false } :{ products: Product[] | undefined, similar? : boolean }) => {
@@ -18,11 +16,6 @@ const ListProducts = ({ products, similar=false } :{ products: Product[] | undef
     }
   }
 
-  const childVariants = {
-    hidden : { opacity : 0, y : -10 },
-    show : { opacity : 1, y : 0 }
-  }
-
   const productsMapping = useMemo(() => {
     return (  
     <motion.div 
@@ -30,36 +23,7 @@ const ListProducts = ({ products, similar=false } :{ products: Product[] | undef
     initial="hidden"
     animate="show"
     className={`grid grid-cols-2 mt-2 mb-10 gap-3 md:grid-cols-3 lg:grid-cols-4 lg:gap-5 lg:mt-4`}>
-      {products?.map((product) => (
-        <motion.div
-        variants={childVariants}
-        key={product._id}
-        className="relative lg:w-full flex flex-col items-center min-h-80 bg-white border border-gray-300 rounded overflow-hidden  shadow"
-        >
-          <section className="relative aspect-[1/1] w-full">
-            <Image
-              src={product?.img}
-              alt={product?.name}
-              fill
-              sizes="50vw"
-              className="object-center object-cover"
-              />
-          </section>
-          <ul className=" py-2  text-black px-4  text-sm w-full ">
-            {!similar && <li className="italic font-semibold mb-2 text-gray-700">{product?.category}</li>}
-            <Link href={`/products/${product._id}`} className="font-bold mb-1">
-              {product?.name}
-            </Link>
-            <li className="text-gray-500">
-            <CurrencyFormatter amount={product.price} />
-            </li>
-            <li className="text-sm">
-              {product?.rate?.value} ⭐ | {product?.rate?.count} reviews
-            </li>
-            <li className="text-gray-800">Stock : {product?.stock}</li>
-          </ul>
-        </motion.div>
-      ))}
+      {products?.map((product) => <ProductCard similar={similar} product={product} key={product._id}/>)}
     </motion.div>
   );
   },[products])
