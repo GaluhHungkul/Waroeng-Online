@@ -1,22 +1,21 @@
 "use client"
 
-import { useProductsQuery } from "@/lib/getProducts"
-
 import { Swiper, SwiperSlide } from "swiper/react"
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Autoplay, Pagination } from "swiper/modules";
 import ProductCard from "../common/ProductCard";
 import SkeletonSwiperListProduct from "../skeleton/SkeletonSwiperListProduct";
+import { useProductsQuery } from "@/api/productApi";
 
-const SwiperListProduct = ({ title, endpoint, queries } : { title : string, endpoint? : string, queries? : string }) => {
+const SwiperListProduct = ({ title, endpoint, queries, queryKey } : { title : string, endpoint? : string, queries? : string, queryKey : string }) => {
 
     const { data, isPending } = useProductsQuery({
-        queryKey : title,
+        queryKey,
         endpoint, queries
     })    
 
-    if(isPending) return <SkeletonSwiperListProduct />
+    if(isPending) return <SkeletonSwiperListProduct />  
 
   return (
     <div className="pt-5">
@@ -38,9 +37,9 @@ const SwiperListProduct = ({ title, endpoint, queries } : { title : string, endp
         speed={800}
         >
             {data?.products.map((product) => (
-            <SwiperSlide key={product._id} className="mb-10 lg:mb-14">
-                <ProductCard product={product}/>
-            </SwiperSlide>
+                <SwiperSlide key={product.id} className="mb-10 lg:mb-14">
+                    <ProductCard product={product}/>
+                </SwiperSlide>
             ))}
       </Swiper>
     </div>

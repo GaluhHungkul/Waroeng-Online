@@ -1,12 +1,11 @@
 "use client";
-import { Product } from "@/types/product";
+import { Product } from "@/types/api_response";
 import { motion } from "framer-motion";
 import { useMemo } from "react";
 import ProductCard from "./ProductCard";
 
 
-const ListProducts = ({ products, similar=false } :{ products: Product[] | undefined, similar? : boolean }) => {
-  
+const ListProducts = ({ products, similar=false } :{ products: Product[] | undefined, similar? : boolean }) => {  
 
   const parentVariants = {
     hidden : { opacity : 0 },
@@ -23,7 +22,7 @@ const ListProducts = ({ products, similar=false } :{ products: Product[] | undef
     initial="hidden"
     animate="show"
     className={`grid grid-cols-2 mt-2 mb-10 gap-3 md:grid-cols-3 lg:grid-cols-4 lg:gap-5 lg:mt-4`}>
-      {products?.map((product) => <ProductCard similar={similar} product={product} key={product._id}/>)}
+      {products?.map((product) => <ProductCard similar={similar} product={product} key={product.id}/>)}
     </motion.div>
   );
   },[products])

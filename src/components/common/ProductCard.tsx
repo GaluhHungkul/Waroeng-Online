@@ -1,10 +1,10 @@
 "use client"
 
-import { Product } from "@/types/product"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import CurrencyFormatter from "../CurrencyFormatter"
+import { Product } from "@/types/api_response"
 
 
 const ProductCard = ({ product, similar=false } : { product : Product, similar? : boolean }) => {
@@ -21,8 +21,8 @@ const ProductCard = ({ product, similar=false } : { product : Product, similar? 
         >
           <div className="relative aspect-[1/1] w-full">
             <Image
-              src={product?.img}
-              alt={product?.name}
+              src={product?.thumbnail}
+              alt={product?.title}
               fill
               sizes="50vw"
               className="object-center object-cover"
@@ -30,14 +30,14 @@ const ProductCard = ({ product, similar=false } : { product : Product, similar? 
           </div>
           <ul className=" py-2  text-black px-4  text-sm w-full ">
             {!similar && <li className="italic font-semibold mb-2 text-gray-700">{product?.category}</li>}
-            <Link href={`/products/${product._id}`} className="font-bold mb-1">
-              {product?.name}
+            <Link href={`/products/${product.id}`} className="font-bold mb-1">
+              {product?.title}
             </Link>
             <li className="text-gray-500">
             <CurrencyFormatter amount={product.price} />
             </li>
             <li className="text-sm">
-              {product?.rate?.value} ⭐ | {product?.rate?.count} reviews
+              {product?.rating} / 5 ⭐
             </li>
             <li className="text-gray-800">Stock : {product?.stock}</li>
           </ul>

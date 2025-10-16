@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    domains: ['placehold.co', 'via.placeholder.com', "ui-avatars.com"],
+    domains: ['placehold.co', 'via.placeholder.com', "ui-avatars.com", "cdn.dummyjson.com"],
   },
   experimental : {
     viewTransition : true
