@@ -1,11 +1,12 @@
 "use client"
 
 import SkeletonListProducts from "../common/SkeletonListProducts"
-import { useState } from "react";
 import InfiniteScroll from "./InfiniteScroll";
 import { useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import { useProductsQuery } from "@/api/productApi";
+
+const DATA_PER_REQUEST = 12
 
 const ListProducts = dynamic(() => import("../common/ListProducts"))
 
@@ -14,17 +15,19 @@ const ClientProductsPage = () => {
   const searchParams = useSearchParams();
 
   const params = new URLSearchParams(searchParams.toString());
+  const paramsPage = Number(params.get("page")) || 1
+
 
   const { data, isPending, isError, error } = useProductsQuery({
-    queries : params.toString()
+    page : paramsPage
   })
 
-  const [isNextPage, setIsNextPage] = useState<boolean>(false)
   if(isPending) return <SkeletonListProducts />
   if(isError) return <p>Error : {error.message}</p>
 
+
   return (
-      <div className="lg:mr-12 p-2 min-h-screen w-full relative order-2">
+      <div className="lg:mr-12 w-full p-2 min-h-screen relative order-2">
           {isPending ?  <SkeletonListProducts /> 
           :
           <>
@@ -36,7 +39,7 @@ const ClientProductsPage = () => {
             }
           </>
           }
-          {!isPending && <InfiniteScroll params={params} isNextPage={isNextPage} setIsNextPage={setIsNextPage} />}
+          {!isPending && <InfiniteScroll params={params} isShowMore={paramsPage * DATA_PER_REQUEST < (data?.total ?? 194) } paramsPage={paramsPage}  />}
       </div>
   )
 }

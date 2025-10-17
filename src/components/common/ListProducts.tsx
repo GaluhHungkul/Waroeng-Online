@@ -21,7 +21,7 @@ const ListProducts = ({ products, similar=false } :{ products: Product[] | undef
     variants={parentVariants} 
     initial="hidden"
     animate="show"
-    className={`grid grid-cols-2 mt-2 mb-10 gap-3 md:grid-cols-3 lg:grid-cols-5 lg:gap-5 lg:mt-4`}>
+    className={`grid grid-cols-2 mt-2 mb-10 gap-3 md:p-4 md:grid-cols-3 lg:grid-cols-6 lg:gap-5 lg:mt-4`}>
       {products?.map((product) => <ProductCard similar={similar} product={product} key={product.id}/>)}
     </motion.div>
   );

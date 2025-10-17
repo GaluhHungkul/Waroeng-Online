@@ -2,7 +2,7 @@ import Image from "next/image"
 
 const ImageProductCard = ({ thumbnail, title } : { thumbnail : string; title : string }) => {
   return (
-    <div className="relative aspect-[1/1] w-full">
+    <div className="relative aspect-[1/1] w-full bg-gray-200 rounded">
         <Image
           src={thumbnail}
           alt={title}
