@@ -5,6 +5,7 @@ import InfiniteScroll from "./InfiniteScroll";
 import { useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import { useProductsQuery } from "@/api/productApi";
+import Navigasi from "./Navigasi";
 
 const DATA_PER_REQUEST = 12
 
@@ -15,19 +16,28 @@ const ClientProductsPage = () => {
   const searchParams = useSearchParams();
 
   const params = new URLSearchParams(searchParams.toString());
-  const paramsPage = Number(params.get("page")) || 1
 
+  const paramsPage = Number(params.get("page")) || 1
+  const paramsSortBy = params.get("sortBy")
+  const paramsOrder = params.get("order")
+  const paramsCategory =  params.get("category")
 
   const { data, isPending, isError, error } = useProductsQuery({
-    page : paramsPage
-  })
+    page : paramsPage,
+    sortBy : paramsSortBy ?? "",
+    order : paramsOrder ?? "",
+    category : paramsCategory ?? ""
+  }) 
 
   if(isPending) return <SkeletonListProducts />
   if(isError) return <p>Error : {error.message}</p>
 
 
   return (
-      <div className="lg:mr-12 w-full p-2 min-h-screen relative order-2">
+    <>
+      <Navigasi params={params} categorys={[]} />
+      <h1 className="font-bold md:text-lg md:mb-4">All products for you!</h1>
+      <div className="lg:mr-12 w-full min-h-screen relative order-2">
           {isPending ?  <SkeletonListProducts /> 
           :
           <>
@@ -40,7 +50,8 @@ const ClientProductsPage = () => {
           </>
           }
           {!isPending && <InfiniteScroll params={params} isShowMore={paramsPage * DATA_PER_REQUEST < (data?.total ?? 194) } paramsPage={paramsPage}  />}
-      </div>
+        </div>
+      </>
   )
 }
 

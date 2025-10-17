@@ -3,7 +3,7 @@ import ClientProductsPage from "@/components/products/ClientProductsPage";
 const ProductsPage = () => {  
 
   return (
-    <div className="flex flex-col lg:w-[90vw] mx-auto pb-14 lg:pb-32 lg:mt-5 relative lg:min-h-[80vh] lg:flex-row">
+    <div className="lg:w-[90vw] p-4 md:p-8 mx-auto pb-14 lg:pb-32 lg:mt-5 relative lg:min-h-[80vh] lg:flex-row">      
       <ClientProductsPage />
     </div>
   );

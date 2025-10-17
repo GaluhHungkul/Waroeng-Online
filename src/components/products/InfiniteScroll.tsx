@@ -17,7 +17,7 @@ const InfiniteScroll : FC<Props> = ({ params, isShowMore, paramsPage   }) => {
     setLoadingGetShowMore(true)
     params.set("page", (paramsPage + 1).toString())
     router.push(`/products?${params.toString()}`, { scroll : false })
-    setLoadingGetShowMore(false)
+    setLoadingGetShowMore(false)  
   }
 
   if(!isShowMore) return null

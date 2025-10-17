@@ -8,11 +8,11 @@ import ProductCard from "../common/ProductCard";
 import SkeletonSwiperListProduct from "../skeleton/SkeletonSwiperListProduct";
 import { useProductsQuery } from "@/api/productApi";
 
-const SwiperListProduct = ({ title, endpoint, queries, queryKey } : { title : string, endpoint? : string, queries? : string, queryKey : string }) => {
+const SwiperListProduct = ({ title, queries, queryKey } : { title : string, endpoint? : string, queries? : string, queryKey : string }) => {
 
     const { data, isPending } = useProductsQuery({
         queryKey,
-        endpoint, queries
+        queries
     })    
 
     if(isPending) return <SkeletonSwiperListProduct />  

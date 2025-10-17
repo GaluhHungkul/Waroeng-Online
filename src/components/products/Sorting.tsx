@@ -1,65 +1,47 @@
 "use client";
 
-import { useState } from "react";
-import useProducts from "@/zustand/useProducts";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { useRouter } from "next/navigation";
 
-interface OptionType {
-  value: string;
-  label: string;
-}
 
-const options: OptionType[] = [
-  { value: "hargaTertinggi", label: "Dari harga tertinggi" },
-  { value: "hargaTerrendah", label: "Dari harga terendah" },
-  { value: "ratingTertinggi", label: "Dari rating tertinggi" },
-  { value: "ratingTerrendah", label: "Dari rating terendah" },
+const options = [
+  { value: "price,desc", label: "Dari harga tertinggi" },
+  { value: "price,asc", label: "Dari harga terendah" },
+  { value: "rating,desc", label: "Dari rating tertinggi" },
+  { value: "rating,asc", label: "Dari rating terendah" },
 ];
 
-const Sorting = () => {
-  const { products, setProducts } = useProducts();
-  const [userSorting, setUserSorting] = useState<OptionType | null>(null);
+const Sorting = ({ params } : { params : URLSearchParams }) => {
 
-  const handleSorting = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = event.target.value;
-    const selectedOption = options.find((option) => option.value === value);
+  const router = useRouter()
 
-    if (!selectedOption) return;
-
-    const sortedProducts = [...products];
-
-    switch (selectedOption.value) {
-      case "hargaTertinggi":
-        setProducts(sortedProducts.sort((a, b) => b.price - a.price));
-        break;
-      case "hargaTerrendah":
-        setProducts(sortedProducts.sort((a, b) => a.price - b.price));
-        break;
-      case "ratingTertinggi":
-        setProducts(sortedProducts.sort((a, b) => b.rate.value - a.rate.value));
-        break;
-      case "ratingTerrendah":
-        setProducts(sortedProducts.sort((a, b) => a.rate.value - b.rate.value));
-        break;
-    }
-
-    setUserSorting(selectedOption);
-  };
+  const handleSort = async (val:string) => {
+    const [sortBy, order] = val.split(",")
+    params.set("sortBy", sortBy)
+    params.set("order", order)
+    router.push(`/products?${params.toString()}` , { scroll : true })
+  }
 
   return (
-    <select
-      onChange={handleSorting}
-      value={userSorting?.value || ""}
-      className="rounded px-1 py-1 text-gray-400 font-semibold text-[12px] lg:text-base w-4/5 "
-    >
-      <option value="" disabled>
-        Urutkan
-      </option>
-      {options.map((item, index) => (
-        <option key={index} value={item.value}>
-          {item.label}
-        </option>
-      ))}
-    </select>
+    <Select onValueChange={handleSort}>
+      <SelectTrigger className="w-[180px]">
+        <SelectValue placeholder="Sort by" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          {options.map(option => (
+            <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>
+          ))}
+        </SelectGroup>
+      </SelectContent>
+    </Select>
   );
 };
 
