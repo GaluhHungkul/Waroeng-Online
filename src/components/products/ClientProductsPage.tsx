@@ -35,23 +35,23 @@ const ClientProductsPage = () => {
 
   return (
     <>
-      <Navigasi params={params} categorys={[]} />
+      <Navigasi params={params} />
       <h1 className="font-bold md:text-lg md:mb-4">All products for you!</h1>
       <div className="lg:mr-12 w-full min-h-screen relative order-2">
-          {isPending ?  <SkeletonListProducts /> 
+        {isPending ?  <SkeletonListProducts /> 
+        :
+        <>
+          {data.products.length ? <ListProducts products={data.products} /> 
           :
-          <>
-            {data.products.length ? <ListProducts products={data.products} /> 
-            :
-            <div className="text-center content-center font-bold text-2xl h-[50vh]">
-              Products tidak tersedia
-            </div>
-            }
-          </>
+          <div className="text-center content-center font-bold text-2xl h-[50vh]">
+            Products tidak tersedia
+          </div>
           }
-          {!isPending && <InfiniteScroll params={params} isShowMore={paramsPage * DATA_PER_REQUEST < (data?.total ?? 194) } paramsPage={paramsPage}  />}
-        </div>
-      </>
+        </>
+        }
+        {!isPending && <InfiniteScroll params={params} isShowMore={paramsPage * DATA_PER_REQUEST < (data?.total ?? 194) } paramsPage={paramsPage}  />}
+      </div>
+    </>
   )
 }
 

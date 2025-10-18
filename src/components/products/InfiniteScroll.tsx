@@ -1,4 +1,4 @@
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {  FC, useState } from "react"
 
 type Props = {
@@ -12,11 +12,12 @@ const InfiniteScroll : FC<Props> = ({ params, isShowMore, paramsPage   }) => {
   const [loadingGetShowMore, setLoadingGetShowMore] = useState<boolean>(false)
 
   const router = useRouter()
+  const pathname = usePathname()
 
   const handleShowMoreProducts = async () => {
     setLoadingGetShowMore(true)
     params.set("page", (paramsPage + 1).toString())
-    router.push(`/products?${params.toString()}`, { scroll : false })
+    router.push(`${pathname}?${params.toString()}`, { scroll : false })
     setLoadingGetShowMore(false)  
   }
 

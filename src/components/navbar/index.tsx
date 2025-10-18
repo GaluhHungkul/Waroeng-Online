@@ -7,8 +7,8 @@ import { usePathname } from "next/navigation";
 import useUser from "@/zustand/useUser";
 import { useSession } from "next-auth/react";
 import MobileSheet from "./MobileSheet";
-import TitleAndSearch from "./TitleAndSearch";
 import Navigation from "./Navigation";
+import WaroengLogo from "../common/WaroengLogo";
 
 const Navbar = () => {
   const pathname = usePathname()
@@ -29,7 +29,7 @@ const Navbar = () => {
 
   return (
     <nav className="flex h-16 py-2 justify-between bg-primary sticky backdrop-blur-md top-0 z-[999] items-center lg:h-20 px-5 lg:px-10  mx-auto">
-      <TitleAndSearch />
+      <WaroengLogo />
       <MobileSheet />
       <Navigation user={user} loadingGetUser={status === "loading"} />
     </nav>

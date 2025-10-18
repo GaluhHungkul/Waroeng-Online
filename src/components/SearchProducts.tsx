@@ -2,30 +2,33 @@
 
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
+import { Input } from "./ui/input";
+import { Search } from "lucide-react";
 
-const SearchProducts = () => {
+const SearchProducts = ({ params, searchProductsPage } : { params : URLSearchParams, searchProductsPage : boolean }) => {
   const router = useRouter();
 
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   const handleSearch = (e: FormEvent) => {
     e.preventDefault();
-    if (!searchQuery.trim().length) router.replace("/products");
-    router.replace(`/products?search=${searchQuery}`);
+    if (!searchQuery.trim().length) router.push("/products");
+    router.replace(`/products/search?q=${searchQuery}`);
   };
 
   return (
-    <form onSubmit={handleSearch} className="flex gap-2 text-[12px]">
-      <input
+    <form onSubmit={handleSearch} className="relative bg-">
+      <Input
         type="text"
+        className="text-gray-700"
         placeholder="Search Products"
-        value={searchQuery}
+        defaultValue={!searchProductsPage ? "" : params.get("q") || "phone"}
         onChange={(e) => setSearchQuery(e.target.value)}
-        className="rounded py-1 px-2  lg:px-4  lg:py-1 focus:outline-none lg:text-lg md:w-52 lg:w-96"
       />
-      <button className="bg-white font-bold px-2 lg:px-4 lg:py-1 rounded lg:text-lg hover:bg-white/70 active:bg-white/50 ">
-        Search
+      <button className="absolute right-4 top-1/2 -translate-y-1/2 ">
+        <Search color="#808080"/>
       </button>
+        
     </form>
   );
 };

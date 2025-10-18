@@ -14,7 +14,7 @@ const ProductCard = ({ product, similar=false } : { product : Product, similar? 
     <motion.section
     className="relative lg:w-full flex flex-col items-center min-h-80 bg-white rounded overflow-hidden  shadow"
     >
-      <Link href={`/products/${product.id}`} className="size-full">
+      <Link href={`/products/detail/${product.id}`} className="size-full">
         <ImageProductCard thumbnail={product.thumbnail} title={product.title}/>
         <DetailProductCard product={product} similar={similar}/>
       </Link>

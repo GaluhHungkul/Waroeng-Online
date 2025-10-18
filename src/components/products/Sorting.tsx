@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 
 const options = [
@@ -21,12 +21,13 @@ const options = [
 const Sorting = ({ params } : { params : URLSearchParams }) => {
 
   const router = useRouter()
+  const pathname = usePathname()
 
   const handleSort = async (val:string) => {
     const [sortBy, order] = val.split(",")
     params.set("sortBy", sortBy)
     params.set("order", order)
-    router.push(`/products?${params.toString()}` , { scroll : true })
+    router.push(`${pathname}?${params.toString()}` , { scroll : true })
   }
 
   return (
