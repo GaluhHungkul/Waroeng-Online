@@ -1,6 +1,6 @@
 "use client"
 
-import SkeletonListProducts from "../common/SkeletonListProducts"
+import SkeletonListProducts from "../skeleton/SkeletonListProducts"
 import InfiniteScroll from "./InfiniteScroll";
 import { useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
@@ -38,8 +38,6 @@ const ClientProductsPage = () => {
       <Navigasi params={params} />
       <h1 className="font-bold md:text-lg md:mb-4">All products for you!</h1>
       <div className="lg:mr-12 w-full min-h-screen relative order-2">
-        {isPending ?  <SkeletonListProducts /> 
-        :
         <>
           {data.products.length ? <ListProducts products={data.products} /> 
           :
@@ -48,7 +46,6 @@ const ClientProductsPage = () => {
           </div>
           }
         </>
-        }
         {!isPending && <InfiniteScroll params={params} isShowMore={paramsPage * DATA_PER_REQUEST < (data?.total ?? 194) } paramsPage={paramsPage}  />}
       </div>
     </>
