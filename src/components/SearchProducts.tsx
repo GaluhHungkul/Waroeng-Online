@@ -17,10 +17,10 @@ const SearchProducts = ({ params, searchProductsPage } : { params : URLSearchPar
   };
 
   return (
-    <form onSubmit={handleSearch} className="relative bg-">
+    <form onSubmit={handleSearch} className="relative lg:w-1/3">
       <Input
         type="text"
-        className="text-gray-700"
+        className="text-gray-700 lg:text-lg lg:py-6 focus:border-blue-300"
         placeholder="Search Products"
         defaultValue={!searchProductsPage ? "" : params.get("q") || "phone"}
         onChange={(e) => setSearchQuery(e.target.value)}

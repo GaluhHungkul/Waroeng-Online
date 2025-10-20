@@ -28,7 +28,7 @@ const MobileSheet = () => {
   return (
     <Sheet open={open}  onOpenChange={setOpen}>
       <SheetTrigger asChild className="cursor-pointer lg:hidden">
-        <Menu size={32} color="white"/>
+        <Menu size={32} color="black" strokeWidth={3}/>
       </SheetTrigger>
       <SheetContent  className="z-[999] flex flex-col items-end" >
         <SheetClose/>

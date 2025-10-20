@@ -36,7 +36,7 @@ const ClientProductsPage = () => {
   return (
     <>
       <Navigasi params={params} />
-      <h1 className="font-bold md:text-lg md:mb-4">All products for you!</h1>
+      <h1 className="font-bold md:text-lg md:mb-4 lg:text-xl lg:mb-8">All products for you!</h1>
       <div className="lg:mr-12 w-full min-h-screen relative order-2">
         <>
           {data.products.length ? <ListProducts products={data.products} /> 

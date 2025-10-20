@@ -28,10 +28,12 @@ const Navbar = () => {
   if (disableNavbar.includes(pathname)) return null;
 
   return (
-    <nav className="flex h-16 py-2 justify-between bg-primary sticky backdrop-blur-md top-0 z-[999] items-center lg:h-20 px-5 lg:px-10  mx-auto">
-      <WaroengLogo />
-      <MobileSheet />
-      <Navigation user={user} loadingGetUser={status === "loading"} />
+    <nav className="border-b border-gray-300 px-4 md:px-0 bg-white sticky top-0 z-[999]">
+      <div className="flex h-16 md:h-24 justify-between  items-center md:w-4/5 md:mx-auto ">
+        <WaroengLogo />
+        <MobileSheet />
+        <Navigation user={user} loadingGetUser={status === "loading"} />
+      </div>
     </nav>
   );
 };
