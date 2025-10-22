@@ -35,7 +35,7 @@ const HistoryShopping = () => {
   },[])
 
   return (
-    <div className='w-full'>
+    <div>
         {loadingGetHistoryShopping ? <SkeletonHistoryShopping /> : 
         <>
         {historyShopping?.length 

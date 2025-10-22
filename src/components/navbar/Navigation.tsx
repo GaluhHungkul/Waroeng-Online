@@ -1,6 +1,7 @@
 import { TypeUser } from "@/types/user"
 import Link from "next/link"
 import { FC } from "react"
+import UserAvatar from "../profile/UserAvatar"
 
 const navigation = [
   {
@@ -36,7 +37,7 @@ const Navigation : FC<Props> = ({ loadingGetUser, user }) => {
       <div className="order-1 lg:order-3"> {user 
         ? 
           <Link href={`/profile/account`}  >
-            <div className="size-10 cursor-pointer bg-black rounded-full"></div> 
+            <UserAvatar username={user.username} navbar/>
           </Link>
         : 
         <Link className="hover:text-gray-300 hover:border-b border-white  font-bold text-black active:text-gray-400 py-1" href="/login" >
