@@ -1,7 +1,7 @@
 import React from 'react'
 import ProfileNavbar from '@/components/profile/ProfileSidebar'
 
-const ProfileLlayout = ({ children } : { children : React.ReactNode} ) => {
+const ProfileLayout = ({ children } : { children : React.ReactNode} ) => {
   return (
     <div className='flex'>
       <ProfileNavbar />
@@ -10,4 +10,4 @@ const ProfileLlayout = ({ children } : { children : React.ReactNode} ) => {
   )
 }
 
-export default ProfileLlayout
+export default ProfileLayout
