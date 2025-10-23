@@ -16,29 +16,26 @@ export async function POST(req: NextRequest) {
   try {
     await ConnectToDatabase();
 
-    const { product, quantity } = await req.json();
-
-    if (!(product)) return NextResponse.json(
+    const { id, price, name, img, quantity } = await req.json();
+    if (!(id && price && name && img && quantity)) return NextResponse.json(
       { message: "Invalid checkout data" },
       { status: 400 }
-    );
-    
-
+    );    
+      
     const currUser = await User.findById(token.id);
-
     if (!currUser) return NextResponse.json({ message: `There is no account with username ${token.username}` },{ status: 404 });
 
     //? New Order handle
 
     const orderedProduct = {
-      productId : product._id,
-      price :product.price,
-      name : product.name, 
-      img : product.img,
+      id : id,
+      price :price,
+      name : name, 
+      img : img,
       quantity
     }
 
-    const totalPrice = product.price * quantity
+    const totalPrice = price * quantity
 
     const newOrder = new Order({
       userId : currUser._id,

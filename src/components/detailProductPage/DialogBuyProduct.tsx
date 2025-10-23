@@ -14,7 +14,7 @@ import DialogControlQty from "./DialogControlQty"
 import DialogTotalPrice from "./DialogTotalPrice"
 import { toast } from "sonner"
 
-const DialogBuyProduct = ({ product } : { product : DetailProduct}) => {
+const DialogBuyProduct = ({ product } : { product : DetailProduct }) => {
 
 
   const [open, setOpen] = useState(false)
@@ -26,13 +26,17 @@ const DialogBuyProduct = ({ product } : { product : DetailProduct}) => {
     const loadingToast = toast.loading("Checkout...")
     try {
       setLoadingCheckout(true)
+      const { id, title, price, thumbnail } = product
       const res = await fetch("/api/products/checkout", {
         method : "POST",
         headers : {
           "Content-Type" : "application/json"
         },
         body : JSON.stringify({ 
-          product, quantity
+          id, price, 
+          name : title,
+          img : thumbnail,
+          quantity
         })
       })
       if(!res.ok) throw new Error("Failed to checkout")

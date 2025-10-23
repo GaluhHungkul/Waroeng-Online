@@ -1,15 +1,9 @@
 import { TypeUser } from "./user";
 
 export type Order = {
+  _id : string
   userId : TypeUser
-  orderedProduct : {
-    productId : string
-    price : number
-    name : string
-    img : string;
-    quantity : number
-    _id : string
-  }
+  orderedProduct : OrderedProduct
   totalPrice: number
   paymentMethod: "COD" | "Transfer" | "Credit Card" | "PayPal"
   paymentStatus: "unpaid" | "paid"
@@ -17,3 +11,11 @@ export type Order = {
   createdAt : Date;
   updatedAt : Date
 }
+
+type OrderedProduct = {
+    productId : string
+    price : number
+    name : string
+    img : string;
+    quantity : number
+  }

@@ -42,10 +42,7 @@ const LoginPage = () => {
       if(!res?.ok) throw new Error(`${res?.error}`)      
 
       reset()
-      toast.success("Login berhasil")
-      toast.loading("Redirecting...", {
-        duration : 1
-      })
+      toast.success("Login berhasil. Redirecting...")
       router.push('/');
 
     } catch (error) {

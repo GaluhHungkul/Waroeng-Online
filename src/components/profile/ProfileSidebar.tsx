@@ -39,7 +39,7 @@ const ProfileSideBar = () => {
       </button>
       <div className="lg:my-5 items-center flex-row-reverse justify-end flex lg:flex-col w-full">
         {sideBarNavigation.map((item) => (
-          <Link href={item.href} key={item.name} className={`flex-1 duration-300 relative ${pathname == item.href ? "bg-black lg:bg-primary-orange text-white " : "bg-white  text-primary-orange hover:bg-primary-orange/70 hover:text-white"} font-semibold w-full`}>
+          <Link href={item.href} key={item.name} className={`flex-1 duration-300 relative ${pathname == item.href ? "bg-black lg:bg-primary-orange text-white " : "bg-gray-200 text-primary-orange hover:bg-primary-orange/70 hover:text-white"} font-semibold w-full`}>
             <div className={`my-2 flex items-center justify-center lg:justify-start`}>
             <item.icon size={24} strokeWidth={3} className="ml-7 w-max mr-5 text-blue-500" /> 
             {showSideBar && 
@@ -48,7 +48,7 @@ const ProfileSideBar = () => {
               animate={{ opacity : 1, width : 'auto' }}
               exit={{ opacity : 0, width : 0 }}
               transition={{ duration : .2, delay : .5 }}
-              className="whitespace-nowrap ">
+              className="whitespace-nowrap">
                 {item.name}
               </motion.span>}
             </div>
