@@ -42,6 +42,7 @@ export type DetailProduct = {
   };
   images: string[];
   thumbnail: string;
+  priceAfterDiscount : number
 }
 
 

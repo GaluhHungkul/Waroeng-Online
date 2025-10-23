@@ -23,7 +23,10 @@ export const useDetailProductQuery = ({ id } : { id : string }) => useQuery({
         if(res.status !== 200) throw new Error("Failed get products data")
         const similarProducts = await getSimilarProducts(res.data.category, id)
         return {
-            detailProduct : res.data,
+            detailProduct : {
+                ...res.data, 
+                priceAfterDiscount : res.data.price - (res.data.price * res.data.discountPercentage / 100)
+            },
             similarProducts
         }
     }

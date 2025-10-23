@@ -1,8 +1,7 @@
 import CurrencyFormatter from "../CurrencyFormatter"
 
-const PriceAndDiscount = ({ price, discountPercentage=0, className="" } : { price : number; discountPercentage : number; className? : string }) => {
+const PriceAndDiscount = ({ price, className, priceAfterDiscount } : { price : number; className? : string; priceAfterDiscount : number }) => {
 
-    const priceAfterDiscount = price - (price * discountPercentage / 100)
 
   return (
     <div className={`text-4xl text-gray-700 flex items-center gap-5 lg:text-6xl ${className}`}>

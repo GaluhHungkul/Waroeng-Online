@@ -16,8 +16,8 @@ const ThumbnailAndImagesProduct : FC<Props> = ({ images, title }) => {
             <Image src={currentImage || 'https://placehold.co/200x200.png'} alt={title ?? ""} fill sizes='90vw' className='object-center object-cover rounded'/>
         </section>
         <section className='flex gap-2.5 rounded md:gap-2'>
-            {images.slice(0,4).map(img => (
-                <Image onClick={() => setCurrentImage(img)} src={img} className={`object-cover object-center aspect-[1/1] w-20 md:w-[85px] cursor-pointer lg:w-[100px] rounded bg-gray-200 duration-200  ${currentImage === img ? " -translate-y- bg-primary-orange shadow-md shadow-black" : ""}`} alt={title} key={img} width={700} height={700}/>
+            {images.slice(0,4).map((img, i) => (
+                <Image onClick={() => setCurrentImage(img)} src={img} className={`object-cover object-center aspect-[1/1] w-20 md:w-[85px] cursor-pointer lg:w-[97px] rounded bg-gray-200 duration-200  ${currentImage === img ? " -translate-y- bg-primary-orange shadow-md shadow-black" : ""}`} alt={`${title}'s ${i + 1}${i + 1 === 1 ? "st" : (i + 1 === 2 ? "nd" : (i + 1 === 3 ? "rd" : "th"))} image`} key={img} width={700} height={700}/>
             ))}
         </section>
     </div>
