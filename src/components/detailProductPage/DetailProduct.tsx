@@ -1,21 +1,22 @@
-import { Product } from '@/types/product'
-import Image from 'next/image'
-import React from 'react'
-import CurrencyFormatter from '../CurrencyFormatter'
 import DialogBuyProduct from './DialogBuyProduct'
+import { DetailProduct as Product } from '@/types/api_response'
+import ThumbnailAndImagesProduct from './ThumbnailAndImagesProduct'
+import PriceAndDiscount from './PriceAndDiscount'
 
-const DetailProduct = ({ product } : { product : Product | null | undefined }) => {
+const DetailProduct = ({ product } : { product : Product }) => { 
+
   return (
-    <div className='mb-20 relative md:flex lg:mb-40 w-[80vw] '>
-      <section className='relative aspect-[1/1] w-full lg:flex-1'>
-        <Image src={product?.img || 'https://placehold.co/200x200.png'} alt={product?.name ?? ""} fill sizes='90vw' className='object-center object-cover rounded'/>
+    <div className='mb-10 relative md:flex lg:mb-40'>
+      <ThumbnailAndImagesProduct images={product.images} title={product.title} />
+      <section className='py-4 relative space-y-3 font-bold lg:text-xl lg:flex-2 lg:pl-8 lg:pt-0 border-b border-gray-300 text-lg'>
+        <h1 className='text-gray-700 text-2xl'>{product?.title}</h1>
+        <p>{product?.rating} / 5 ⭐</p>
+        <p className='font-normal text-gray-700'>{product?.description}</p>
+        <PriceAndDiscount price={product.price} discountPercentage={product.discountPercentage}/>
       </section>
-      <section className='p-4 relative flex flex-col gap-3 font-bold lg:text-xl lg:flex-2 lg:pl-8 lg:pt-0'>
-        <p className='font-semibold text-gray-500'>{product?.category}</p>
-        <p>Nama Product : <span className='font-normal text-gray-500'>{product?.name}</span></p>
-        <p>Harga : <span className='font-normal text-gray-500'><CurrencyFormatter amount={product?.price || 0}/></span></p>
-        <p>Deskripsi : <span className='font-normal text-gray-500'>{product?.description}</span></p>
-        <p>Rate : <span className='font-normal text-gray-500'>{product?.rate.value}</span> ⭐ | <span className='font-normal text-gray-500'>{product?.rate.count} reviews</span>  </p>
+      <section className='py-4 relative space-y-3 font-bold lg:text-xl lg:flex-2 lg:pl-8 lg:pt-0 border-b border-gray-300 text-gray-600'>
+        <p className='flex justify-between'>Category <span className='text-gray-400'>{product.category}</span></p>
+        <p className='flex justify-between'>Tags <span className='text-gray-400'>{product.tags.join(", ")}</span></p>
       </section>
       <DialogBuyProduct product={product}/>
     </div>

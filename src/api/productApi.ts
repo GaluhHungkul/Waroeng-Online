@@ -1,4 +1,4 @@
-import { ProductsResponse } from "@/types/api_response";
+import { DetailProduct, Product, ProductsResponse } from "@/types/api_response";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios"
 
@@ -16,6 +16,19 @@ export const useProductsQuery = ({ queryKey="", page=1, sortBy="", order="", cat
     }
 })
 
+export const useDetailProductQuery = ({ id } : { id : string }) => useQuery({
+    queryKey : ["product", id ],
+    queryFn : async () => {
+        const res = await axios.get<DetailProduct>(`${process.env.NEXT_PUBLIC_DUMMY_JSON_PRODUCT_API}/${id}`)
+        if(res.status !== 200) throw new Error("Failed get products data")
+        const similarProducts = await getSimilarProducts(res.data.category, id)
+        return {
+            detailProduct : res.data,
+            similarProducts
+        }
+    }
+})
+
 export const useSearchProductsQuery = ({
     q="", page=1, sortBy="", order=""
 }: { q : string, page? : number; sortBy? : string; order? : string }) => useQuery({
@@ -29,3 +42,9 @@ export const useSearchProductsQuery = ({
         return res.data
     }
 })
+
+const getSimilarProducts = async (category:string, id:string) : Promise<Product[]> => {
+    const res = await axios.get<ProductsResponse>(`${process.env.NEXT_PUBLIC_DUMMY_JSON_PRODUCT_API}/category/${category}?limit=9`)
+    if(res.status !== 200) throw new Error("Failed get similar products data")
+    return res.data.products.filter(p => p.id !== Number(id)).slice(0,8)
+}

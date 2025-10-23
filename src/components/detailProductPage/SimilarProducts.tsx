@@ -1,4 +1,4 @@
-import { Product } from '@/types/product'
+import { Product } from '@/types/api_response'
 import ListProducts from '../common/ListProducts'
 
 const SimilarProducts = ({ products } : { products : Product[] | undefined }) => {

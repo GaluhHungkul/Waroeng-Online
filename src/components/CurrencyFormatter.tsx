@@ -1,10 +1,10 @@
-const CurrencyFormatter = (props : { amount : number }) => {
+const CurrencyFormatter = ({ amount, lineThrough=false } : { amount : number; lineThrough? : boolean }) => {
   const formatCurrency = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
-  }).format(props.amount);
+  }).format(amount);
   
-    return <span>{formatCurrency}</span>;
+    return <span className={lineThrough ? "line-through text-gray-400 text-2xl" : ""}>{formatCurrency}</span>;
   };
 
 export default CurrencyFormatter

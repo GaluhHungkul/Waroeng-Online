@@ -9,13 +9,13 @@ import {
 } from "@/components/ui/dialog"
 import { useState } from "react"
 import { Button } from "../ui/button"
-import { Product } from "@/types/product"
+import { DetailProduct } from "@/types/api_response"
 import DialogDetailProduct from "./DialogDetailProduct"
 import DialogControlQty from "./DialogControlQty"
 import DialogTotalPrice from "./DialogTotalPrice"
 import { toast } from "sonner"
 
-const DialogBuyProduct = ({ product } : { product : Product | null | undefined}) => {
+const DialogBuyProduct = ({ product } : { product : DetailProduct | null | undefined}) => {
 
 
   const [open, setOpen] = useState(false)
@@ -51,6 +51,7 @@ const DialogBuyProduct = ({ product } : { product : Product | null | undefined})
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
+
       <DialogTrigger asChild className="mt-4 md:absolute md:-bottom-12 md:text-lg lg:text-xl lg:py-5 w-full lg:-bottom-16"><Button>Buy</Button></DialogTrigger>
       <DialogContent className="w-4/5 rounded">
         <DialogHeader>
@@ -59,7 +60,7 @@ const DialogBuyProduct = ({ product } : { product : Product | null | undefined})
           <div>
             <DialogDetailProduct product={product}/>
             <DialogControlQty quantity={quantity} setQuantity={setQuantity} />
-            <DialogTotalPrice quantity={quantity} product={product}/>            
+            <DialogTotalPrice quantity={quantity} price={product?.price ?? 99999}/>            
           </div>
           <Button  onClick={handleCheckout} disabled={quantity < 1 || loadingCheckout} className="md:text-lg">Checkout</Button>
       </DialogContent>
