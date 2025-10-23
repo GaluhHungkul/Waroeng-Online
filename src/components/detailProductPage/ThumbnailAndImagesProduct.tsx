@@ -8,7 +8,7 @@ type Props = {
 
 const ThumbnailAndImagesProduct : FC<Props> = ({ images, title }) => {
 
-     const [currentImage, setCurrentImage] = useState(images[0])
+    const [currentImage, setCurrentImage] = useState(images[0])
 
   return (
     <div className="flex flex-col md:flex-1">
@@ -17,7 +17,7 @@ const ThumbnailAndImagesProduct : FC<Props> = ({ images, title }) => {
         </section>
         <section className='flex gap-2.5 rounded md:gap-2'>
             {images.slice(0,4).map(img => (
-                <Image onClick={() => setCurrentImage(img)} src={img} className={`object-cover object-center aspect-[1/1] w-20 md:w-[85px] cursor-pointer rounded bg-gray-200 duration-200  ${currentImage === img ? " -translate-y-4 bg-primary-orange shadow-md shadow-black" : ""}`} alt={title} key={img} width={700} height={700}/>
+                <Image onClick={() => setCurrentImage(img)} src={img} className={`object-cover object-center aspect-[1/1] w-20 md:w-[85px] cursor-pointer lg:w-[100px] rounded bg-gray-200 duration-200  ${currentImage === img ? " -translate-y- bg-primary-orange shadow-md shadow-black" : ""}`} alt={title} key={img} width={700} height={700}/>
             ))}
         </section>
     </div>

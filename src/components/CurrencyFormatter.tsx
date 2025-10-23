@@ -4,7 +4,7 @@ const CurrencyFormatter = ({ amount, lineThrough=false } : { amount : number; li
     currency: "USD",
   }).format(amount);
   
-    return <span className={lineThrough ? "line-through text-gray-400 text-2xl" : ""}>{formatCurrency}</span>;
+    return <span className={lineThrough ? "line-through text-gray-400 text-2xl lg:text-4xl" : ""}>{formatCurrency}</span>;
   };
 
 export default CurrencyFormatter

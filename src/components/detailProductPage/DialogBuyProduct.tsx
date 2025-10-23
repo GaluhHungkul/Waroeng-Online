@@ -51,7 +51,9 @@ const DialogBuyProduct = ({ product } : { product : DetailProduct | null | undef
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild className="mt-4 md:text-lg lg:text-xl lg:py-5 w-full"><Button>Buy</Button></DialogTrigger>
+      <DialogTrigger asChild >
+        <button className='w-full py-2 bg-primary-orange text-white hover:brightness-90 lg:py-4'>Buy</button>
+      </DialogTrigger>
       <DialogContent className="w-4/5 rounded">
         <DialogHeader>
           <DialogTitle className="text-center">Buy Product</DialogTitle>
