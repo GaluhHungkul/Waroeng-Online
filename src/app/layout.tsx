@@ -1,5 +1,5 @@
 import "./globals.css";
-import Navbar from "../components/navbar";
+import Navbar from "../components/Navbar";
 import SessionProviderWrapper from "@/components/SessionProviderWrapper";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";

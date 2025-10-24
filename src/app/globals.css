@@ -28,7 +28,8 @@
 
 @layer base {
   :root {
-    --color-primary: 251 146 60; /* orange-400 */
+    --swiper-pagination-color: #ff6b00; /* misal orange */
+    --color-primary: 251 146 60; 
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
@@ -83,9 +84,20 @@
   }
 }
 
+.pagination .swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  background: #ddd; 
+  opacity: 1;
+  border-radius: 50%;
+  transition: all 0.3s;
+  cursor: pointer;
+}
 
-
-
+.pagination .swiper-pagination-bullet-active {
+  background: #ff6b00; /* warna bullet aktif */
+  transform: scale(1.2); /* efek zoom aktif */
+}
 
 @layer base {
   * {

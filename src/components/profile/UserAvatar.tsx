@@ -7,7 +7,7 @@ const UserAvatar = ({ username, navbar=false } : { username : string | null | un
 
 
   return (
-    <div className={`size-14 relative rounded-full  lg:ml-4 md:size-24 overflow-hidden ${navbar  ? "lg:size-14" : ""}`}>
+    <div className={`size-14 relative rounded-full  lg:ml-4 md:size-24 overflow-hidden ${navbar  ? "lg:size-12" : ""}`}>
         <Image
         loader={avatarLoader}
         src={`https://ui-avatars.com/api/?name=${username ?? "Om Anton"}&background=random`}
