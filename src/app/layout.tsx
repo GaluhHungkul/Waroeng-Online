@@ -6,6 +6,7 @@ import { authOptions } from "@/lib/auth";
 import { Metadata } from "next";
 import { Toaster } from "@/components/ui/sonner";
 import QueryProvider from "@/components/QueryProvider";
+import Footer from "@/components/Footer";
 
 export const metadata : Metadata = {
   title : "Waroeng Online"
@@ -26,6 +27,7 @@ export default async function RootLayout({
           <SessionProviderWrapper session={session}>
           <Navbar />
           {children}
+          <Footer />
           <Toaster closeButton duration={2000} theme="dark" position="bottom-right"/>         
         </SessionProviderWrapper>
         </QueryProvider>

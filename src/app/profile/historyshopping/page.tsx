@@ -1,6 +1,11 @@
 import Title from "@/components/common/Title"
 import ListHistoryShopping from "@/components/profile/HistoryShopping/ListHistoryShopping"
 
+export const metadata = {
+  title : "My Orders",
+  description : "My orders page"
+}
+
 const HistoryShoppingPage = () => {  
 
   return (

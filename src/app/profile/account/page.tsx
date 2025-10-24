@@ -1,5 +1,10 @@
 import ProfileCard from "@/components/profile/ProfileCard";
 
+export const metadata = {
+  title : "My Profile",
+  description : "My profile page"
+}
+
 const AccountPage = () => {        
 
   return (

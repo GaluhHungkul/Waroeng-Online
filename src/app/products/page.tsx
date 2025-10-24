@@ -1,5 +1,10 @@
 import ClientProductsPage from "@/components/products/ClientProductsPage";
 
+export const metadata = {
+  title : "Get all Products",
+  description : "Lihat semua products"
+}
+
 const ProductsPage = () => {  
 
   return (
