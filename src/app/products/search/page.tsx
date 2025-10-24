@@ -1,11 +1,14 @@
 import ClientSearchProductsPage from "@/components/searchProductsPage/ClientSearchProductsPage"
 
-export async function generateMetadata({ searchParams } : { 
-  searchParams : { [key:string] : string | string[] | undefined }
+export async function generateMetadata(props : { 
+  searchParams : Promise<{ [key:string] : string | string[] | undefined }>
 }) {
+  
+  const query = await props.searchParams
+
   return {
-    title : `All "${searchParams.q}" products`,
-    description : `Semua product dengan pencarian ${searchParams.q}`
+    title : `All "${query.q}" products`,
+    description : `Semua product dengan pencarian ${query.q}`
   }
 }
 
