@@ -12,6 +12,7 @@ import { Menu } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
+import WaroengLogo from "../common/WaroengLogo"
 // import Navigation from "./Navigation"
 // import ListFilterMoviesBy from "./ListFilterMoviesBy"
 
@@ -34,12 +35,12 @@ const MobileSheet = () => {
         <SheetClose/>
         <SheetHeader>
           <SheetTitle>
-            <Link href={"/"} className="font-bold text-2xl text-primary">Waroeng Online</Link>
+            <WaroengLogo />
           </SheetTitle>
         </SheetHeader>
-        <div className=" space-y-2 text-primary flex flex-col items-end">
-          <Link className="hover:underline font-medium text-xl" href={"/profile/account"}>My Profile</Link>
-          <Link className="hover:underline font-medium text-xl" href={"/products"}>See All Products</Link>
+        <div className=" space-y-2 text-gray-700 flex flex-col items-end">
+          <Link className="hover:underline  font-medium text-xl" href={"/profile/account"}>My Profile</Link>
+          <Link className="hover:underline  font-medium text-xl" href={"/products"}>See All Products</Link>
         </div>
       </SheetContent>
     </Sheet>

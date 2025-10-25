@@ -14,9 +14,8 @@ export async function generateMetadata(props : {
 
 const SearchProductsPage =  () => {
 
-
   return (
-    <div className="lg:w-[90vw] p-4 md:p-8 mx-auto pb-14 lg:pb-32 lg:mt-5 relative lg:min-h-[80vh]">
+    <div className="p-4 md:p-8 mx-auto  pb-14 md:w-[90vw] lg:w-4/5 lg:px-0 lg:pb-32 lg:mt-5 relative lg:min-h-[80vh]">
       <ClientSearchProductsPage />
     </div>
   )

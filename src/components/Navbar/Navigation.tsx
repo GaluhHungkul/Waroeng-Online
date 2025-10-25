@@ -1,7 +1,7 @@
 import { TypeUser } from "@/types/user"
 import Link from "next/link"
 import { FC } from "react"
-import UserAvatar from "../profile/UserAvatar"
+import AccountAndSearchBar from "./AccountAndSearchBar"
 
 const navigation = [
   {
@@ -26,7 +26,7 @@ const Navigation : FC<Props> = ({ loadingGetUser, user }) => {
     <div className="hidden lg:flex items-center gap-10 justify-between w-1/2">
       <section className="flex gap-8">
         {navigation.map(nav => (
-          <Link key={nav.id} className="hover:text-gray-600 lg:text-lg font-bold text-black" href={nav.href} >
+          <Link key={nav.id} className="text-gray-400 hover:text-gray-500 lg:text-lg font-bold" href={nav.href} >
           {nav.title}
         </Link>
         ))}
@@ -36,9 +36,7 @@ const Navigation : FC<Props> = ({ loadingGetUser, user }) => {
       :
       <div className="order-1 lg:order-3"> {user 
         ? 
-          <Link href={`/profile/account`}  >
-            <UserAvatar username={user.username} navbar/>
-          </Link>
+          <AccountAndSearchBar />
         : 
         <Link className="hover:text-gray-300 hover:border-b border-white  font-bold text-black active:text-gray-400 py-1" href="/login" >
           Login

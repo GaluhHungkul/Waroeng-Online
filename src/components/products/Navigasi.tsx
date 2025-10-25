@@ -1,6 +1,5 @@
 import Sorting from "./Sorting";
 import SelectCategories from "./SelectCategories";
-import SearchProducts from "../SearchProducts";
 
 
 interface PropsNavigasi {
@@ -11,13 +10,10 @@ interface PropsNavigasi {
 const Navigasi = ({ params, searchProductsPage=false }: PropsNavigasi) => {
 
   return (
-    <div className="text-white  order-1 lg:order-3 lg:rounded  gap-5  lg:gap-10">
-      <SearchProducts searchProductsPage={searchProductsPage} params={params} />
-      <section className="flex justify-between mt-4 mb-8 items-center gap-5">
-        <Sorting params={params} />
-        {!searchProductsPage && <SelectCategories params={params}/>}
-      </section>
-    </div>
+    <section className="flex justify-between mt-4 mb-8 items-center gap-5">
+      <Sorting params={params} />
+      {!searchProductsPage && <SelectCategories params={params}/>}
+    </section>
   );
 };
 
