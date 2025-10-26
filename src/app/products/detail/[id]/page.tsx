@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import ClientDetailProductPage from '@/components/detailProductPage/ClientDetailProductPage'
+import axios from 'axios'
 
 type Props = {
   params : Promise<{
@@ -12,10 +13,14 @@ export async function generateMetadata(props : {
 }) {
   
   const { id } = await props.params
-
+  const res = await axios.get(`${process.env.NEXT_PUBLIC_DUMMY_JSON_PRODUCT_API}/${id}`)
+  if(res.status !== 200) return {
+    title : `Error : ${res.status}`,
+    description : "Failed get detail product"
+  }
   return {
-    title : `Detail product for ID : ${id}`,
-    description : `Detail product dengan ID : ${id}`
+    title : `${res.data.title}`,
+    description : `Detail product ${res.data.title}`
   }
 }
 
