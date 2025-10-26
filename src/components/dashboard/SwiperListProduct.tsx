@@ -19,7 +19,7 @@ const SwiperListProduct = ({ title, queries, queryKey } : { title : string, endp
 
   return (
     <div className="pt-5">
-        <h1 className="mb-5 lg:mt-10 text-xl  lg:text-2xl font-bold text-black lg:mb-4">{title}</h1>
+        <h1 className="mb-5 lg:mt-10 text-xl  lg:text-2xl font-bold text-gray-700 lg:mb-4">{title}</h1>
         <Swiper
         modules={[Autoplay, Pagination]}
         spaceBetween={20}

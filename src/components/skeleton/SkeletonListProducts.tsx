@@ -1,17 +1,16 @@
 import React from 'react'
 import { Skeleton } from '../ui/skeleton'
 
-const SkeletonListProducts = ({ isSearchProductsPage=false } : { isSearchProductsPage? : boolean }) => {
+const SkeletonListProducts = ({ isSearchProductsPage=false, similar=false } : { isSearchProductsPage? : boolean; similar? : boolean }) => {
     return (
         <div>
-            <div className="mb-5">
-                <Skeleton className='h-8 lg:w-1/3'/>
+            {!similar && <div className="mb-5">
                 <section className="flex justify-between mt-4 mb-8 items-center gap-5">
                     <Skeleton className='h-8 w-1/2 lg:w-1/5'/>
                     {!isSearchProductsPage && <Skeleton className='h-8 w-1/2 lg:w-1/5'/>}
                 </section>
                 <Skeleton className='h-5 w-1/2 lg:w-1/4'/>
-            </div>
+            </div>}
             <div className='grid grid-cols-2 w-full gap-3 md:grid-cols-3 lg:grid-cols-6 md:gap-5 md:p-4 lg:p-0 lg:pt-2'>
             {Array.from({ length : 12 }).map((_, index) => (
                 <div key={index}>

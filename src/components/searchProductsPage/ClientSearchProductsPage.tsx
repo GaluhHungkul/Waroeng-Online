@@ -35,7 +35,7 @@ const ClientSearchProductsPage = () => {
   return (
     <>
      <Navigasi params={params} searchProductsPage />
-      <h1 className="font-bold md:text-lg md:mb-4">All products for you!</h1>
+      <h1 className="font-bold md:text-lg md:mb-4 text-gray-700">All products for you!</h1>
       <div className="lg:mr-12 w-full min-h-screen relative order-2">
         <>
           {data.products.length ? <ListProducts products={data.products} /> 
@@ -46,7 +46,7 @@ const ClientSearchProductsPage = () => {
           </div>
           }
         </>        
-        {!isPending && <InfiniteScroll params={params} isShowMore={paramsPage * DATA_PER_REQUEST < (data?.total ?? 194) } paramsPage={paramsPage}  />}
+        {!isPending && <InfiniteScroll isPending={isPending} params={params} isShowMore={paramsPage * DATA_PER_REQUEST < (data?.total ?? 194) } paramsPage={paramsPage}  />}
       </div>   
     </>
   )

@@ -23,7 +23,7 @@ const DetailProductPage : FC<Props> = async (props) => {
 
   const { id } = await props.params
 
-  return <ClientDetailProductPage id={id}/>
+  return <ClientDetailProductPage id={id} />
 }
 
 export default DetailProductPage

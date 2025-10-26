@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 const DetailProduct = ({ product } : { product : Product }) => { 
   return (
-    <div className='mb-10 relative flex flex-col md:flex-row md:mb-20 lg:mb-20 md:gap-6 w-full lg:gap-16'>
+    <div className='mb-10 relative flex flex-col md:flex-row md:mb-20 md:gap-6 w-full lg:gap-16'>
       <ThumbnailAndImagesProduct images={product.images} title={product.title} />
       <div className='md:flex-1 relative lg:flex-[1.75]'>
         <section className='py-4 relative space-y-3 font-bold lg:text-xl lg:flex-2  lg:pt-0 border-b border-gray-300 md:border-none text-lg md:py-0 lg:mb-20'>
