@@ -35,8 +35,9 @@ export const useDetailProductQuery = ({ id } : { id : string }) => useQuery({
 export const useSearchProductsQuery = ({
     q="", page=1, sortBy="", order=""
 }: { q : string, page? : number; sortBy? : string; order? : string }) => useQuery({
-    queryKey : ["search", "products", q, page, sortBy, order],
+    queryKey : ["search", q, page, sortBy, order],
     queryFn : async () => {
+        console.log(`apalah ini kocak ${["search", q, page, sortBy, order]}`)
         const paramsSortBy = sortBy.trim().length < 1 || sortBy === null ? "" : `&sortBy=${sortBy}`
         const paramsOrder = order.trim().length < 1 || order === null ? "" : `&order=${order}`
         const res = await axios.get<ProductsResponse>(`${process.env.NEXT_PUBLIC_DUMMY_JSON_PRODUCT_API}/search?q=${q}&select=title,category,thumbnail,price,rating,stock&limit=${DATA_PER_REQUST * page}${paramsOrder}${paramsSortBy}`)

@@ -1,13 +1,13 @@
+import ListProducts from "@/components/common/ListProducts";
 import Banner from "@/components/dashboard/Banner";
-import SwiperListProduct from "@/components/dashboard/SwiperListProduct";
 
 export default async function Home() {  
 
   return (
     <div className="mx-4 md:w-4/5 md:mx-auto pb-10">
       <Banner />
-      <SwiperListProduct title="Featured Products" queryKey="featured" queries="sortBy=rating&order=desc&select=title,category,thumbnail,price,rating,stock"/>
-      <SwiperListProduct title="Popular Products" queryKey="popular" queries="sortBy=rating&order=desc&skip=20&select=title,category,thumbnail,price,rating,stock"/>
+      <h1 className="mb-5 lg:mt-10 text-xl  lg:text-2xl font-bold text-gray-700 lg:mb-4">Popular Products</h1>
+      <ListProducts queryKey="popular_products" similar queries="sortBy=rating&order=desc&select=title,category,thumbnail,price,rating,stock,description"/>
     </div>
   );
 }

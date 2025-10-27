@@ -4,10 +4,10 @@ import { useSearchProductsQuery } from "@/api/productApi"
 import { useSearchParams } from "next/navigation"
 import Navigasi from "../products/Navigasi"
 import SkeletonListProducts from "../skeleton/SkeletonListProducts"
-import ListProducts from "../common/ListProducts"
 import InfiniteScroll from "../products/InfiniteScroll"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
+import ListSearchProducts from "./ListSearchProducts"
 
 const DATA_PER_REQUEST = 12
 
@@ -28,7 +28,6 @@ const ClientSearchProductsPage = () => {
       sortBy : paramsSortBy,
       order : paramsOrder
   })
-
   if(isPending) return <SkeletonListProducts isSearchProductsPage/>
   if(isError) return <p>Error : {error.message}</p>
 
@@ -38,7 +37,7 @@ const ClientSearchProductsPage = () => {
       <h1 className="font-bold md:text-lg md:mb-4 text-gray-700">All products for you!</h1>
       <div className="lg:mr-12 w-full min-h-screen relative order-2">
         <>
-          {data.products.length ? <ListProducts products={data.products} /> 
+          {data.products.length ? <ListSearchProducts page={paramsPage} sortBy={paramsSortBy} order={paramsOrder} q={paramsQ}/> 
           :
           <div className="text-center content-center h-[50vh]">
             <h1 className="font-bold text-2xl text-gray-500">Products tidak ditemukan</h1>

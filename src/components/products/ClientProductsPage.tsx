@@ -18,15 +18,15 @@ const ClientProductsPage = () => {
   const params = new URLSearchParams(searchParams.toString());
 
   const paramsPage = Number(params.get("page")) || 1
-  const paramsSortBy = params.get("sortBy")
-  const paramsOrder = params.get("order")
-  const paramsCategory =  params.get("category")
+  const paramsSortBy = params.get("sortBy") ?? ""
+  const paramsOrder = params.get("order") ?? ""
+  const paramsCategory =  params.get("category") ?? ""
 
   const { data, isPending, isError, error } = useProductsQuery({
     page : paramsPage,
-    sortBy : paramsSortBy ?? "",
-    order : paramsOrder ?? "",
-    category : paramsCategory ?? ""
+    sortBy : paramsSortBy,
+    order : paramsOrder,
+    category : paramsCategory
   }) 
 
   if(isPending) return <SkeletonListProducts />
@@ -39,7 +39,7 @@ const ClientProductsPage = () => {
       <h1 className="font-bold md:text-lg md:mb-4 lg:text-xl lg:mb-8 text-gray-700">All products for you!</h1>
       <div className="lg:mr-12 w-full min-h-screen relative order-2">
         <>
-          {data.products.length ? <ListProducts products={data.products} /> 
+          {data.products.length ? <ListProducts page={paramsPage} sortBy={paramsSortBy} order={paramsOrder} category={paramsCategory} queryKey="products_page"/> 
           :
           <div className="text-center content-center font-bold text-2xl h-[50vh]">
             Products tidak tersedia

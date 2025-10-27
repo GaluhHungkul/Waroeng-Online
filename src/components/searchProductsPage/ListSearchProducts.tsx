@@ -1,24 +1,21 @@
 "use client";
 import { motion } from "framer-motion";
 import { FC } from "react";
-import ProductCard from "./ProductCard";
-import { useProductsQuery } from "@/api/productApi";
+import { useSearchProductsQuery } from "@/api/productApi";
 import SkeletonListProducts from "../skeleton/SkeletonListProducts";
+import ProductCard from "../common/ProductCard";
 
 type Props = {
-  similar? : boolean  
   page? : number
-  category? : string  
-  queries? : string  
-  queryKey? : string  
   order? : string 
   sortBy? : string
+  q : string
 }
 
-const ListProducts : FC<Props> = ({ similar=false, page=1, category="", queries="", queryKey="", order="", sortBy="" }) => {  
+const ListSearchProducts : FC<Props> = ({ page=1, q="", order="", sortBy="" }) => {  
 
-  const { data, isPending, isError, error } = useProductsQuery({
-    page, category, queries, queryKey, order, sortBy
+  const { data, isPending, isError, error } = useSearchProductsQuery({
+    page, q, order, sortBy
   })
 
   if(isPending) return <SkeletonListProducts similar/>
@@ -38,9 +35,9 @@ const ListProducts : FC<Props> = ({ similar=false, page=1, category="", queries=
     initial="hidden"
     animate="show"
     className={`grid grid-cols-2 mt-2 mb-10 gap-3  md:grid-cols-3 lg:grid-cols-6 lg:gap-5 lg:mt-4`}>
-      {data?.products?.map((product) => <ProductCard similar={similar} product={product} key={product.id}/>)}
+      {data?.products?.map((product) => <ProductCard product={product} key={product.id}/>)}
     </motion.div>
   )
 }
 
-export default ListProducts;
+export default ListSearchProducts;
