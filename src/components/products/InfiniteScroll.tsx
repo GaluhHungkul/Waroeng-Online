@@ -1,5 +1,6 @@
 import { usePathname, useRouter } from "next/navigation";
 import { FC } from "react"
+import { Button } from "../ui/button";
 
 type Props = {
     params : URLSearchParams;
@@ -21,7 +22,7 @@ const InfiniteScroll : FC<Props> = ({ params, isShowMore, paramsPage, isPending 
 
   if(!isShowMore) return null
 
-  return <button onClick={handleShowMoreProducts} disabled={isPending}  className="absolute right-1/2 translate-x-1/2 border-2 border-black w-1/2 font-semibold text-xl py-1 rounded hover:bg-black hover:text-white active:bg-black/80 duration-100 disabled:bg-black/70 disabled:border-none disabled:text-white">{isPending ? "Loading..." : "Show more"}</button>
+  return <Button  onClick={handleShowMoreProducts} disabled={isPending} variant={"outline"}  className="absolute right-1/2 translate-x-1/2  py-1 rounded-full ">{isPending ? "Loading..." : "Show more"}</Button>
 }
 
 export default InfiniteScroll

@@ -15,7 +15,7 @@ export default function Footer() {
   if(disabledFooter.includes(pathname)) return null
 
   return (
-    <footer className="bg-gray-900 text-gray-300 mt-10">
+    <footer className="text-gray-500 font-semibold mt-10">
       <div className="max-w-7xl mx-auto px-6 py-10 grid md:grid-cols-4 gap-8">
         <div>
           <WaroengLogo />
@@ -26,7 +26,7 @@ export default function Footer() {
         </div>
 
         <div className="md:ml-16">
-          <h3 className="text-lg font-semibold text-white mb-3">Belanja</h3>
+          <h3 className="text-lg font-semibold text-gray-800 mb-3">Belanja</h3>
           <ul className="space-y-2 text-sm grid grid-cols-2 md:grid-cols-1 ">
             <li><Link href="#" className="hover:text-primary-orange">Semua Produk</Link></li>
             <li><Link href="#" className="hover:text-primary-orange">Promo</Link></li>
@@ -36,7 +36,7 @@ export default function Footer() {
         </div>
 
         <div>
-          <h3 className="text-lg font-semibold text-white mb-3">Perusahaan</h3>
+          <h3 className="text-lg font-semibold text-gray-800 mb-3">Perusahaan</h3>
           <ul className="space-y-2 text-sm grid grid-cols-2 md:grid-cols-1">
             <li><Link href="#" className="hover:text-primary-orange">Tentang Kami</Link></li>
             <li><Link href="#" className="hover:text-primary-orange">Kontak</Link></li>
@@ -46,7 +46,7 @@ export default function Footer() {
         </div>
 
         <div>
-          <h3 className="text-lg font-semibold text-white mb-3">Ikuti Kami</h3>
+          <h3 className="text-lg font-semibold text-gray-800 mb-3">Ikuti Kami</h3>
           <div className="flex space-x-4 text-xl">
             <Link href="#" className="hover:text-primary-orange" aria-label="Facebook">
               <Facebook size={22} />
@@ -64,7 +64,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-gray-700 py-4 text-center text-sm">
+      <div className="border-t border-gray-700 py-4 text-center text-sm text-gray-800">
         <p>© {year} WaroengOnline. Semua hak cipta dilindungi.</p>
       </div>
     </footer>
