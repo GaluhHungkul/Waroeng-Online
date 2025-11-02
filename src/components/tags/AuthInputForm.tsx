@@ -8,7 +8,7 @@ type Props = {
 const AuthInputForm : FC<Props>= ({ errorMessage, inputForm }) => {
 
   return (
-    <div className='lg:pb-2'>
+    <div className='lg:pb-2 '>
       {inputForm}
       <p className='text-red-500 lg:text-sm lg:pt-2 '>{errorMessage}</p>
     </div>

@@ -17,7 +17,7 @@ const Navbar = () => {
 
   const { data: session, status } = useSession();
 
-  const { setUser, user } = useUser();
+  const { setUser } = useUser();
 
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const Navbar = () => {
       <div className="flex h-16 md:h-24 justify-between  items-center md:w-4/5 md:mx-auto lg:h-16">
         <WaroengLogo />
         <MobileSheet />
-        <Navigation user={user} loadingGetUser={status === "loading"} />
+        <Navigation />
       </div>
     </nav>
   );

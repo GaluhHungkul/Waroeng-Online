@@ -7,6 +7,7 @@ import { Metadata } from "next";
 import { Toaster } from "@/components/ui/sonner";
 import QueryProvider from "@/components/QueryProvider";
 import Footer from "@/components/Footer";
+import DialogLoginCard from "@/components/DialogLoginCard";
 
 export const metadata : Metadata = {
   title : "Waroeng Online"
@@ -27,6 +28,7 @@ export default async function RootLayout({
           <SessionProviderWrapper session={session}>
           <Navbar />
           {children}
+          <DialogLoginCard />
           <Footer />
           <Toaster closeButton duration={2000} theme="dark" position="bottom-right"/>         
         </SessionProviderWrapper>

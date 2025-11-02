@@ -10,21 +10,32 @@ import {
 } from "@/components/ui/sheet"
 import { Menu } from "lucide-react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import WaroengLogo from "../common/WaroengLogo"
-// import Navigation from "./Navigation"
-// import ListFilterMoviesBy from "./ListFilterMoviesBy"
-
+import useUser from "@/zustand/useUser"
+import useDialogLoginCard from "@/zustand/useDialogLoginCard"
 const MobileSheet = () => {
 
   const pathname = usePathname()
 
+  const router = useRouter()
+
   const [open, setOpen] = useState(false)
+
+  const { user } = useUser()
+  const { setShowLoginCard } = useDialogLoginCard()
 
   useEffect(() => {
     setOpen(false)
   },[pathname])
+
+
+  const handleToProfilePage = () => {
+    setOpen(false)
+    if(!user) return setShowLoginCard(true)
+    router.push("/profile/account")
+  }
 
   return (
     <Sheet open={open}  onOpenChange={setOpen}>
@@ -39,7 +50,7 @@ const MobileSheet = () => {
           </SheetTitle>
         </SheetHeader>
         <div className=" space-y-2 text-gray-700 flex flex-col items-end">
-          <Link className="hover:underline  font-medium text-xl" href={"/profile/account"}>My Profile</Link>
+          <p onClick={handleToProfilePage} className="hover:underline  font-medium text-xl" >My Profile</p>
           <Link className="hover:underline  font-medium text-xl" href={"/products"}>See All Products</Link>
         </div>
       </SheetContent>

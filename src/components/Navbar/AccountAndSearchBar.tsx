@@ -1,10 +1,10 @@
 import { Search, User, X } from 'lucide-react'
-import Link from 'next/link'
 import { FormEvent, useState } from 'react'
 import { Input } from '../ui/input'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useRouter, useSearchParams } from 'next/navigation'
-
+import useUser from '@/zustand/useUser'
+import useDialogLoginCard from '@/zustand/useDialogLoginCard'
 
 const AccountAndSearchBar = () => {
 
@@ -20,6 +20,14 @@ const AccountAndSearchBar = () => {
         if (!searchQuery.trim().length) return
         router.push(`/products/search?q=${searchQuery}`);
     };
+
+    const { setShowLoginCard } = useDialogLoginCard()
+    const { user } = useUser()
+
+    const handleToProfilePage = () => {
+        if(!user) return setShowLoginCard(true)
+        router.push("/profile/account")
+    }
 
   return (
     <div className="flex items-center gap-4">
@@ -45,9 +53,9 @@ const AccountAndSearchBar = () => {
             </AnimatePresence>
             <Search onClick={() => { if(!showSearchBar) setShowSearchBar(true) }} className="text-gray-700 hover:text-primary-orange duration-100 cursor-pointer absolute right-2 top-1/2 -translate-y-1/2"/>
         </form>
-        <Link href={`/profile/account`}  >
+        <button onClick={handleToProfilePage}>
             <User className="text-gray-700 hover:text-primary-orange duration-100"/>
-        </Link>
+        </button>
     </div>
   )
 }
