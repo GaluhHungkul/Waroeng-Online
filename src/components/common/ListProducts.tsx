@@ -4,6 +4,7 @@ import { FC } from "react";
 import ProductCard from "./ProductCard";
 import { useProductsQuery } from "@/api/productApi";
 import SkeletonListProducts from "../skeleton/SkeletonListProducts";
+import { Button } from "../ui/button";
 
 type Props = {
   similar? : boolean  
@@ -13,9 +14,10 @@ type Props = {
   queryKey? : string  
   order? : string 
   sortBy? : string
+  dashboard? : boolean
 }
 
-const ListProducts : FC<Props> = ({ similar=false, page=1, category="", queries="", queryKey="", order="", sortBy="" }) => {  
+const ListProducts : FC<Props> = ({ similar=false, page=1, category="", queries="", queryKey="", order="", sortBy="", dashboard=false }) => {  
 
   const { data, isPending, isError, error } = useProductsQuery({
     page, category, queries, queryKey, order, sortBy
@@ -33,13 +35,16 @@ const ListProducts : FC<Props> = ({ similar=false, page=1, category="", queries=
   }
 
   return (  
-    <motion.div 
-    variants={parentVariants} 
-    initial="hidden"
-    animate="show"
-    className={`grid grid-cols-2 mt-2 mb-10 gap-3  md:grid-cols-3 lg:grid-cols-6 lg:gap-5 lg:mt-4`}>
-      {data?.products?.map((product) => <ProductCard similar={similar} product={product} key={product.id}/>)}
-    </motion.div>
+    <>
+      <motion.div 
+      variants={parentVariants} 
+      initial="hidden"
+      animate="show"
+      className={`grid grid-cols-2 mt-2 mb-10 gap-3  md:grid-cols-3 lg:grid-cols-6 lg:gap-5 lg:mt-4`}>
+        {data?.products?.map((product) => <ProductCard similar={similar} product={product} key={product.id}/>)}
+      </motion.div>
+      {dashboard && <Button className="absolute right-1/2 translate-x-1/2  py-1 rounded-full" variant={"outline"}>Show more</Button>}
+    </>
   )
 }
 
