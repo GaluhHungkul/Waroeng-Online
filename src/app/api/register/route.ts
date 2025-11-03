@@ -7,7 +7,6 @@ export async function POST(req: NextRequest) {
   try {
     await ConnectToDatabase();
     const { username, password, email } = await req.json();
-    console.log({username, password, email})
     const alreadyExistUser = await User.findOne({ email });
     if (alreadyExistUser) return NextResponse.json({ message: "Email already used" }, { status: 400 } );
 

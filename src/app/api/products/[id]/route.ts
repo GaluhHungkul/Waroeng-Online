@@ -15,7 +15,6 @@ export async function GET(req: NextRequest, context: RouteContext ) {
 
   try {
     await ConnectToDatabase();
-    console.log(req.url)
     const product = await Product.findById(id);
 
     if (!product)

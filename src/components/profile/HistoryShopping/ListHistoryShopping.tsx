@@ -10,7 +10,6 @@ const ListHistoryShopping = () => {
 
  if(isPending) return <SkeletonHistoryShopping />
 if(isError) return <p>Error : {error.message}</p>
-  console.log(historyShopping)
   return (
     <div>
         {historyShopping?.length 

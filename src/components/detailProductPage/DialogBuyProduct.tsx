@@ -41,7 +41,6 @@ const DialogBuyProduct = ({ product } : { product : DetailProduct }) => {
         })
       })
       if(!res.ok) throw new Error("Failed to checkout")
-      console.log(await res.json())
       setQuantity(0)
       toast.success("Checkout berhasil")
     } catch (error) {
