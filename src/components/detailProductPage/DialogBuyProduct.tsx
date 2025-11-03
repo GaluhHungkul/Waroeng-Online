@@ -13,6 +13,7 @@ import DialogDetailProduct from "./DialogDetailProduct"
 import DialogControlQty from "./DialogControlQty"
 import DialogTotalPrice from "./DialogTotalPrice"
 import { toast } from "sonner"
+import { Button } from "../ui/button"
 
 const DialogBuyProduct = ({ product } : { product : DetailProduct }) => {
 
@@ -66,7 +67,7 @@ const DialogBuyProduct = ({ product } : { product : DetailProduct }) => {
             <DialogControlQty quantity={quantity} setQuantity={setQuantity} />
             <DialogTotalPrice quantity={quantity} price={product?.price ?? 99999}/>            
           </div>
-          <button  onClick={handleCheckout} disabled={quantity < 1 || loadingCheckout} className="md:text-lg text-white py-2 rounded font-bold bg-blue-500 disabled:opacity-50">Checkout</button>
+          <Button  onClick={handleCheckout} disabled={quantity < 1 || loadingCheckout} className="md:text-lg text-white rounded font-bold  ">Checkout</Button>
       </DialogContent>
     </Dialog>
   )

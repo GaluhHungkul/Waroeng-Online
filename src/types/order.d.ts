@@ -13,7 +13,7 @@ export type Order = {
 }
 
 type OrderedProduct = {
-    productId : string
+    id : string
     price : number
     name : string
     img : string;

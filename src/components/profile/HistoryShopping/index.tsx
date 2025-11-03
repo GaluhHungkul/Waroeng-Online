@@ -12,7 +12,7 @@ type Props = {
 }
 
 
-const HistoryShopping : FC<Props> = ({ order : { orderedProduct : {  img, name, quantity, price,    productId, }, createdAt, paymentStatus, orderStatus, totalPrice,paymentMethod  } }) => {
+const HistoryShopping : FC<Props> = ({ order : { orderedProduct : {  img, name, quantity, price, id, }, createdAt, paymentStatus, orderStatus, totalPrice,paymentMethod  } }) => {
 
   return (
     <div className='relative pb-8 mb-10 border-b border-primary-orange md:border-b-4 md:pb-10'>
@@ -24,7 +24,7 @@ const HistoryShopping : FC<Props> = ({ order : { orderedProduct : {  img, name, 
         <DeskripsiProduct name={name} quantity={quantity} price={price}/>
       </div>
       <StatusPembelian paymentMethod={paymentMethod} paymentStatus={paymentStatus} orderStatus={orderStatus}/>
-      <TotalPriceAndNavigation totalPrice={totalPrice} productId={productId}/>
+      <TotalPriceAndNavigation totalPrice={totalPrice} id={id}/>
     </div>
   )
 }
