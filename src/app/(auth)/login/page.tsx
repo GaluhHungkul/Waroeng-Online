@@ -1,5 +1,5 @@
 import AnimatedLoginBackground from '@/components/Login/AnimatedLoginBackground'
-import LoginForm from '@/components/Login/LoginForm'
+import LoginForm from '@/components/Login/SignInForm'
 import GoogleLoginButton from '@/components/tags/GoogleLoginButton'
 import Link from 'next/link'
 

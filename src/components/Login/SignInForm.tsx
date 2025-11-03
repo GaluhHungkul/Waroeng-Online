@@ -17,7 +17,7 @@ const loginSchema = z.object({
 
 type LoginSchema = z.infer<typeof loginSchema>
 
-const LoginForm = () => {
+const SignInForm = () => {
 
   const { register, handleSubmit, formState : { errors },reset } = useForm({
     resolver : zodResolver(loginSchema)
@@ -62,4 +62,4 @@ const LoginForm = () => {
   )
 }
 
-export default LoginForm
+export default SignInForm

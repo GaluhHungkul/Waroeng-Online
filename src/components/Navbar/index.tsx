@@ -28,7 +28,7 @@ const Navbar = () => {
   if (disableNavbar.includes(pathname)) return null;
 
   return (
-    <nav className="border-b border-gray-300 px-4 md:px-0 bg-white sticky top-0 z-[999]">
+    <nav className="border-b border-gray-300 px-4 md:px-0 bg-white sticky top-0 z-10">
       <div className="flex h-16 md:h-24 justify-between  items-center md:w-4/5 md:mx-auto lg:h-16">
         <WaroengLogo />
         <MobileSheet />

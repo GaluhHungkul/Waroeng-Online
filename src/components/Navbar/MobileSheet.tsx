@@ -14,7 +14,7 @@ import { usePathname, useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import WaroengLogo from "../common/WaroengLogo"
 import useUser from "@/zustand/useUser"
-import useDialogLoginCard from "@/zustand/useDialogLoginCard"
+import useDialogLoginCard from "@/zustand/useDialogAuthCard"
 const MobileSheet = () => {
 
   const pathname = usePathname()
@@ -24,7 +24,7 @@ const MobileSheet = () => {
   const [open, setOpen] = useState(false)
 
   const { user } = useUser()
-  const { setShowLoginCard } = useDialogLoginCard()
+  const { setShowAuthCard } = useDialogLoginCard()
 
   useEffect(() => {
     setOpen(false)
@@ -33,7 +33,7 @@ const MobileSheet = () => {
 
   const handleToProfilePage = () => {
     setOpen(false)
-    if(!user) return setShowLoginCard(true)
+    if(!user) return setShowAuthCard("signIn")
     router.push("/profile/account")
   }
 

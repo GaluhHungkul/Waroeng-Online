@@ -4,7 +4,7 @@ import { Input } from '../ui/input'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useRouter, useSearchParams } from 'next/navigation'
 import useUser from '@/zustand/useUser'
-import useDialogLoginCard from '@/zustand/useDialogLoginCard'
+import useDialogLoginCard from '@/zustand/useDialogAuthCard'
 
 const AccountAndSearchBar = () => {
 
@@ -21,11 +21,11 @@ const AccountAndSearchBar = () => {
         router.push(`/products/search?q=${searchQuery}`);
     };
 
-    const { setShowLoginCard } = useDialogLoginCard()
+    const { setShowAuthCard } = useDialogLoginCard()
     const { user } = useUser()
 
     const handleToProfilePage = () => {
-        if(!user) return setShowLoginCard(true)
+        if(!user) return setShowAuthCard("signIn")
         router.push("/profile/account")
     }
 
