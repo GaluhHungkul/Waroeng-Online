@@ -19,7 +19,7 @@ export async function generateMetadata(props : {
     description : "Failed get detail product"
   }
   return {
-    title : `${res.data.title}`,
+    title : `Product | ${res.data.title}`,
     description : `Detail product ${res.data.title}`
   }
 }

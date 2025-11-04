@@ -14,6 +14,8 @@ import DialogControlQty from "./DialogControlQty"
 import DialogTotalPrice from "./DialogTotalPrice"
 import { toast } from "sonner"
 import { Button } from "../ui/button"
+import useUser from "@/zustand/useUser"
+import useDialogAuthCard from "@/zustand/useDialogAuthCard"
 
 const DialogBuyProduct = ({ product } : { product : DetailProduct }) => {
 
@@ -21,6 +23,9 @@ const DialogBuyProduct = ({ product } : { product : DetailProduct }) => {
   const [open, setOpen] = useState(false)
   const [quantity, setQuantity] = useState(0)
   const [loadingCheckout, setLoadingCheckout] = useState(false)
+
+  const { user } = useUser()
+  const { setShowAuthCard } = useDialogAuthCard()
 
   const handleCheckout = async () => {
     if(!quantity) return
@@ -52,10 +57,16 @@ const DialogBuyProduct = ({ product } : { product : DetailProduct }) => {
     }
   }
 
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild >
-        <button className='w-full py-2 bg-primary-orange text-white hover:brightness-90 lg:py-4 focus:outline-none'>Buy</button>
+        <button onClick={(e) => {
+          if(!user) {
+            e.preventDefault()
+            setShowAuthCard("signIn")
+          }
+        }} className='w-full py-2 bg-primary-orange text-white hover:brightness-90 lg:py-4 focus:outline-none '>Buy</button>
       </DialogTrigger>
       <DialogContent className="w-4/5 rounded lg:top-[400px]">
         <DialogHeader>
