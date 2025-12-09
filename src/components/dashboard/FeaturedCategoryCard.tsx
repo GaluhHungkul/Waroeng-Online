@@ -28,7 +28,7 @@ const FeaturedCategoryCard : FC<Props> = ({ item }) => {
           className="object-cover object-center duration-300 group-hover:brightness-75"
         />
       </div>
-      <div className="p-6 absolute bottom-0 z-10 text-white group-hover:-translate-y-4 duration-300">
+      <div className="p-6 absolute bottom-0 text-white group-hover:-translate-y-4 duration-300">
         <h3 className="text-2xl font-semibold mb-2">
           {item.title}
         </h3>
