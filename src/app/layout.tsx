@@ -30,7 +30,7 @@ export default async function RootLayout({
           {children}
           <DialogAuthCard />
           <Footer />
-          <Toaster closeButton duration={2000} theme="dark" position="bottom-right"/>         
+          <Toaster closeButton duration={2000} theme="dark" position="top-center" className="bg-black"/>         
         </SessionProviderWrapper>
         </QueryProvider>
       </body>
