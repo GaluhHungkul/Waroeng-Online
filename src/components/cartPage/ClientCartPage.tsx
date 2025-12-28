@@ -5,10 +5,25 @@ import DetailCheckout from "./DetailCheckout"
 import ListItemInCart from "./ListItemInCart"
 import EmptyStateCart from "./EmptyStateCart"
 import { Trash2 } from "lucide-react"
+// import { useEffect } from "react"
 
 const ClientCartPage = () => {
 
   const { cart, clearCart } = useCart()
+
+  // useEffect(() => {
+  //   const snapScript = "https://app.sandbox.midtrans.com/snap/snap.js"
+  //   const script = document.createElement("script")
+  //   script.src = snapScript
+  //   script.setAttribute("data-client-key",process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY!)
+  //   script.async = true
+  //   document.body.appendChild(script)
+
+  //   return () => {
+  //     document.body.removeChild(script)
+  //   }
+            
+  // },[])
 
   return (
     <div className="p-4 md:p-8 min-h-screen mx-auto pb-14 lg:pb-32 lg:mt-5 relative lg:px-0 lg:w-4/5 flex flex-col">

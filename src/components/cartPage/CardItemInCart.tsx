@@ -8,7 +8,7 @@ const CardItemInCart = (product : ProductInCart) => {
   return (
     <div className="flex justify-between shadow rounded py-4">
       <Link href={`/products/detail/${id}`} className="relative flex-1 aspect-square ">
-        <Image src={thumbnail} alt={title} layout="fill"/>
+        <Image priority src={thumbnail} alt={title} fill className="object-cover" sizes="80vw"/>
       </Link>
       <DetailCardItem {...product}/>
     </div>
