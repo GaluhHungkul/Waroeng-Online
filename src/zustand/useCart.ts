@@ -7,7 +7,8 @@ import { ProductInCart } from "@/types/cart";
 interface TypeUseCart {
     cart : ProductInCart[];
     addToCart : (value:DetailProduct) => void ;
-    deleteFromCart : (value:DetailProduct) => void ;
+    deleteFromCart : (value:number) => void ;
+    removeFromCart : (id:number) => void;
     clearCart : () => void;
 }
 
@@ -25,15 +26,16 @@ const useCart = create<TypeUseCart>()(persist((set, get) => ({
         set(() => ({ cart : final }))
         console.log(final.map(item => [item.id, item.title, item.qty]))
     },
-    deleteFromCart : (value) => {
+    deleteFromCart : (id) => {
         const { cart } = get()
-        const productInCart = cart.find((el) => el.id === value.id)
+        const productInCart = cart.find((el) => el.id === id)
         if(!productInCart) return 
         let final;
-        if(productInCart?.qty === 1) final = cart.filter((product) => product.id !== value.id) 
-        else final = cart.map((product) => product.id === value.id ? { ...product, qty : product.qty - 1, totalPrice : product.price * ( product.qty - 1 ) } : product)
+        if(productInCart?.qty === 1) final = cart.filter((product) => product.id !== id) 
+        else final = cart.map((product) => product.id === id ? { ...product, qty : product.qty - 1, totalPrice : product.price * ( product.qty - 1 ) } : product)
         set(() => ({ cart : final }))
     },
+    removeFromCart : (id) => set({ cart : get().cart.filter(item => item.id !== id) }),
     clearCart : () => set(() => ({ cart : [] }))
 }), {
         name : "cart-storage",
