@@ -18,7 +18,7 @@ import useUser from "@/zustand/useUser"
 import useDialogAuthCard from "@/zustand/useDialogAuthCard"
 import useCart from "@/zustand/useCart"
 
-const DialogBuyProduct = ({ product } : { product : DetailProduct }) => {
+const DialogSetQuantityToCart = ({ product } : { product : DetailProduct }) => {
 
 
   const [open, setOpen] = useState(false)
@@ -63,9 +63,8 @@ const DialogBuyProduct = ({ product } : { product : DetailProduct }) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild >
-        <button onClick={(e) => {
+        <button onClick={() => {
           if(!user) {
-            e.preventDefault()
             setShowAuthCard("signIn")
           }
         }} className='w-full py-2 bg-gray-200 text-gray-700 cursor-pointer hover:brightness-90 lg:py-4'>Set quantity</button>
@@ -88,5 +87,5 @@ const DialogBuyProduct = ({ product } : { product : DetailProduct }) => {
   )
 }
 
-export default DialogBuyProduct
+export default DialogSetQuantityToCart
 
