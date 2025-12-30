@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import useUser from '@/zustand/useUser'
 import useDialogLoginCard from '@/zustand/useDialogAuthCard'
 
-const AccountAndSearchBar = () => {
+const AccountAndSearchBar = ({ account=true } : { account? : boolean }) => {
 
     const searchParams = useSearchParams()
 
@@ -30,7 +30,7 @@ const AccountAndSearchBar = () => {
     }
 
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center justify-end gap-4">
         <form onSubmit={handleSearchProducts} className="relative">
            <AnimatePresence>
                 {showSearchBar && (
@@ -53,9 +53,9 @@ const AccountAndSearchBar = () => {
             </AnimatePresence>
             <Search onClick={() => { if(!showSearchBar) setShowSearchBar(true) }} className="text-gray-700 hover:text-primary-orange duration-100 cursor-pointer absolute right-2 top-1/2 -translate-y-1/2"/>
         </form>
-        <button onClick={handleToProfilePage}>
+        {account && <button onClick={handleToProfilePage}>
             <User className="text-gray-700 hover:text-primary-orange duration-100"/>
-        </button>
+        </button>}
     </div>
   )
 }

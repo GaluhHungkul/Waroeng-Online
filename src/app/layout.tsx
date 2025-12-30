@@ -8,6 +8,7 @@ import { Toaster } from "@/components/ui/sonner";
 import QueryProvider from "@/components/QueryProvider";
 import Footer from "@/components/Footer";
 import DialogAuthCard from "@/components/DialogAuthCard";
+import Script from "next/script";
 
 export const metadata : Metadata = {
   title : "Waroeng Online"
@@ -30,7 +31,12 @@ export default async function RootLayout({
           {children}
           <DialogAuthCard />
           <Footer />
-          <Toaster closeButton duration={2000} theme="dark" position="bottom-right"/>         
+          <Toaster closeButton duration={2000} theme="dark" position="top-center" className="bg-black"/>         
+          <Script 
+            src="https://app.sandbox.midtrans.com/snap/snap.js"
+            data-client-key={process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY}
+            strategy="afterInteractive"
+          />
         </SessionProviderWrapper>
         </QueryProvider>
       </body>

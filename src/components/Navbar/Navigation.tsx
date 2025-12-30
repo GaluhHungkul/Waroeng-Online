@@ -1,5 +1,6 @@
 import Link from "next/link"
 import AccountAndSearchBar from "./AccountAndSearchBar"
+import CartButton from "./CartButton"
 
 const navigation = [
   {
@@ -30,7 +31,8 @@ const Navigation  = () => {
         </Link>
         ))}
       </section>
-      <div className="order-1 lg:order-3">  
+      <div className="order-1 flex items-center gap-16 lg:order-3">  
+        <CartButton />
         <AccountAndSearchBar />
       </div>
     </div>

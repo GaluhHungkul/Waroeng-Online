@@ -15,6 +15,7 @@ import { useEffect, useState } from "react"
 import WaroengLogo from "../common/WaroengLogo"
 import useUser from "@/zustand/useUser"
 import useDialogLoginCard from "@/zustand/useDialogAuthCard"
+import AccountAndSearchBar from "./AccountAndSearchBar"
 const MobileSheet = () => {
 
   const pathname = usePathname()
@@ -31,10 +32,10 @@ const MobileSheet = () => {
   },[pathname])
 
 
-  const handleToProfilePage = () => {
+  const handleToProfilePage = (path:string) => {
     setOpen(false)
     if(!user) return setShowAuthCard("signIn")
-    router.push("/profile/account")
+    router.push(path)
   }
 
   return (
@@ -49,8 +50,10 @@ const MobileSheet = () => {
             <WaroengLogo />
           </SheetTitle>
         </SheetHeader>
-        <div className=" space-y-2 text-gray-700 flex flex-col items-end">
-          <p onClick={handleToProfilePage} className="hover:underline  font-medium text-xl" >My Profile</p>
+        <div className="gap-2 mt-2 text-gray-700 flex flex-col items-end">
+          <AccountAndSearchBar account={false}/>
+          <p onClick={() => handleToProfilePage("/profile/account")} className="hover:underline  font-medium text-xl mt-6" >My Profile</p>
+          <p onClick={() => handleToProfilePage("/cart")} className="hover:underline  font-medium text-xl" >My Cart</p>
           <Link className="hover:underline  font-medium text-xl" href={"/products"}>See All Products</Link>
         </div>
       </SheetContent>

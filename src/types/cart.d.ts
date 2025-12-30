@@ -1,6 +1,6 @@
-import { Product } from "./product";
+import { DetailProduct } from "./api_response";
 
-export  interface ProductInCart extends Product {
+export  interface ProductInCart extends DetailProduct {
     qty : number;
     totalPrice : number
 }
