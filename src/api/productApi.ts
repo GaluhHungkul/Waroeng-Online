@@ -16,7 +16,7 @@ export const useProductsQuery = ({ queryKey="", page=1, sortBy="", order="", cat
             ...res.data,
             products : res.data.products.map(p => ({
                 ...p, 
-                priceAfterDiscount : Number((p.price - (p.price * p.discountPercentage / 100)).toFixed())
+                priceAfterDiscount : Number((p.price - (p.price * (p.discountPercentage ?? 0) / 100)).toFixed())
             }))
         }
     }
@@ -31,7 +31,7 @@ export const useDetailProductQuery = ({ id } : { id : string }) => useQuery({
         return {
             detailProduct : {
                 ...res.data, 
-                priceAfterDiscount : Number((res.data.price - (res.data.price * res.data.discountPercentage / 100)).toFixed())
+                priceAfterDiscount : Number((res.data.price - (res.data.price * (res.data.discountPercentage ?? 0) / 100)).toFixed())
             },
             similarProducts
         }
@@ -51,7 +51,7 @@ export const useSearchProductsQuery = ({
             ...res.data, 
             products : res.data.products.map(p => ({
                 ...p, 
-                priceAfterDiscount : Number((p.price - (p.price * p.discountPercentage / 100)).toFixed())
+                priceAfterDiscount : Number((p.price - (p.price * (p.discountPercentage ?? 0) / 100)).toFixed())
             }))
         }
     }
@@ -62,6 +62,6 @@ const getSimilarProducts = async (category:string, id:string) : Promise<Product[
     if(res.status !== 200) throw new Error("Failed get similar products data")
     return res.data.products.map(p => ({
         ...p, 
-        priceAfterDiscount : Number((p.price - (p.price * p.discountPercentage / 100)).toFixed())
+        priceAfterDiscount : Number((p.price - (p.price * (p.discountPercentage ?? 0) / 100)).toFixed())
     })).filter(p => p.id !== Number(id)).slice(0,8)
 }

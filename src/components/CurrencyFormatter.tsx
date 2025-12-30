@@ -1,7 +1,7 @@
 const CurrencyFormatter = ({ amount, lineThrough=false, small=false } : { amount : number; lineThrough? : boolean; small? : boolean }) => {
-  const formatCurrency = new Intl.NumberFormat("en-US", {
+  const formatCurrency = new Intl.NumberFormat("id-ID", {
     style: "currency",
-    currency: "USD",
+    currency: "IDR",
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   }).format(amount);

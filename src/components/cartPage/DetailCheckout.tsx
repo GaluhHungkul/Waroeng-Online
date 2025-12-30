@@ -100,16 +100,18 @@ const DetailCheckout = () => {
   }
 
   return (
-    <div className='border-t border-primary-orange pt-10 flex-1 flex flex-col gap-4'>
-      <section className="flex justify-between">
-        <p className="font-medium">Total items</p>
-        <p className="font-bold">{cart.length} items</p>
-      </section>
-      <section className="flex justify-between">
-        <p className="font-medium">Total price</p>
-        <p className="font-bold"><CurrencyFormatter amount={totalPrice} /></p>
-      </section>
-      <section className="flex gap-4 mt-20">
+    <div className='border-t border-primary-orange pt-10 flex-1 flex flex-col md:border-none md:pt-0 lg:h-[60vh] lg:justify-between'>
+      <div>
+        <section className="flex justify-between lg:mb-2">
+          <p className="font-semibold">Total item</p>
+          <p className="font-bold">{cart.length} items</p>
+        </section>
+        <section className="flex justify-between">
+          <p className="font-semibold">Total harga</p>
+          <p className="font-bold"><CurrencyFormatter amount={totalPrice} /></p>
+        </section>
+      </div>
+      <section className="flex gap-4 mt-20 md:mt-10 lg:flex-col lg:w-64">
         <Button onClick={generatePaymentLink} variant={"outline"} disabled={loadingCheckout || cart.length === 0} className="relative flex-1 text-lg font-bold text-primary-orange hover:bg-primary-orange/20 active:bg-primary-orange/40 hover:text-primary-orange">
           <span>Bayar Nanti</span>
         </Button>

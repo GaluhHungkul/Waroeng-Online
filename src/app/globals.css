@@ -99,6 +99,28 @@
   transform: scale(1.2); /* efek zoom aktif */
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 4px;      
+  height: 6px;
+}
+
+/* background track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* handle */
+::-webkit-scrollbar-thumb {
+  background: transparent;
+  /* border-radius: 10px; */
+}
+
+/* hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #bbbbbb;
+}
+
 @layer base {
   * {
     @apply border-border;

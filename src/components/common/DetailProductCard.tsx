@@ -15,7 +15,6 @@ const DetailProductCard = ({ product, similar } : { product : Product; similar :
           {product?.rating} / 5 ⭐
         </li>
         <li className="text-gray-900 font-bold text-lg lg:text-base">
-          {/* <CurrencyFormatter amount={product.price} /> */}
           <PriceAndDiscount small price={product.price} priceAfterDiscount={product.priceAfterDiscount}/>
         </li>
       </ul>
