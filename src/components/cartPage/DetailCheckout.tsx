@@ -15,9 +15,10 @@ const DetailCheckout = () => {
     const loadingToast = toast.loading("Checkout...")
     try {
       setLoadingCheckout(true)
-      const products = cart.map(({ id, title, price, qty }) => ({
+      const products = cart.map(({ id, title, price, qty, thumbnail }) => ({
         id, title, qty, 
-        price : Number(price.toFixed())
+        price : Number(price.toFixed()), 
+        img : thumbnail
       }))
       const res = await fetch("/api/tokenizer", {
         method : "POST",
@@ -31,7 +32,7 @@ const DetailCheckout = () => {
       })
       if(!res.ok) throw new Error("Failed to checkout")
       const { snapToken } = await res.json()
-      window.snap.pay(snapToken.token, {
+      window.snap.pay(snapToken, {
         onSuccess: (res) => {
           toast.success("Checkout berhasil")
           console.log(res)
