@@ -69,6 +69,7 @@ export type Product =  {
   meta: Meta
   thumbnail: string
   images: string[]
+  priceAfterDiscount : number
 }
 
 export type Dimensions =  {

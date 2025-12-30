@@ -1,4 +1,4 @@
-const CurrencyFormatter = ({ amount, lineThrough=false } : { amount : number; lineThrough? : boolean }) => {
+const CurrencyFormatter = ({ amount, lineThrough=false, small=false } : { amount : number; lineThrough? : boolean; small? : boolean }) => {
   const formatCurrency = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
@@ -6,7 +6,7 @@ const CurrencyFormatter = ({ amount, lineThrough=false } : { amount : number; li
     maximumFractionDigits: 0,
   }).format(amount);
   
-    return <span className={lineThrough ? "line-through text-gray-400 text-2xl lg:text-4xl" : ""}>{formatCurrency}</span>;
+    return <span className={lineThrough ? `line-through text-gray-400 ${small ? "" : "text-2xl lg:text-4xl"}` : ""}>{formatCurrency}</span>;
   };
 
 export default CurrencyFormatter

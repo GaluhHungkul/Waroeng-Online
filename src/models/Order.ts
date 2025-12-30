@@ -64,9 +64,6 @@ const orderSchema = new mongoose.Schema(
     },
 
     midtrans: {
-      orderId: {
-        type: String,
-      },
       transactionStatus: {
         type: String,
       },

@@ -3,15 +3,17 @@ import CurrencyFormatter from "../CurrencyFormatter"
 import { Button } from "../ui/button"
 import { toast } from "sonner"
 import { useState } from "react"
+import useUser from "@/zustand/useUser"
 
 const DetailCheckout = () => {
 
   const { cart } = useCart()
   const [loadingCheckout, setLoadingCheckout] = useState(false)
+  const { user } = useUser()
 
-  const totalPrice = Number(cart.map(item => item.price * item.qty).reduce((a,b) => a + b, 0).toFixed())
+  const totalPrice = Number(cart.map(item => item.priceAfterDiscount * item.qty).reduce((a,b) => a + b, 0).toFixed())
 
-  const handleCheckout = async () => {
+  const handleCheckoutUsingSnap = async () => {
     const loadingToast = toast.loading("Checkout...")
     try {
       setLoadingCheckout(true)
@@ -20,7 +22,7 @@ const DetailCheckout = () => {
         price : Number(price.toFixed()), 
         img : thumbnail
       }))
-      const res = await fetch("/api/tokenizer", {
+      const res = await fetch("/api/midtrans/snap", {
         method : "POST",
         headers : {
           "Content-Type" : "application/json"
@@ -55,6 +57,48 @@ const DetailCheckout = () => {
     }
   }
   
+  const generatePaymentLink = async () => {
+    if(!user || !user.id) return
+
+    try {
+      const orderedProducts = cart.map((p) => ({
+        productId: p.id,
+        name: p.title, 
+        price: p.priceAfterDiscount, 
+        img: p.thumbnail,
+        quantity: p.qty,
+      }))
+
+      const dataBody = {
+        orderedProducts, 
+        totalPrice
+      }
+      console.log(totalPrice)
+      const amount = orderedProducts.map(p => {
+          console.log(p.price)
+          return p.price * p.quantity
+      }).reduce((a,b) => {
+          console.log(b)
+          return a + b 
+      }, 0)
+      console.log(amount)
+      const res = await fetch(`/api/midtrans/payment-link`, {
+        method : "POST",
+        body : JSON.stringify(dataBody)
+      })
+
+      if(!res.ok) {
+        const err = await res.json()
+        throw new Error(err.error_messages)
+      }
+      const data = await res.json()
+      console.log(data)
+    } catch (error) {
+      console.log("Error : " , error)
+    }
+
+  }
+
   return (
     <div className='border-t border-primary-orange pt-10 flex-1 flex flex-col gap-4'>
       <section className="flex justify-between">
@@ -66,10 +110,10 @@ const DetailCheckout = () => {
         <p className="font-bold"><CurrencyFormatter amount={totalPrice} /></p>
       </section>
       <section className="flex gap-4 mt-20">
-        <Button variant={"outline"} disabled={loadingCheckout || cart.length === 0} className="relative flex-1 text-lg font-bold text-primary-orange hover:bg-primary-orange/20 active:bg-primary-orange/40 hover:text-primary-orange">
+        <Button onClick={generatePaymentLink} variant={"outline"} disabled={loadingCheckout || cart.length === 0} className="relative flex-1 text-lg font-bold text-primary-orange hover:bg-primary-orange/20 active:bg-primary-orange/40 hover:text-primary-orange">
           <span>Bayar Nanti</span>
         </Button>
-        <Button onClick={handleCheckout} disabled={loadingCheckout || cart.length === 0} className="bg-primary-orange relative flex-1  text-lg font-bold hover:bg-primary-orange/80 active:bg-primary-orange/50">
+        <Button onClick={handleCheckoutUsingSnap} disabled={loadingCheckout || cart.length === 0} className="bg-primary-orange relative flex-1  text-lg font-bold hover:bg-primary-orange/80 active:bg-primary-orange/50">
           <span>Bayar Sekarang</span>
         </Button>
       </section>
