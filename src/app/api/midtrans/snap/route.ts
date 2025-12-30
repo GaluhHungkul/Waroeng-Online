@@ -8,7 +8,7 @@ import { NextRequest, NextResponse } from "next/server";
 const snap = new Midtrans.Snap({
     isProduction : false,
     clientKey : process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY!,
-    serverKey : process.env.MIDTRANS_SERVER_KEY!,
+    serverKey : process.env.NEXT_PUBLIC_MIDTRANS_SERVER_KEY!,
 })
 
 type ProductFromRequest = {
@@ -34,7 +34,7 @@ export async function POST(req:NextRequest) {
 
         const { products, totalPrice } = await req.json()
 
-        const orderId = `ORDER-${Date.now()}-${id.toString()}`
+        
         const orderedProducts = products.map((p:ProductFromRequest) => ({
             productId: p.id,
             name: p.title, 
@@ -50,14 +50,11 @@ export async function POST(req:NextRequest) {
             paymentMethod : "midtrans",
             paymentStatus: "unpaid",
             orderStatus: "pending",
-            midtrans: {
-                orderId,
-            },
         })
 
         const parameter = {
             transaction_details: {
-                order_id: orderId, 
+                order_id: order._id, 
                 gross_amount : totalPrice
             },
             customer_details: {
@@ -74,7 +71,7 @@ export async function POST(req:NextRequest) {
         const snapResponse = await snap.createTransaction(parameter)
         return NextResponse.json({
             orderId : order._id, 
-            midtransOrderId: orderId,
+            midtransOrderId: order._id,
             snapToken: snapResponse.token, 
             redirectUrl: snapResponse.redirect_url
         })

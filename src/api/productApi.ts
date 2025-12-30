@@ -12,7 +12,13 @@ export const useProductsQuery = ({ queryKey="", page=1, sortBy="", order="", cat
         const paramsOrder = order.trim().length < 1 || order === null ? "" : `&order=${order}`
         const res = await axios.get<ProductsResponse>(`${process.env.NEXT_PUBLIC_DUMMY_JSON_PRODUCT_API}${endpointCategory}?limit=${DATA_PER_REQUST * page}${paramsOrder}${paramsSortBy}&${queries}`)
         if(res.status !== 200) throw new Error("Failed get products data")
-        return res.data
+        return {
+            ...res.data,
+            products : res.data.products.map(p => ({
+                ...p, 
+                priceAfterDiscount : Number((p.price - (p.price * (p.discountPercentage ?? 0) / 100)).toFixed())
+            }))
+        }
     }
 })
 
@@ -25,7 +31,7 @@ export const useDetailProductQuery = ({ id } : { id : string }) => useQuery({
         return {
             detailProduct : {
                 ...res.data, 
-                priceAfterDiscount : res.data.price - (res.data.price * res.data.discountPercentage / 100)
+                priceAfterDiscount : Number((res.data.price - (res.data.price * (res.data.discountPercentage ?? 0) / 100)).toFixed())
             },
             similarProducts
         }
@@ -41,12 +47,21 @@ export const useSearchProductsQuery = ({
         const paramsOrder = order.trim().length < 1 || order === null ? "" : `&order=${order}`
         const res = await axios.get<ProductsResponse>(`${process.env.NEXT_PUBLIC_DUMMY_JSON_PRODUCT_API}/search?q=${q}&select=title,category,thumbnail,price,rating,stock&limit=${DATA_PER_REQUST * page}${paramsOrder}${paramsSortBy}`)
         if(res.status !== 200) throw new Error("Failed get products data")
-        return res.data
+        return {
+            ...res.data, 
+            products : res.data.products.map(p => ({
+                ...p, 
+                priceAfterDiscount : Number((p.price - (p.price * (p.discountPercentage ?? 0) / 100)).toFixed())
+            }))
+        }
     }
 })
 
 const getSimilarProducts = async (category:string, id:string) : Promise<Product[]> => {
     const res = await axios.get<ProductsResponse>(`${process.env.NEXT_PUBLIC_DUMMY_JSON_PRODUCT_API}/category/${category}?limit=9`)
     if(res.status !== 200) throw new Error("Failed get similar products data")
-    return res.data.products.filter(p => p.id !== Number(id)).slice(0,8)
+    return res.data.products.map(p => ({
+        ...p, 
+        priceAfterDiscount : Number((p.price - (p.price * (p.discountPercentage ?? 0) / 100)).toFixed())
+    })).filter(p => p.id !== Number(id)).slice(0,8)
 }

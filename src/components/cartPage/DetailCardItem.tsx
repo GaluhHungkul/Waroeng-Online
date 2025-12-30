@@ -13,7 +13,7 @@ const DetailCardItem = (product : ProductInCart ) => {
     const { addToCart, deleteFromCart, removeFromCart } = useCart()
 
   return (
-    <div className='flex-1'>
+    <div className='flex-1 lg:p-4'>
         <section className='flex items-start justify-between gap-2'>
             <Link href={`/products/detail/${id}`} className='line-clamp-2 font-medium' title={title}>{title}</Link>
             <button onClick={() => removeFromCart(id)}>

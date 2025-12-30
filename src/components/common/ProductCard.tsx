@@ -8,8 +8,6 @@ import ImageProductCard from "./ImageProductCard"
 
 
 const ProductCard = ({ product, similar=false } : { product : Product, similar? : boolean }) => {
-
-
   return (
     <motion.section
     className="relative lg:w-full flex flex-col items-center min-h- bg-white rounded overflow-hidden  shadow"

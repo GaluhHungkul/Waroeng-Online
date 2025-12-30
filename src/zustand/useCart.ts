@@ -19,12 +19,12 @@ const useCart = create<TypeUseCart>()(persist((set, get) => ({
         const isExist = cart.find((product) => product.id === value.id)
         let final
         if(isExist) {
-            final = cart.map((product) => product.id === value.id ? { ...product, qty : product.qty + 1, totalPrice : (product.qty + 1) * product.price } : product)
+            final = cart.map((product) => product.id === value.id ? { ...product, qty : product.qty + 1, totalPrice : (product.qty + 1) * product.priceAfterDiscount } : product)
         } else {
-            final = [...cart, { ...value, qty : 1, totalPrice : value.price }]
+            final = [...cart, { ...value, qty : 1, totalPrice : value.priceAfterDiscount }]
         }
         set(() => ({ cart : final }))
-        console.log(final.map(item => [item.id, item.title, item.qty]))
+        console.log(cart.map(p => p.priceAfterDiscount))
     },
     deleteFromCart : (id) => {
         const { cart } = get()
@@ -32,7 +32,7 @@ const useCart = create<TypeUseCart>()(persist((set, get) => ({
         if(!productInCart) return 
         let final;
         if(productInCart?.qty === 1) final = cart.filter((product) => product.id !== id) 
-        else final = cart.map((product) => product.id === id ? { ...product, qty : product.qty - 1, totalPrice : product.price * ( product.qty - 1 ) } : product)
+        else final = cart.map((product) => product.id === id ? { ...product, qty : product.qty - 1, totalPrice : product.priceAfterDiscount * ( product.qty - 1 ) } : product)
         set(() => ({ cart : final }))
     },
     removeFromCart : (id) => set({ cart : get().cart.filter(item => item.id !== id) }),
