@@ -8,7 +8,7 @@ import { NextRequest, NextResponse } from "next/server";
 const snap = new Midtrans.Snap({
     isProduction : false,
     clientKey : process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY!,
-    serverKey : process.env.NEXT_PUBLIC_MIDTRANS_SERVER_KEY!,
+    serverKey : process.env.MIDTRANS_SERVER_KEY!,
 })
 
 type ProductFromRequest = {

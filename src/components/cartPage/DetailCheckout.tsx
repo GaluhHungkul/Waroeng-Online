@@ -11,7 +11,7 @@ const DetailCheckout = () => {
   const [loadingCheckout, setLoadingCheckout] = useState(false)
   const { user } = useUser()
 
-  const totalPrice = Number(cart.map(item => item.priceAfterDiscount * item.qty).reduce((a,b) => a + b, 0).toFixed())
+  const totalPrice = Number(cart.map(item => item.price * item.qty).reduce((a,b) => a + b, 0).toFixed())
 
   const handleCheckoutUsingSnap = async () => {
     const loadingToast = toast.loading("Checkout...")
@@ -73,15 +73,6 @@ const DetailCheckout = () => {
         orderedProducts, 
         totalPrice
       }
-      console.log(totalPrice)
-      const amount = orderedProducts.map(p => {
-          console.log(p.price)
-          return p.price * p.quantity
-      }).reduce((a,b) => {
-          console.log(b)
-          return a + b 
-      }, 0)
-      console.log(amount)
       const res = await fetch(`/api/midtrans/payment-link`, {
         method : "POST",
         body : JSON.stringify(dataBody)

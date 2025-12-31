@@ -14,11 +14,11 @@ if(isError) return <p>Error : {error.message}</p>
     <div>
         {historyShopping?.length 
           ? 
-          <>
+          <div className="flex flex-col gap-4">
             {historyShopping?.map((order) => (
                 <HistoryShopping order={order} key={order._id}/>   
             ))}
-          </> 
+          </div> 
           : 
           <h1 className='font-bold lg:text-2xl text-center lg:mt-32'>Anda tidak pernah melakukan transaksi</h1>
         }

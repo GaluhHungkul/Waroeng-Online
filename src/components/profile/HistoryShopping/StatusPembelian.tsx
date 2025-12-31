@@ -1,17 +1,23 @@
+import { CheckCheck } from "lucide-react"
 import { FC } from "react"
+import FormatedDate from "../FormatedDate"
 
 type Props = {
-  paymentMethod: "COD" | "Transfer" | "Credit Card" | "PayPal"
-  paymentStatus: "unpaid" | "paid"
+  paymentType: string
+  paymentStatus: "unpaid" | "paid" | "failed"
   orderStatus: "pending" | "processing" | "shipped" | "delivered" | "cancelled"
+  createdAt: Date;
 }
 
-const StatusPembelian : FC<Props> = ({ paymentMethod, paymentStatus, orderStatus }) => {
+const StatusPembelian : FC<Props> = ({ paymentType, paymentStatus, createdAt }) => {
   return (
-    <div className="text-sm space-y-2 mt-4 md:text-xl lg:text-xl text-gray-700 font-bold border-b border-gray-300 pb-4 mb-4 md:mb-6">
-        <p className="flex justify-between mb-4">Metode pembayaran : <span className="text-gray-500">{paymentMethod}</span></p>
-        <p className="flex justify-between pr-4">Status pembayaran : <span className="text-gray-500 relative after:absolute after:size-4 after:rounded-full after:-right-5 after:top-1/2 after:-translate-y-1/2 after:bg-orange-400 after:animate-pulse">{paymentStatus}</span></p>
-        <p className="flex justify-between pr-4 items-center">Status pengiriman : <span className="text-gray-500 relative after:absolute after:size-4 after:rounded-full after:-right-5 after:top-1/2 after:-translate-y-1/2 after:bg-orange-400 after:animate-pulse">{orderStatus}</span></p>
+    <div className="text-sm space-y-2 mt-8 md:text-xl text-gray-700 font-bold border-b border-gray-300 pb-4 mb-4 md:mb-6 lg:flex-1 lg:border-none lg:font-medium lg:text-base">
+        <p className="flex justify-between lg:justify-start lg:gap-4">Metode : <span className="text-gray-500">{paymentType.replace("_", " ")}</span></p>
+        <div className="flex justify-between lg:justify-start lg:gap-4 ">Status : <p className={`text-gray-500 flex items-center gap-2 relative after:absolute after:size-4 after:rounded-full after:-right-5 after:top-1/2 after:-translate-y-1/2  ${paymentStatus == "paid" ? "" : "after:bg-gray-400 lg:after:-right-6 after:animate-pulse mr-4"}`}>
+        <span>{paymentStatus}</span>
+        {paymentStatus == "paid" && <CheckCheck className="text-gray-500"/>}
+        </p></div>
+        <p className="flex justify-between lg:justify-start lg:gap-4 mb-4">Date <span className="text-gray-500"><FormatedDate date={createdAt}/></span></p>
     </div>
   )
 }
