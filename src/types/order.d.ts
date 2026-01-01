@@ -14,6 +14,7 @@ export type Order = {
     transactionStatus: string,
     paymentType: string,
     fraudStatus: string,
+    paymentLink?: string
   },
 }
 

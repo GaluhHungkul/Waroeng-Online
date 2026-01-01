@@ -54,6 +54,7 @@ const MobileSheet = () => {
           <AccountAndSearchBar account={false}/>
           <p onClick={() => handleToProfilePage("/profile/account")} className="hover:underline  font-medium text-xl mt-6" >My Profile</p>
           <p onClick={() => handleToProfilePage("/cart")} className="hover:underline  font-medium text-xl" >My Cart</p>
+          <p onClick={() => handleToProfilePage("/profile/historyshopping")} className="hover:underline  font-medium text-xl" >My Orders</p>
           <Link className="hover:underline  font-medium text-xl" href={"/products"}>See All Products</Link>
         </div>
       </SheetContent>

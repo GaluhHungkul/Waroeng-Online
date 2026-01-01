@@ -7,7 +7,7 @@ export async function POST(req:NextRequest) {
     try {
         await ConnectToDatabase()
         const { order_id, status_code, gross_amount, signature_key, transaction_status, payment_type, fraud_status } = await req.json()
-        
+        const orderId = order_id.split("-")[0]
         const serverKey = process.env.MIDTRANS_SERVER_KEY
         const payload = order_id + status_code + gross_amount + serverKey
         const expectedSignature = crypto
@@ -23,7 +23,7 @@ export async function POST(req:NextRequest) {
         }
 
         // 🔎 Cari order
-        const order = await Order.findById(order_id);
+        const order = await Order.findById(orderId);
 
         if (!order) {
             return NextResponse.json(
@@ -53,8 +53,6 @@ export async function POST(req:NextRequest) {
         order.midtrans.fraudStatus = fraud_status;
 
         await order.save();
-         console.log("lancar")
-        console.log("********************************")
         return NextResponse.json({ message: "Callback handled" });
     } catch (error) {
         console.error("Midtrans callback error:", error);

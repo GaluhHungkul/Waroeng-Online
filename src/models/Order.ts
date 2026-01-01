@@ -75,6 +75,9 @@ const orderSchema = new mongoose.Schema(
       fraudStatus: {
         type: String,
       },
+      paymentLink : {
+        type: String
+      }
     },
   },
   { timestamps: true }

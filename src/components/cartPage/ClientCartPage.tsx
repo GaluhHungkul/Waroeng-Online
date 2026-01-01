@@ -18,7 +18,7 @@ const ClientCartPage = () => {
           <button onClick={clearCart} className="absolute right-4 bg-red-100 rounded p-2 top-2">
             <Trash2 className="text-red-500"/>
           </button>
-          <div className="flex flex-col md:flex-row md:gap-8 lg:items-end">
+          <div className="flex flex-col md:flex-row md:gap-8 lg:items-start">
             <ListItemInCart />
             <DetailCheckout />
           </div>

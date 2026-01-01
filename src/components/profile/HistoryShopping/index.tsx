@@ -10,7 +10,7 @@ type Props = {
 }
 
 
-const HistoryShopping : FC<Props> = ({ order : { orderedProducts, paymentStatus, orderStatus,createdAt, totalPrice, midtrans : { paymentType }  } }) => {
+const HistoryShopping : FC<Props> = ({ order : { orderedProducts, orderStatus, createdAt, paymentStatus, totalPrice, midtrans : { paymentType, paymentLink }  } }) => {
 
   return (
     <div className='relative flex flex-col py-4 mb-10 border-y md:pb-10 lg:flex-row lg:gap-12 md:py-6 lg:py-0 border-gray-400'>
@@ -24,7 +24,7 @@ const HistoryShopping : FC<Props> = ({ order : { orderedProducts, paymentStatus,
           ))}
         </section>
       </section>
-      <StatusPembelian createdAt={createdAt} paymentType={paymentType} paymentStatus={"unpaid"} orderStatus={orderStatus}/>
+      <StatusPembelian createdAt={createdAt} paymentType={paymentType} paymentLink={paymentLink} paymentStatus={paymentStatus} orderStatus={orderStatus}/>
       <TotalPriceAndNavigation totalPrice={totalPrice} totalItems={orderedProducts.length}/>
     </div>
   )
