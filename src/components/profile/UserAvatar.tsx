@@ -3,11 +3,11 @@ import React from 'react'
 
 const avatarLoader = ({ src } : ImageLoaderProps) => src
 
-const UserAvatar = ({ username, navbar=false } : { username : string | null | undefined, navbar? : boolean}) => {
+const UserAvatar = ({ username, navbar=false, showCard=false } : { username : string | null | undefined, navbar? : boolean; showCard?: boolean}) => {
 
 
   return (
-    <div className={`size-14 relative rounded-full  lg:ml-4 md:size-24 overflow-hidden ${navbar  ? "lg:size-12" : ""}`}>
+    <div className={`relative rounded-full ${showCard ? "border border-primary-orange" : ""} lg:ml-4 overflow-hidden ${navbar  ? "size-10 lg:size-12" : "size-14 md:size-24"}`}>
         <Image
         loader={avatarLoader}
         src={`https://ui-avatars.com/api/?name=${username ?? "Om Anton"}&background=random`}

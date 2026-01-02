@@ -7,7 +7,7 @@ import useUser from "@/zustand/useUser"
 
 const DetailCheckout = () => {
 
-  const { cart } = useCart()
+  const { cart, clearCart } = useCart()
   const [loadingCheckout, setLoadingCheckout] = useState(false)
   const { user } = useUser()
 
@@ -17,9 +17,9 @@ const DetailCheckout = () => {
     const loadingToast = toast.loading("Checkout...")
     try {
       setLoadingCheckout(true)
-      const products = cart.map(({ id, title, price, qty, thumbnail }) => ({
+      const products = cart.map(({ id, title, qty, thumbnail, priceAfterDiscount }) => ({
         id, title, qty, 
-        price : Number(price.toFixed()), 
+        price : Number(priceAfterDiscount.toFixed()), 
         img : thumbnail
       }))
       const res = await fetch("/api/midtrans/snap", {
@@ -35,17 +35,15 @@ const DetailCheckout = () => {
       if(!res.ok) throw new Error("Failed to checkout")
       const { snapToken } = await res.json()
       window.snap.pay(snapToken, {
-        onSuccess: (res) => {
-          toast.success("Checkout berhasil")
-          console.log(res)
+        onSuccess: () => {
+          toast.success("Checkout berhasil");
+          clearCart()
         },
-        onError: (res) => {
+        onError: () => {
           toast.error("Checkout gagal")
-          console.log(res)
         },
         onClose: () => {
           toast.success("Checkout selesai")
-          console.log(res)
         },
       })
     } catch (error) {
@@ -54,6 +52,7 @@ const DetailCheckout = () => {
     } finally {
       setLoadingCheckout(false)
       toast.dismiss(loadingToast)
+      
     }
   }
   
@@ -73,15 +72,6 @@ const DetailCheckout = () => {
         orderedProducts, 
         totalPrice
       }
-      console.log(totalPrice)
-      const amount = orderedProducts.map(p => {
-          console.log(p.price)
-          return p.price * p.quantity
-      }).reduce((a,b) => {
-          console.log(b)
-          return a + b 
-      }, 0)
-      console.log(amount)
       const res = await fetch(`/api/midtrans/payment-link`, {
         method : "POST",
         body : JSON.stringify(dataBody)
@@ -91,8 +81,8 @@ const DetailCheckout = () => {
         const err = await res.json()
         throw new Error(err.error_messages)
       }
-      const data = await res.json()
-      console.log(data)
+      toast.success("Link pembayaran berhasil dibuat di riwayat belanja anda")
+      clearCart()
     } catch (error) {
       console.log("Error : " , error)
     }
@@ -111,7 +101,7 @@ const DetailCheckout = () => {
           <p className="font-bold"><CurrencyFormatter amount={totalPrice} /></p>
         </section>
       </div>
-      <section className="flex gap-4 mt-20 md:mt-10 lg:flex-col lg:w-64">
+      <section className="flex gap-4 mt-20 md:mt-10 lg:flex-col">
         <Button onClick={generatePaymentLink} variant={"outline"} disabled={loadingCheckout || cart.length === 0} className="relative flex-1 text-lg font-bold text-primary-orange hover:bg-primary-orange/20 active:bg-primary-orange/40 hover:text-primary-orange">
           <span>Bayar Nanti</span>
         </Button>

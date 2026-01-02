@@ -8,7 +8,7 @@ import Link from 'next/link';
 
 const DetailCardItem = (product : ProductInCart ) => {
 
-    const { title, price, id, qty, } = product
+    const { title, priceAfterDiscount, id, qty, } = product
 
     const { addToCart, deleteFromCart, removeFromCart } = useCart()
 
@@ -20,7 +20,7 @@ const DetailCardItem = (product : ProductInCart ) => {
                 <Trash className='text-red-400'/>
             </button>
         </section>
-        <p className='line-clamp-2 mt-4 font-medium'><CurrencyFormatter amount={price}/></p>
+        <p className='line-clamp-2 mt-4 font-medium'><CurrencyFormatter amount={priceAfterDiscount}/></p>
         <section className='flex items-center justify-center gap-4 mt-4 border-b pb-4'>
             <Button onClick={() => deleteFromCart(id)}><Minus /></Button>
             <p className='text-xl'>{qty}</p>
@@ -31,7 +31,7 @@ const DetailCardItem = (product : ProductInCart ) => {
         </section>
         <section className='flex justify-between items-center mt-6'>
             <p className='font-medium'>Subtotal</p>
-            <p className='font-bold'><CurrencyFormatter amount={price * qty}/></p>
+            <p className='font-bold'><CurrencyFormatter amount={priceAfterDiscount * qty}/></p>
         </section>
     </div>
   )

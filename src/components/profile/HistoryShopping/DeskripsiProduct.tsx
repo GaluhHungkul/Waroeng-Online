@@ -1,4 +1,3 @@
-import CurrencyFormatter from '@/components/CurrencyFormatter'
 import { FC } from 'react';
 
 type Props = {
@@ -7,12 +6,11 @@ type Props = {
     quantity : number
 }
 
-const DeskripsiProduct : FC<Props> = ({ name, price, quantity }) => {
+const DeskripsiProduct : FC<Props> = ({ name, quantity }) => {
   return (
-    <section className="text-sm space-y-2 md:text-2xl font-bold text-gray-700 w-1/2 ">
-      <p>{name} x {quantity}</p>
-      <p><CurrencyFormatter amount={price} /> x {quantity}</p>
-    </section>
+    <p className="text-sm space-y-2 md:text-lg font-medium text-gray-700 line-clamp-1 lg:text-base">
+      {name} x {quantity}
+    </p>
   )
 }
 

@@ -5,7 +5,7 @@ import { FormEvent, useState } from "react";
 import { Input } from "./ui/input";
 import { Search } from "lucide-react";
 
-const SearchProducts = ({ params, searchProductsPage } : { params : URLSearchParams, searchProductsPage : boolean }) => {
+const SearchProducts = ({ params, searchProductsPage } : { params : URLSearchParams, searchProductsPage? : boolean }) => {
   const router = useRouter();
 
   const [searchQuery, setSearchQuery] = useState<string>("");

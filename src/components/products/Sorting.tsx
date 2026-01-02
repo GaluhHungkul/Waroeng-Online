@@ -8,25 +8,41 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 
-const options = [
+const optionsProductSort = [
   { value: "price,desc", label: "Dari harga tertinggi" },
   { value: "price,asc", label: "Dari harga terendah" },
   { value: "rating,desc", label: "Dari rating tertinggi" },
   { value: "rating,asc", label: "Dari rating terendah" },
 ];
 
-const Sorting = ({ params } : { params : URLSearchParams }) => {
+const optionsOrderSort = [
+  { value: "unpaid", label: "Unpaid" },
+  { value: "paid", label: "Paid" },
+];
+
+const Sorting = ({ orders=false } : { orders?: boolean }) => {
 
   const router = useRouter()
   const pathname = usePathname()
 
+  const data = orders ? optionsOrderSort : optionsProductSort
+
+  const searchParams = useSearchParams()
+
+  const params = new URLSearchParams(searchParams.toString())
+
   const handleSort = async (val:string) => {
-    const [sortBy, order] = val.split(",")
-    params.set("sortBy", sortBy)
-    params.set("order", order)
+    if(!orders) {
+      const [sortBy, order] = val.split(",")
+      params.set("sortBy", sortBy)
+      params.set("order", order)
+    } else {
+      params.set("sortBy", val)
+    }
+     
     router.push(`${pathname}?${params.toString()}` , { scroll : true })
   }
 
@@ -37,7 +53,7 @@ const Sorting = ({ params } : { params : URLSearchParams }) => {
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          {options.map(option => (
+          {data.map(option => (
             <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>
           ))}
         </SelectGroup>

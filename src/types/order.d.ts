@@ -3,17 +3,23 @@ import { TypeUser } from "./user";
 export type Order = {
   _id : string
   userId : TypeUser
-  orderedProduct : OrderedProduct
+  orderedProducts : OrderedProduct[]
   totalPrice: number
-  paymentMethod: "COD" | "Transfer" | "Credit Card" | "PayPal"
-  paymentStatus: "unpaid" | "paid"
+  paymentMethod: "cod" | "midtrans"
+  paymentStatus: "unpaid" | "paid" | "failed"
   orderStatus: "pending" | "processing" | "shipped" | "delivered" | "cancelled"
   createdAt : Date;
   updatedAt : Date
+  midtrans: {
+    transactionStatus: string,
+    paymentType: string,
+    fraudStatus: string,
+    paymentLink?: string
+  },
 }
 
 type OrderedProduct = {
-    id : string
+    productId : string
     price : number
     name : string
     img : string;

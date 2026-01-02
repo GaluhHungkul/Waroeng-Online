@@ -66,6 +66,8 @@ const orderSchema = new mongoose.Schema(
     midtrans: {
       transactionStatus: {
         type: String,
+        enum : ["capture", "settlement", "pending", "deny", "cancel", "expire"],
+        default : "pending"
       },
       paymentType: {
         type: String,
@@ -73,6 +75,9 @@ const orderSchema = new mongoose.Schema(
       fraudStatus: {
         type: String,
       },
+      paymentLink : {
+        type: String
+      }
     },
   },
   { timestamps: true }

@@ -72,9 +72,14 @@ export async function POST(req:NextRequest) {
         if(!res.ok) {
             throw new Error((await res.json()).error_messages)
         }
-        const midtransRes = await res.json()
         
-        return NextResponse.json({ midtransRes })
+        const { payment_url } = await res.json()
+
+        order.midtrans.paymentLink = payment_url
+        
+        await order.save()
+
+        return NextResponse.json({ message : "Berhasil membuat payment link" })
 
     } catch (error) {
         console.log("Error :" , error)
