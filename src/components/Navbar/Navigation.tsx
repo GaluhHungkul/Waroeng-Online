@@ -1,6 +1,4 @@
 import Link from "next/link"
-import AccountAndSearchBar from "./AccountAndSearchBar"
-import CartButton from "./CartButton"
 
 const navigation = [
   {
@@ -23,18 +21,12 @@ const navigation = [
 
 const Navigation  = () => {
   return (
-    <div className="hidden lg:flex items-center gap-10 justify-between w-1/2 lg:w-3/5">
-      <section className="flex gap-8">
-        {navigation.map(nav => (
-          <Link key={nav.id} className="text-gray-400 hover:text-gray-500 lg:text-lg font-bold" href={nav.href} >
-          {nav.title}
-        </Link>
-        ))}
-      </section>
-      <div className="order-1 flex items-center gap-16 lg:order-3">  
-        <CartButton />
-        <AccountAndSearchBar />
-      </div>
+    <div className="hidden lg:flex items-center gap-10 justify-center w-1/2 lg:w-3/5">
+      {navigation.map(nav => (
+        <Link key={nav.id} className="text-gray-400 hover:text-gray-500 lg:text-lg font-bold" href={nav.href} >
+        {nav.title}
+      </Link>
+      ))}
     </div>
   )
 }
