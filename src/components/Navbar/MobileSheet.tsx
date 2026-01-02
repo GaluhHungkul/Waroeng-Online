@@ -51,7 +51,7 @@ const MobileSheet = () => {
           </SheetTitle>
         </SheetHeader>
         <div className="gap-2 mt-2 text-gray-700 flex flex-col items-end">
-          <AccountAndSearchBar account={false}/>
+          <AccountAndSearchBar />
           <p onClick={() => handleToProfilePage("/profile/account")} className="hover:underline  font-medium text-xl mt-6" >My Profile</p>
           <p onClick={() => handleToProfilePage("/cart")} className="hover:underline  font-medium text-xl" >My Cart</p>
           <p onClick={() => handleToProfilePage("/profile/historyshopping")} className="hover:underline  font-medium text-xl" >My Orders</p>
