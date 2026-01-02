@@ -52,13 +52,12 @@ const DetailCheckout = () => {
     } finally {
       setLoadingCheckout(false)
       toast.dismiss(loadingToast)
-      
     }
   }
   
   const generatePaymentLink = async () => {
     if(!user || !user.id) return
-
+    const loadingToast = toast.loading("Generate payment link...")
     try {
       const orderedProducts = cart.map((p) => ({
         productId: p.id,
@@ -85,6 +84,8 @@ const DetailCheckout = () => {
       clearCart()
     } catch (error) {
       console.log("Error : " , error)
+    } finally {
+      toast.dismiss(loadingToast)
     }
 
   }
