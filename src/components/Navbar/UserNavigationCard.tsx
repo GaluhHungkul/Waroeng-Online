@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import UserAvatar from '../profile/UserAvatar'
 import useUser from '@/zustand/useUser'
 import { AnimatePresence, motion } from 'framer-motion'
-import { LogOut, ShoppingBag, ShoppingCart, User } from 'lucide-react'
+import { LogOut, ShoppingBag, ShoppingCart, User2 } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import { signOut } from 'next-auth/react'
 import WaroengLogo from '../common/WaroengLogo'
@@ -55,9 +55,10 @@ const UserNavigationCard = () => {
   return (
     <div className='relative flex gap-4 items-center'>
         <AccountAndSearchBar />
-        <button onClick={() => setShowCard(p => !p)}>
-          <UserAvatar navbar username={user?.username} showCard={showCard}/>
-        </button>
+        {user 
+        ? <button onClick={() => setShowCard(p => !p)}><UserAvatar navbar username={user?.username} showCard={showCard}/></button>
+        : <User2 onClick={() => setShowAuthCard("signIn")} className='cursor-pointer text-gray-500 hover:text-gray-700'/>
+        }
         <AnimatePresence>
             {showCard && <motion.div 
             initial={{
@@ -77,7 +78,7 @@ const UserNavigationCard = () => {
                     <WaroengLogo userCard/>
                 </p>
                 <Link href={"/profile/account"} className='flex items-center gap-6 py-4 px-3 hover:bg-gray-200'>
-                    <User className='text-gray-800'/>
+                    <User2 className='text-gray-800'/>
                     <section className='text-sm md:text-base'>
                         <p className='font-bold'>{user?.username}</p>
                         <p className='font-medium text-xs text-gray-500 md:text-sm'>{user?.email}</p>

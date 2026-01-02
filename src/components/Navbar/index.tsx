@@ -36,11 +36,13 @@ const Navbar = () => {
     <nav className="border-b border-gray-300 px-4 md:px-0 bg-white sticky top-0 z-10">
       <div className="flex h-16 md:h-24 justify-between  items-center md:w-4/5 md:mx-auto lg:h-16">
         <WaroengLogo />
-        <div className="lg:hidden">
-          <SearchProducts params={params} searchProductsPage/>
-        </div>
-        <Navigation />
-        <UserNavigationCard />
+        <section className="flex justify-between w-full md:w-max md:justify-end md:gap-10 lg:w-3/4 lg:justify-between">
+          <div className="lg:hidden">
+            <SearchProducts params={params} searchProductsPage/>
+          </div>
+          <Navigation />
+          <UserNavigationCard />
+        </section>
       </div>
     </nav>
   );
