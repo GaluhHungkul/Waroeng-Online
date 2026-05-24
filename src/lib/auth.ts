@@ -50,6 +50,17 @@ export const authOptions : NextAuthOptions = {
     session : {
         strategy : "jwt"
     },
+    // cookies: {
+    //     sessionToken: {
+    //         name: "waroeng-online-session-token",
+    //         options: {
+    //             httpOnly: true,
+    //             sameSite: "lax",
+    //             path: "/",
+    //             secure: false,
+    //         },
+    //     }
+    // },
     callbacks : {
         async signIn({ account, user }) {
             await ConnectToDatabase()
@@ -78,7 +89,6 @@ export const authOptions : NextAuthOptions = {
                     token.isMember = currUser.isMember
                 }
             }
-            
             if(!user?.email) return token
             
             await ConnectToDatabase()

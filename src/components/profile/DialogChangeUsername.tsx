@@ -11,7 +11,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Pen } from "lucide-react"
 import { useSession } from "next-auth/react"
-import { FormEvent, useState } from "react"
+import { useState } from "react"
+import { toast } from "sonner"
 
 const DialogChangeUsername = () => {
 
@@ -21,10 +22,8 @@ const DialogChangeUsername = () => {
   const [newUsername, setNewUsername] = useState("")
   const [loadingChangeUsername, setLoadingChangeUsername] = useState(false)
 
-  const handleChangeUsername = async (e:FormEvent) => {
+  const handleChangeUsername = async () => {
     try {
-        e.preventDefault()
-        if(newUsername.trim() === "" || newUsername.trim().length < 8) return
         setLoadingChangeUsername(true)
         const res = await fetch("/api/user/changeusername", {
             method : "PUT",
@@ -55,15 +54,18 @@ const DialogChangeUsername = () => {
             Change Your Username
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleChangeUsername}>
+        <div>
             <div className="w-full mb-6 mt-4">
                 <Label htmlFor="link" className="sr-only">
                 Link
                 </Label>
-                <Input required onChange={(e) => setNewUsername(e.target.value)} />
+                <Input placeholder="Masukkan minimal 8 karakter dan maksimal 24" required onChange={(e) => setNewUsername(e.target.value)} />
             </div>
-            <Button disabled={loadingChangeUsername} className="w-full">{loadingChangeUsername ? "Submitting..." : "Change"}</Button>
-        </form>
+            <Button onClick={() => {
+              if(newUsername.trim() === "" || newUsername.trim().length < 8 || newUsername.trim().length > 24) toast.warning("Minimal 8 karakter")
+              else handleChangeUsername()
+            }} disabled={loadingChangeUsername} className="w-full">{loadingChangeUsername ? "Submitting..." : "Change"}</Button>
+        </div>
       </DialogContent>
     </Dialog>
   )

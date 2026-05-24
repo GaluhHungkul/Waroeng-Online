@@ -24,7 +24,6 @@ const useCart = create<TypeUseCart>()(persist((set, get) => ({
             final = [...cart, { ...value, qty : 1 }]
         }
         set(() => ({ cart : final }))
-        console.log(cart.map(p => p.priceAfterDiscount))
     },
     deleteFromCart : (id) => {
         const { cart } = get()
@@ -39,7 +38,6 @@ const useCart = create<TypeUseCart>()(persist((set, get) => ({
     clearCart : () => set(() => ({ cart : [] }))
 }), {
         name : "cart-storage",
-        
     }
 ))
 

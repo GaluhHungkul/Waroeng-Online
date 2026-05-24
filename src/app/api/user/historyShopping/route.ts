@@ -6,9 +6,8 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req:NextRequest) {
 
     try {
-        
         await ConnectToDatabase()
-        const token = await getToken({ req })
+        const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET })
         if(!token) return NextResponse.json({ message : "Unauthorized" }, { status : 401 })
         const order = await Order.find({ userId : token.id })
             

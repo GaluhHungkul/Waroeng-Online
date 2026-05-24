@@ -10,10 +10,10 @@ const ListHistoryShopping = () => {
   const searchParams = useSearchParams()
   const params = new URLSearchParams(searchParams.toString())
 
-  const { data:historyShopping, isPending, isError, error } = useHistoryShopping({ sortBy : params.get("sortBy") ?? "unpaid" })
+  const { data:historyShopping, isPending, isError } = useHistoryShopping({ sortBy : params.get("sortBy") ?? "unpaid" })
 
   if(isPending) return <SkeletonHistoryShopping />
-  if(isError) return <p>Error : {error.message}</p>
+  if(isError) return <p className="text-center content-center">Something went wrong</p>
 
   return (
     <div>

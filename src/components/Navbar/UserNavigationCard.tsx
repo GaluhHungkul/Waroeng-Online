@@ -51,6 +51,19 @@ const UserNavigationCard = () => {
         setShowCard(false)
     }, [pathname])
 
+    useEffect(() => {
+        const handleEsc = (e: KeyboardEvent) => {
+            if (e.key === "Escape") {
+                setShowCard(false)
+            }
+        }
+
+            window.addEventListener("keydown", handleEsc)
+
+            return () => {
+            window.removeEventListener("keydown", handleEsc)
+        }
+    }, [])
 
   return (
     <div className='relative flex gap-4 items-center'>
